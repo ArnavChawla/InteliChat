@@ -1,0 +1,10 @@
+framework module RetrieveAndRankV1 {
+  umbrella header "RetrieveAndRankV1.h"
+
+  export *
+  module * { export * }
+}
+
+module RetrieveAndRankV1.Swift {
+    header "RetrieveAndRankV1-Swift.h"
+}

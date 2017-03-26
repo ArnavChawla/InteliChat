@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E175b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="c3r-9G-GPc">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login-->
+        <scene sceneID="qLg-59-WDD">
+            <objects>
+                <viewController storyboardIdentifier="hello" title="Login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="c3r-9G-GPc" customClass="LoginViewController" customModule="CodedayProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nzq-C0-J0E"/>
+                        <viewControllerLayoutGuide type="bottom" id="wcI-Jm-WE8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kJC-Ie-llS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="baN-a7-LSy">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="OrLine.png" translatesAutoresizingMaskIntoConstraints="NO" id="rtT-An-ZgB">
+                                <rect key="frame" x="0.0" y="318" width="414" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ihG-at-G5j">
+                                <rect key="frame" x="36" y="239" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SG3-k8-tYx">
+                                <rect key="frame" x="36" y="183" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hJ-Nx-vRW">
+                                <rect key="frame" x="181" y="357" width="53" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="googleButton.png"/>
+                                <connections>
+                                    <action selector="GoogleLoginDidTapped:" destination="c3r-9G-GPc" eventType="touchUpInside" id="38o-fg-oIr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6G8-If-tS7">
+                                <rect key="frame" x="239" y="280" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign Up"/>
+                                <connections>
+                                    <action selector="CreateAccount:" destination="c3r-9G-GPc" eventType="touchUpInside" id="M7S-Rx-5Dn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4q-3R-H1q">
+                                <rect key="frame" x="120" y="280" width="42" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Log In"/>
+                                <connections>
+                                    <action selector="LoginPressed:" destination="c3r-9G-GPc" eventType="touchUpInside" id="hJa-kC-LgG"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="Email" destination="SG3-k8-tYx" id="1kF-uP-c31"/>
+                        <outlet property="Password" destination="ihG-at-G5j" id="L3a-N0-ed4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t22-t6-U9u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="11.594202898550726" y="3.2608695652173916"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TPv-zC-scc">
+            <objects>
+                <navigationController storyboardIdentifier="VC" id="di9-9O-tKd" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="VDe-cF-htm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.14901960780000001" green="0.2666666667" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Vim-KK-l4Z" kind="relationship" relationship="rootViewController" id="stJ-t8-U1w"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3wI-j5-imi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="679" y="5"/>
+        </scene>
+        <!--Setup View-->
+        <scene sceneID="tH3-3q-iIy">
+            <objects>
+                <viewController storyboardIdentifier="pls" id="Sz7-hZ-0Mx" customClass="setupView" customModule="CodedayProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hCw-D6-tNG"/>
+                        <viewControllerLayoutGuide type="bottom" id="w7R-Ta-Jkr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ixi-0Y-bkr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Display Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ozT-wc-8Wv">
+                                <rect key="frame" x="20" y="241" width="374" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QaJ-Cz-yM1">
+                                <rect key="frame" x="336" y="279" width="58" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Submit"/>
+                                <connections>
+                                    <action selector="Submit:" destination="Sz7-hZ-0Mx" eventType="touchUpInside" id="HSS-EC-prn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibb-At-YQE">
+                                <rect key="frame" x="163" y="203" width="88" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Take Picture"/>
+                                <connections>
+                                    <action selector="takePhoto:" destination="Sz7-hZ-0Mx" eventType="touchUpInside" id="CV0-tu-vJS"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I7k-gF-m5G">
+                                <rect key="frame" x="143" y="67" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="I7k-gF-m5G" id="rQh-qi-Qzn"/>
+                        <outlet property="nameTextField" destination="ozT-wc-8Wv" id="bRt-v4-nuJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lsZ-jF-H42" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2001" y="5"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="nJp-3f-NE7">
+            <objects>
+                <viewController id="Vim-KK-l4Z" customClass="ChatViewController" customModule="CodedayProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="jMO-95-Edt">
+                        <barButtonItem key="leftBarButtonItem" title="&lt;- Back" id="Y0p-Bs-dMJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="Logout:" destination="Vim-KK-l4Z" id="fqa-MM-dBg"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="translations" id="dAq-oR-zLM">
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="translation:" destination="Vim-KK-l4Z" id="Gec-Uv-LFx"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" id="k2b-Y6-oaF">
+                                <inset key="imageInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <color key="tintColor" red="0.43524378538131714" green="0.0" blue="0.3178013392857143" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="item" destination="k2b-Y6-oaF" id="iiu-u5-M8R"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c5x-pl-Pgi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1333.5999999999999" y="4.9475262368815596"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="aAY-pr-1Re">
+            <objects>
+                <navigationController storyboardIdentifier="yo" id="cvu-q5-aIl" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="IVW-bK-yKU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.14901960780000001" green="0.2666666667" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Nn5-qx-1E0" kind="relationship" relationship="rootViewController" id="01a-xF-zWe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="peq-dK-mvg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="12" y="665"/>
+        </scene>
+        <!--Profile Vc-->
+        <scene sceneID="f1c-gT-9w9">
+            <objects>
+                <tableViewController id="Nn5-qx-1E0" customClass="profileVc" customModule="CodedayProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="99" sectionHeaderHeight="28" sectionFooterHeight="28" id="rTe-Dv-GS8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="99" id="vel-8D-ylE">
+                                <rect key="frame" x="0.0" y="28" width="414" height="99"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vel-8D-ylE" id="yQi-ju-gRd">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="98"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLd-Rc-EJv">
+                                            <rect key="frame" x="119" y="39" width="236" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IhX-ZE-NKu">
+                                            <rect key="frame" x="8" y="12" width="74" height="74"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Nn5-qx-1E0" id="UWD-hy-Yzm"/>
+                            <outlet property="delegate" destination="Nn5-qx-1E0" id="yVU-Bx-9eI"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="ZUT-X5-Bi4">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="VxO-Kb-rKB">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="LogOutTapped:" destination="Nn5-qx-1E0" id="HuD-q7-F3Y"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tSQ-uH-B5C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="677.60000000000002" y="665.21739130434787"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="Bqq-ZG-wug">
+            <objects>
+                <viewController id="67K-Ue-yk0" customClass="settingsViewController" customModule="CodedayProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RPB-gH-bTk"/>
+                        <viewControllerLayoutGuide type="bottom" id="MK7-sd-lPY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NzE-wS-54c" customClass="Settings">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qo0-J5-C1f">
+                                <rect key="frame" x="240" y="371" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="yofrench:" destination="67K-Ue-yk0" eventType="valueChanged" id="ICO-R7-BzJ"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Spanish" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jSB-zz-TNV">
+                                <rect key="frame" x="126" y="339" width="61" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="French" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8lV-hy-fwn">
+                                <rect key="frame" x="130" y="376" width="53" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ks1-zo-skx">
+                                <rect key="frame" x="240" y="334" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="SpanishChanged:" destination="67K-Ue-yk0" eventType="valueChanged" id="rpc-qI-yjr"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7IJ-kj-peQ">
+                                <rect key="frame" x="240" y="295" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="Italy:" destination="67K-Ue-yk0" eventType="valueChanged" id="4OP-64-DtL"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rjT-ty-P6Y">
+                                <rect key="frame" x="240" y="410" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="Arabic:" destination="67K-Ue-yk0" eventType="valueChanged" id="HRD-l7-3il"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Arabic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S2Q-B2-CXF">
+                                <rect key="frame" x="131" y="415" width="50" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Itallian" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZL2-4R-8Sg">
+                                <rect key="frame" x="131" y="300" width="50" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="B7S-TE-xxa">
+                        <barButtonItem key="leftBarButtonItem" title="&lt;- Back" id="D02-g9-Dfn">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="Bacl:" destination="67K-Ue-yk0" id="QKd-qB-Vgl"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="French" destination="qo0-J5-C1f" id="epn-gj-Vy7"/>
+                        <outlet property="SpanishSwitch" destination="Ks1-zo-skx" id="Ou9-EH-CUs"/>
+                        <outlet property="bro" destination="rjT-ty-P6Y" id="JZf-pC-f7t"/>
+                        <outlet property="italy" destination="7IJ-kj-peQ" id="r4x-Rz-InH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="76H-J3-ATi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2001" y="664"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wTe-nN-roI">
+            <objects>
+                <navigationController storyboardIdentifier="settings" id="ba9-aq-6DK" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="JWG-wa-jZ8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.14901960780000001" green="0.2666666667" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="67K-Ue-yk0" kind="relationship" relationship="rootViewController" id="06h-Z3-QSR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kLS-R5-Ql3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1333" y="665"/>
+        </scene>
+        <!--Eula View Controller-->
+        <scene sceneID="NTS-LH-H1E">
+            <objects>
+                <viewController storyboardIdentifier="eula" id="yhd-Gf-1Vm" customClass="EulaViewController" customModule="CodedayProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="X0D-zk-lDN"/>
+                        <viewControllerLayoutGuide type="bottom" id="vNn-ey-Z37"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jsD-Vb-b4Q">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bn9-Fa-pVZ">
+                                <rect key="frame" x="359" y="686" width="41" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Agree"/>
+                                <connections>
+                                    <action selector="agree:" destination="yhd-Gf-1Vm" eventType="touchUpInside" id="cw0-ci-vzt"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fsF-2f-5H6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="688"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R34-zp-lXz">
+                                        <rect key="frame" x="0.0" y="0.0" width="407" height="688"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
+                                        <string key="text">This is an agreement between InteliChat Inc. (“InteliChat”), the owner and operator of InteliChat the 
+
+InteliChat software, including the InteliChat application and the Site (the “InteliChat Service” or the "Service"), and you, a user of the 
+
+InteliChat Service. Following are the set of terms and conditions applicable for the use of the website techshowdown23.wordpress.com and the 
+
+application, "InteliChat". These terms shall be read along with the current Privacy Policy which is incorporated herein by reference. If you do 
+
+not agree with any of these terms, you may not use the InteliChat Service. If you continue to use the services you are deemed to have 
+
+accepted these terms in full.
+
+1. Ability to Accept Terms of License
+
+You affirm that you have the ability to enter into this License. You affirm that you are either more than 13 years of age, an emancipated 
+
+minor, or possess legal parental or guardian consent, and are fully able and competent to enter into the terms, conditions, obligations, 
+
+affirmations, representations, and warranties set forth in this license, and to abide by and comply with this license. 
+
+
+2. Changes to this License
+
+InteliChat reserves the right to amend or modify the terms of this License at any time, and it is your responsibility to review this License for 
+
+any changes. Your continued use of the InteliChat Service following any amendment of this License will signify your assent to and 
+
+acceptance of its revised terms.
+
+3. The Service
+
+3.1 You agree not to exploit the InteliChat Service in any unauthorized way whatsoever, and your use of the Service is solely for personal use.
+
+3.2 You choose to access the Service at your own initiative and are responsible for compliance with any applicable laws, including but not 
+
+limited to local laws.
+
+3.3 We reserve the right to change, suspend, remove, or disable access to our Service at any time without notice. In no event will we be 
+
+liable for the removal of or disabling of access to our Service. We may also impose limits on the use of or access to our Service without 
+
+notice or liability.
+
+3.4 Any notice sent by e-mail or as InteliChat message in absence of e-mail shall be considered as an effective delivery of the notice to the 
+
+user.
+
+3.5 InteliChat may (a) require you to download and install updates; or (b) automatically download and install updates to your device.
+
+3.6 InteliChat does not consider ideas for new products, technologies, promotions, product names, product feedback and product 
+
+improvements ("Feedback") to be confidential information. If you send any Feedback to InteliChat, you acknowledge that InteliChat 
+
+reserves the right to independently use, develop, evaluate, or market products, whether incorporating the Feedback or otherwise.
+
+4. User and Website Content
+
+In these terms and conditions, "your user content" means material (including without limitation chat messages, posts and comments, text, 
+
+images, audio material, video material and audio-visual material) that you submit to InteliChat, for whatever purpose.
+
+4.1 The InteliChat Service may contain links to third party websites, including advertisements, that are not owned or controlled by 
+
+InteliChat. InteliChat has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party 
+
+websites. In addition, InteliChat will not and cannot censor or edit the content of any third-party site. By using the Service, you expressly 
+
+acknowledge and agree that InteliChat shall not be responsible for any damages, claims or other liability arising from or related to your use 
+
+of any third-party website.
+
+4.2 You understand that when using the InteliChat Service you will be exposed to content posted by other users, and that InteliChat is not 
+
+responsible for the accuracy, usefulness, safety, or intellectual property rights of or relating to such content, and that such content are not 
+
+the responsibility of InteliChat. 
+
+4.3 In the course of using the InteliChat Service, you may encounter content that may be deemed offensive, indecent, or objectionable. 
+
+Nevertheless, you agree to use our Service at your sole risk and we shall not have any liability to you for content that may be found to be 
+
+offensive, indecent, or objectionable.
+
+4.4 You shall be solely responsible for the content you post and the consequences of posting them. Because InteliChat is only acting as a 
+
+repository of data, user submitted content do not necessarily represent the views or opinions of InteliChat, and InteliChat makes no 
+
+guarantees as to the validity, accuracy or legal status of any user submitted content.
+
+4.5 You grant to InteliChat a worldwide, irrevocable, non-exclusive, sub-licenseable, royalty-free license to use, reproduce, adapt, publish, 
+
+translate and distribute your user content in any existing or future media or search engines. You also grant InteliChat the right to bring an 
+
+action for infringement of these rights.
+
+4.6 InteliChat reserves the right to use any content posted by the User for promoting the service or as information for other users.
+
+4.7 InteliChat reserves the right to restrict access of the user to any part of the content either temporarily or permanently at its sole discretion.
+
+5. User’s Obligations
+
+5.1  You are responsible for all activities that occur under your User Account. You must notify InteliChat immediately of any breach of 
+
+security or unauthorized use of your mobile phone. InteliChat will not be liable for any loss that you may incur as a result of someone else 
+
+using your User Account, either with or without your knowledge. In addition, you may be held liable for any losses incurred by us or 
+
+another party due to someone else using your User Account.
+
+5.2 You shall keep your account particulars confidential and take all steps that are reasonable and necessary to prevent your identity from 
+
+being compromised.
+
+5.3 You may link to materials on the Service for personal purposes only. InteliChat reserves the right to discontinue any aspect of the 
+
+Service at any time.
+
+5.4 You shall not:
+
+5.4.1 expose any third party to material which is objectionable in any way, including without limitation posting any information that is 
+
+offensive, harmful to minors, obscene, contains adult content, promotes terror, constitutes impersonation, meant to deceive, or infringe on 
+
+the intellectual property rights of any other person or otherwise constitute violation of applicable law;
+
+5.4.2 use the InteliChat Service to threaten, harass or invade the privacy of, any third party, including without limitation bullying, 
+
+intimidating, harassing, defaming, misleading, spamming, phishing, pharming, stalking or otherwise harming other users;
+
+5.4.3 use the InteliChat Service to post advertisements or solicitations of business;
+
+5.4.4 attempt to reverse engineer any part of the InteliChat Service, or carry out any activity which unauthorizedly damages, modifies or 
+
+deletes any content on InteliChat or otherwise impairs the functioning of InteliChat;
+
+5.4.5 duplicate, transfer, give access to, copy or distribute any part of the Service in any medium without InteliChat's prior written 
+
+authorization;
+
+5.4.6 resell or charge others for use of or access to the Service, or in any other manner inconsistent with this License, as the Service is 
+
+permitted solely for your personal use;
+
+5.4.7 use (including as part of your name and/or profile picture) any material or content that is subject to any third party proprietary rights, 
+
+unless you have a license or permission from the owner of such rights;
+
+5.4.8 collect or harvest any personally identifiable information, including account names, from the InteliChat Service.
+
+6. Termination
+
+The License is effective until terminated by you or us. You may terminate your relationship with InteliChat at any time. InteliChat has the 
+
+right to terminate your rights under this License without notice if you fail to comply with any terms of this License. Upon termination of the 
+
+License, you shall cease all use of the Service, and destroy all copies of the Service.
+
+6.1 InteliChat reserves the right to temporarily disable or permanently terminate the account of any user at any time:
+
+6.1.1 if you are in breach of the terms of this License;
+
+6.1.2 if InteliChat reasonably suspects that you are using the InteliChat Service to break the law or infringe third party rights;
+
+6.1.3 if InteliChat reasonably suspects that you are trying to unfairly exploit or misuse any of our policies;
+
+6.1.4 if required due to a change in laws/regulation by a regulator or authority with a lawful mandate in any particular territory, or by any of 
+
+InteliChat's partners;
+
+6.2 The obligations under this agreement shall subsist as long as the application is being used by the user and shall cease only on the 
+
+complete uninstallation of the application and deletion of the account.
+
+7. Warranty Disclaimer
+
+YOU EXPRESSLY ACKNOWLEDGE AND AGREE THAT USE OF THE SERVICE ARE AT YOUR SOLE RISK AND THAT THE ENTIRE RISK AS TO 
+
+SATISFACTORY QUALITY, PERFORMANCE, ACCURACY AND EFFORT IS WITH YOU. TO THE FULLEST EXTENT PERMITTED BY LAW, INTELICHAT, 
+
+ITS OFFICERS AND EMPLOYEES DISCLAIM ALL WARRANTIES, EITHER EXPRESS, IMPLIED OR STATUTORY, IN CONNECTION WITH THE SERVICE, 
+
+INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES AND/OR CONDITIONS OF MERCHANTABILITY, OF SATISFACTORY QUALITY, 
+
+OF FITNESS FOR A PARTICULAR PURPOSE, OF ACCURACY, OF QUIET ENJOYMENT, AND NON-INFRINGEMENT OF THIRD PARTY RIGHTS. WE 
+
+DO NOT WARRANT AGAINST INTERFERENCE WITH YOUR ENJOYMENT OF THE SERVICE OR THAT THE SERVICE WILL BE UNINTERRUPTED OR 
+
+ERROR-FREE, OR THAT DEFECTS IN THE SERVICE WILL BE CORRECTED. NO ORAL OR WRITTEN INFORMATION OR ADVICE GIVEN BY US 
+
+SHALL CREATE A WARRANTY.
+
+8. Limitation of Liability
+
+IN NO EVENT SHALL INTELICHAT, ITS OFFICERS, OR EMPLOYEES BE LIABLE TO YOU FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+
+PUNITIVE, OR CONSEQUENTIAL DAMAGES WHATSOEVER RESULTING FROM PERSONAL INJURY, OR ANY INCIDENTAL, SPECIAL, INDIRECT OR 
+
+CONSEQUENTIAL DAMAGES WHATSOEVER, INCLUDING, WITHOUT LIMITATION, (I) ERRORS, MISTAKES, OR INACCURACIES OF CONTENT, (II) 
+
+PERSONAL INJURY OR PROPERTY DAMAGE, OF ANY NATURE WHATSOEVER, RESULTING FROM YOUR ACCESS TO AND USE OF OUR SERVICE, 
+
+(III) ANY UNAUTHORIZED ACCESS TO OR USE OF OUR SECURE SERVERS AND/OR ANY AND ALL PERSONAL INFORMATION AND/OR 
+
+FINANCIAL INFORMATION STORED THEREIN, (IV) ANY INTERRUPTION OR CESSATION OF TRANSMISSION TO OR FROM OUR SERVERS, (IV) 
+
+ANY BUGS, VIRUSES, TROJAN HORSES, OR THE LIKE, WHICH MAY BE TRANSMITTED TO OR THROUGH OUR SERVICE BY ANY THIRD PARTY, (V) 
+
+DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION OR ANY OTHER COMMERCIAL DAMAGES OR LOSSES, ARISING 
+
+OUT OF OR RELATED TO YOUR USE OR INABILITY TO USE THE SERVICE, HOWEVER CAUSED, REGARDLESS OF THE THEORY OF LIABILITY 
+
+(CONTRACT, TORT OR OTHERWISE) AND EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THE FOREGOING 
+
+LIMITATION OF LIABILITY SHALL APPLY TO THE FULLEST EXTENT PERMITTED BY LAW IN THE APPLICABLE JURISDICTION.
+
+9. Intellectual Property Rights
+
+The InteliChat Service and all copies thereof are protected by copyright and other intellectual property laws and treaties. InteliChat or its 
+
+licensors own the title, copyright, and other intellectual property rights in the Service and all copies, modifications and derivative works 
+
+thereof, and the underlying software (including any user Feedback) ("InteliChat Technology"), and your use of our Service does not grant to 
+
+you, nor do you acquire any ownership rights in the InteliChat Technology.
+11. Indemnity
+
+The user will indemnify InteliChat and any of its officers against any losses, damages, costs, liabilities, and expenses (including attorneys' 
+
+fees and costs) as a result of or in connection with any claim or dispute arising from or relating to any breach by you of this license.
+ 
+
+</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <view alpha="0.0099999997764825821" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oNo-Ad-agA">
+                                        <rect key="frame" x="0.0" y="0.0" width="407" height="688"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQz-8D-FeN">
+                                <rect key="frame" x="14" y="686" width="61" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Disagree"/>
+                                <connections>
+                                    <action selector="Disagree:" destination="yhd-Gf-1Vm" eventType="touchUpInside" id="0ga-ec-y3h"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tdh-eP-1nz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2681.1594202898555" y="328.53260869565219"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="OrLine.png" width="864" height="45"/>
+        <image name="background.png" width="640" height="1136"/>
+        <image name="googleButton.png" width="120" height="120"/>
+    </resources>
+</document>

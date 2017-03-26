@@ -1,0 +1,720 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02A24E2F565A3394B8FBF5D8 /* Pods_CodedayProjectUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB15B92B1FD34D2B16E6E468 /* Pods_CodedayProjectUITests.framework */; };
+		AEFB7A34F9001776ADB979CD /* Pods_CodedayProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A73DFB7B2DE2A4C8B9AF07E /* Pods_CodedayProject.framework */; };
+		F51B444C1E58F337003A6071 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = F51B444B1E58F337003A6071 /* background.png */; };
+		F51B44551E58F3E7003A6071 /* backgroundPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = F51B44501E58F3E7003A6071 /* backgroundPhoto.png */; };
+		F51B44561E58F3E7003A6071 /* dummyUser.png in Resources */ = {isa = PBXBuildFile; fileRef = F51B44511E58F3E7003A6071 /* dummyUser.png */; };
+		F51B44571E58F3E7003A6071 /* googleButton.png in Resources */ = {isa = PBXBuildFile; fileRef = F51B44521E58F3E7003A6071 /* googleButton.png */; };
+		F51B44581E58F3E7003A6071 /* OrLine.png in Resources */ = {isa = PBXBuildFile; fileRef = F51B44531E58F3E7003A6071 /* OrLine.png */; };
+		F51B44591E58F3E7003A6071 /* profileImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F51B44541E58F3E7003A6071 /* profileImage.png */; };
+		F51B445B1E58F623003A6071 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51B445A1E58F623003A6071 /* LoginViewController.swift */; };
+		F51B445F1E590854003A6071 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F51B445E1E590854003A6071 /* ChatViewController.swift */; };
+		F52393A01E58D6870071DC38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F523939F1E58D6870071DC38 /* AppDelegate.swift */; };
+		F52393A51E58D6870071DC38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52393A31E58D6870071DC38 /* Main.storyboard */; };
+		F52393A71E58D6870071DC38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52393A61E58D6870071DC38 /* Assets.xcassets */; };
+		F52393AA1E58D6870071DC38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52393A81E58D6870071DC38 /* LaunchScreen.storyboard */; };
+		F52393B51E58D6870071DC38 /* CodedayProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52393B41E58D6870071DC38 /* CodedayProjectUITests.swift */; };
+		F560AAA81E598F32009A4F43 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = F560AAA71E598F32009A4F43 /* download.png */; };
+		F59EB4061E881DD900DCFCE9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F59EB4051E881DD900DCFCE9 /* GoogleService-Info.plist */; };
+		F59F75041E5CFCAC00AD97F3 /* big.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F59F75021E5CFCAC00AD97F3 /* big.storyboard */; };
+		F59F75061E5CFD1F00AD97F3 /* se.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F59F75051E5CFD1F00AD97F3 /* se.storyboard */; };
+		F59F75081E5CFEB500AD97F3 /* 4s.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F59F75071E5CFEB500AD97F3 /* 4s.storyboard */; };
+		F5B9D61D1E595138008E49D1 /* profiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B9D61C1E595137008E49D1 /* profiles.swift */; };
+		F5BFDC8A1E882286005827D5 /* EulaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BFDC891E882286005827D5 /* EulaViewController.swift */; };
+		F5D4E2041E59A0120045D18F /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D4E2031E59A0120045D18F /* RestKit.framework */; };
+		F5D4E2051E59A1330045D18F /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D4E2031E59A0120045D18F /* RestKit.framework */; };
+		F5D4E2061E59A1330045D18F /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5D4E2031E59A0120045D18F /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F5D4E20B1E59A5EE0045D18F /* settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D4E20A1E59A5EE0045D18F /* settings.swift */; };
+		F5D4E20D1E59A6560045D18F /* settingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D4E20C1E59A6560045D18F /* settingsViewController.swift */; };
+		F5DFC4F91E5B6F6500F2E182 /* LanguageTranslatorV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5DFC4F71E5B6F6500F2E182 /* LanguageTranslatorV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F5DFC4FA1E5B6F7900F2E182 /* LanguageTranslatorV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5DFC4F71E5B6F6500F2E182 /* LanguageTranslatorV2.framework */; };
+		F5EB54E31E5CC1060082FF89 /* setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EB54E21E5CC1060082FF89 /* setup.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F52393B11E58D6870071DC38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F52393941E58D6860071DC38 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F523939B1E58D6870071DC38;
+			remoteInfo = CodedayProject;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F5D4E2091E59A1330045D18F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F5DFC4F91E5B6F6500F2E182 /* LanguageTranslatorV2.framework in Embed Frameworks */,
+				F5D4E2061E59A1330045D18F /* RestKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A73DFB7B2DE2A4C8B9AF07E /* Pods_CodedayProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodedayProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C0FB7C57DD437A4E3EC265D /* Pods-CodedayProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodedayProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodedayProject/Pods-CodedayProject.debug.xcconfig"; sourceTree = "<group>"; };
+		AB15B92B1FD34D2B16E6E468 /* Pods_CodedayProjectUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodedayProjectUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC978B153D1F75314110E188 /* Pods-CodedayProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodedayProjectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodedayProjectUITests/Pods-CodedayProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F1FD7208909F6A6E126AA4C0 /* Pods-CodedayProjectUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodedayProjectUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodedayProjectUITests/Pods-CodedayProjectUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F51B444B1E58F337003A6071 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Assets.xcassets/background.png; sourceTree = "<group>"; };
+		F51B44501E58F3E7003A6071 /* backgroundPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundPhoto.png; sourceTree = "<group>"; };
+		F51B44511E58F3E7003A6071 /* dummyUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dummyUser.png; sourceTree = "<group>"; };
+		F51B44521E58F3E7003A6071 /* googleButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = googleButton.png; sourceTree = "<group>"; };
+		F51B44531E58F3E7003A6071 /* OrLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OrLine.png; sourceTree = "<group>"; };
+		F51B44541E58F3E7003A6071 /* profileImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profileImage.png; sourceTree = "<group>"; };
+		F51B445A1E58F623003A6071 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F51B445E1E590854003A6071 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		F523939C1E58D6870071DC38 /* CodedayProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodedayProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F523939F1E58D6870071DC38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F52393A41E58D6870071DC38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F52393A61E58D6870071DC38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F52393A91E58D6870071DC38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F52393AB1E58D6870071DC38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F52393B01E58D6870071DC38 /* CodedayProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodedayProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52393B41E58D6870071DC38 /* CodedayProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodedayProjectUITests.swift; sourceTree = "<group>"; };
+		F52393B61E58D6870071DC38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F560AAA71E598F32009A4F43 /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
+		F59EB4051E881DD900DCFCE9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F59F75031E5CFCAC00AD97F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/big.storyboard; sourceTree = "<group>"; };
+		F59F75051E5CFD1F00AD97F3 /* se.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = se.storyboard; sourceTree = "<group>"; };
+		F59F75071E5CFEB500AD97F3 /* 4s.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = 4s.storyboard; sourceTree = "<group>"; };
+		F5B9D61C1E595137008E49D1 /* profiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = profiles.swift; sourceTree = "<group>"; };
+		F5BFDC891E882286005827D5 /* EulaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EulaViewController.swift; sourceTree = "<group>"; };
+		F5D4E2011E599FE20045D18F /* LanguageTranslatorV2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LanguageTranslatorV2.framework; path = CodedayProject/LanguageTranslatorV2.framework; sourceTree = "<group>"; };
+		F5D4E2031E59A0120045D18F /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
+		F5D4E20A1E59A5EE0045D18F /* settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = settings.swift; sourceTree = "<group>"; };
+		F5D4E20C1E59A6560045D18F /* settingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = settingsViewController.swift; sourceTree = "<group>"; };
+		F5D4E20E1E59CFC40045D18F /* CodedayProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodedayProject.entitlements; sourceTree = "<group>"; };
+		F5DFC4F71E5B6F6500F2E182 /* LanguageTranslatorV2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LanguageTranslatorV2.framework; path = Carthage/Build/iOS/LanguageTranslatorV2.framework; sourceTree = "<group>"; };
+		F5EB54E21E5CC1060082FF89 /* setup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = setup.swift; sourceTree = "<group>"; };
+		FF53A6F8AD83C7EB54F1EFE5 /* Pods-CodedayProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodedayProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodedayProject/Pods-CodedayProject.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F52393991E58D6870071DC38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F5DFC4FA1E5B6F7900F2E182 /* LanguageTranslatorV2.framework in Frameworks */,
+				F5D4E2041E59A0120045D18F /* RestKit.framework in Frameworks */,
+				AEFB7A34F9001776ADB979CD /* Pods_CodedayProject.framework in Frameworks */,
+				F5D4E2051E59A1330045D18F /* RestKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F52393AD1E58D6870071DC38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02A24E2F565A3394B8FBF5D8 /* Pods_CodedayProjectUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3006C47CBB01A3C3451E65CF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5DFC4F71E5B6F6500F2E182 /* LanguageTranslatorV2.framework */,
+				F5D4E2031E59A0120045D18F /* RestKit.framework */,
+				F5D4E2011E599FE20045D18F /* LanguageTranslatorV2.framework */,
+				0A73DFB7B2DE2A4C8B9AF07E /* Pods_CodedayProject.framework */,
+				AB15B92B1FD34D2B16E6E468 /* Pods_CodedayProjectUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		845558950315110BEE479AD5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4C0FB7C57DD437A4E3EC265D /* Pods-CodedayProject.debug.xcconfig */,
+				FF53A6F8AD83C7EB54F1EFE5 /* Pods-CodedayProject.release.xcconfig */,
+				DC978B153D1F75314110E188 /* Pods-CodedayProjectUITests.debug.xcconfig */,
+				F1FD7208909F6A6E126AA4C0 /* Pods-CodedayProjectUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F51B444F1E58F3E7003A6071 /* Resources-GoChat */ = {
+			isa = PBXGroup;
+			children = (
+				F51B44501E58F3E7003A6071 /* backgroundPhoto.png */,
+				F51B44511E58F3E7003A6071 /* dummyUser.png */,
+				F51B44521E58F3E7003A6071 /* googleButton.png */,
+				F51B44531E58F3E7003A6071 /* OrLine.png */,
+				F51B44541E58F3E7003A6071 /* profileImage.png */,
+			);
+			path = "Resources-GoChat";
+			sourceTree = "<group>";
+		};
+		F52393931E58D6860071DC38 = {
+			isa = PBXGroup;
+			children = (
+				F523939E1E58D6870071DC38 /* CodedayProject */,
+				F52393B31E58D6870071DC38 /* CodedayProjectUITests */,
+				F523939D1E58D6870071DC38 /* Products */,
+				845558950315110BEE479AD5 /* Pods */,
+				3006C47CBB01A3C3451E65CF /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F523939D1E58D6870071DC38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F523939C1E58D6870071DC38 /* CodedayProject.app */,
+				F52393B01E58D6870071DC38 /* CodedayProjectUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F523939E1E58D6870071DC38 /* CodedayProject */ = {
+			isa = PBXGroup;
+			children = (
+				F5D4E20E1E59CFC40045D18F /* CodedayProject.entitlements */,
+				F5B9D61C1E595137008E49D1 /* profiles.swift */,
+				F523939F1E58D6870071DC38 /* AppDelegate.swift */,
+				F52393A31E58D6870071DC38 /* Main.storyboard */,
+				F59F75051E5CFD1F00AD97F3 /* se.storyboard */,
+				F59F75071E5CFEB500AD97F3 /* 4s.storyboard */,
+				F59F75021E5CFCAC00AD97F3 /* big.storyboard */,
+				F5D4E20C1E59A6560045D18F /* settingsViewController.swift */,
+				F560AAA71E598F32009A4F43 /* download.png */,
+				F5EB54E21E5CC1060082FF89 /* setup.swift */,
+				F51B445E1E590854003A6071 /* ChatViewController.swift */,
+				F5D4E20A1E59A5EE0045D18F /* settings.swift */,
+				F51B445A1E58F623003A6071 /* LoginViewController.swift */,
+				F5BFDC891E882286005827D5 /* EulaViewController.swift */,
+				F59EB4051E881DD900DCFCE9 /* GoogleService-Info.plist */,
+				F52393A61E58D6870071DC38 /* Assets.xcassets */,
+				F51B444F1E58F3E7003A6071 /* Resources-GoChat */,
+				F51B444B1E58F337003A6071 /* background.png */,
+				F52393A81E58D6870071DC38 /* LaunchScreen.storyboard */,
+				F52393AB1E58D6870071DC38 /* Info.plist */,
+			);
+			path = CodedayProject;
+			sourceTree = "<group>";
+		};
+		F52393B31E58D6870071DC38 /* CodedayProjectUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F52393B41E58D6870071DC38 /* CodedayProjectUITests.swift */,
+				F52393B61E58D6870071DC38 /* Info.plist */,
+			);
+			path = CodedayProjectUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F523939B1E58D6870071DC38 /* CodedayProject */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F52393B91E58D6870071DC38 /* Build configuration list for PBXNativeTarget "CodedayProject" */;
+			buildPhases = (
+				E43BFD71FCE47D13B88ACB77 /* [CP] Check Pods Manifest.lock */,
+				F52393981E58D6870071DC38 /* Sources */,
+				F52393991E58D6870071DC38 /* Frameworks */,
+				F523939A1E58D6870071DC38 /* Resources */,
+				A3D58A1D34CD9D4697687969 /* [CP] Embed Pods Frameworks */,
+				8C2E4AB54D79CF0AEC85C532 /* [CP] Copy Pods Resources */,
+				F5D4E2091E59A1330045D18F /* Embed Frameworks */,
+				F5DFC4FC1E5BEA6A00F2E182 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CodedayProject;
+			productName = CodedayProject;
+			productReference = F523939C1E58D6870071DC38 /* CodedayProject.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F52393AF1E58D6870071DC38 /* CodedayProjectUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F52393BC1E58D6870071DC38 /* Build configuration list for PBXNativeTarget "CodedayProjectUITests" */;
+			buildPhases = (
+				6CA29E58AC8A4145B1E74CF1 /* [CP] Check Pods Manifest.lock */,
+				F52393AC1E58D6870071DC38 /* Sources */,
+				F52393AD1E58D6870071DC38 /* Frameworks */,
+				F52393AE1E58D6870071DC38 /* Resources */,
+				144EFFC788E35B805B572386 /* [CP] Embed Pods Frameworks */,
+				5FE0F5943CE3774345D95E70 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F52393B21E58D6870071DC38 /* PBXTargetDependency */,
+			);
+			name = CodedayProjectUITests;
+			productName = CodedayProjectUITests;
+			productReference = F52393B01E58D6870071DC38 /* CodedayProjectUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F52393941E58D6860071DC38 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Arnav Chawla";
+				TargetAttributes = {
+					F523939B1E58D6870071DC38 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 24597663G4;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
+					};
+					F52393AF1E58D6870071DC38 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 24597663G4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = F523939B1E58D6870071DC38;
+					};
+				};
+			};
+			buildConfigurationList = F52393971E58D6870071DC38 /* Build configuration list for PBXProject "CodedayProject" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F52393931E58D6860071DC38;
+			productRefGroup = F523939D1E58D6870071DC38 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F523939B1E58D6870071DC38 /* CodedayProject */,
+				F52393AF1E58D6870071DC38 /* CodedayProjectUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F523939A1E58D6870071DC38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F52393AA1E58D6870071DC38 /* LaunchScreen.storyboard in Resources */,
+				F52393A71E58D6870071DC38 /* Assets.xcassets in Resources */,
+				F51B44561E58F3E7003A6071 /* dummyUser.png in Resources */,
+				F560AAA81E598F32009A4F43 /* download.png in Resources */,
+				F51B44591E58F3E7003A6071 /* profileImage.png in Resources */,
+				F51B44551E58F3E7003A6071 /* backgroundPhoto.png in Resources */,
+				F51B44571E58F3E7003A6071 /* googleButton.png in Resources */,
+				F59F75041E5CFCAC00AD97F3 /* big.storyboard in Resources */,
+				F51B444C1E58F337003A6071 /* background.png in Resources */,
+				F59F75061E5CFD1F00AD97F3 /* se.storyboard in Resources */,
+				F52393A51E58D6870071DC38 /* Main.storyboard in Resources */,
+				F51B44581E58F3E7003A6071 /* OrLine.png in Resources */,
+				F59F75081E5CFEB500AD97F3 /* 4s.storyboard in Resources */,
+				F59EB4061E881DD900DCFCE9 /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F52393AE1E58D6870071DC38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		144EFFC788E35B805B572386 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodedayProjectUITests/Pods-CodedayProjectUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5FE0F5943CE3774345D95E70 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodedayProjectUITests/Pods-CodedayProjectUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6CA29E58AC8A4145B1E74CF1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8C2E4AB54D79CF0AEC85C532 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodedayProject/Pods-CodedayProject-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3D58A1D34CD9D4697687969 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodedayProject/Pods-CodedayProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E43BFD71FCE47D13B88ACB77 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F5DFC4FC1E5BEA6A00F2E182 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/LanguageTranslatorV2.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RestKit.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F52393981E58D6870071DC38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F51B445B1E58F623003A6071 /* LoginViewController.swift in Sources */,
+				F5BFDC8A1E882286005827D5 /* EulaViewController.swift in Sources */,
+				F5B9D61D1E595138008E49D1 /* profiles.swift in Sources */,
+				F51B445F1E590854003A6071 /* ChatViewController.swift in Sources */,
+				F5EB54E31E5CC1060082FF89 /* setup.swift in Sources */,
+				F52393A01E58D6870071DC38 /* AppDelegate.swift in Sources */,
+				F5D4E20B1E59A5EE0045D18F /* settings.swift in Sources */,
+				F5D4E20D1E59A6560045D18F /* settingsViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F52393AC1E58D6870071DC38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F52393B51E58D6870071DC38 /* CodedayProjectUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F52393B21E58D6870071DC38 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F523939B1E58D6870071DC38 /* CodedayProject */;
+			targetProxy = F52393B11E58D6870071DC38 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F52393A31E58D6870071DC38 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F52393A41E58D6870071DC38 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F52393A81E58D6870071DC38 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F52393A91E58D6870071DC38 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F59F75021E5CFCAC00AD97F3 /* big.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F59F75031E5CFCAC00AD97F3 /* Base */,
+			);
+			name = big.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F52393B71E58D6870071DC38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F52393B81E58D6870071DC38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F52393BA1E58D6870071DC38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C0FB7C57DD437A4E3EC265D /* Pods-CodedayProject.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CodedayProject/CodedayProject.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 24597663G4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CodedayProject",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = CodedayProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.01;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ArnavChawla.CodedayProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F52393BB1E58D6870071DC38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF53A6F8AD83C7EB54F1EFE5 /* Pods-CodedayProject.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = CodedayProject/CodedayProject.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 24597663G4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CodedayProject",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = CodedayProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.01;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ArnavChawla.CodedayProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		F52393BD1E58D6870071DC38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC978B153D1F75314110E188 /* Pods-CodedayProjectUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 24597663G4;
+				INFOPLIST_FILE = CodedayProjectUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ArnavChawla.CodedayProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = CodedayProject;
+			};
+			name = Debug;
+		};
+		F52393BE1E58D6870071DC38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1FD7208909F6A6E126AA4C0 /* Pods-CodedayProjectUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = 24597663G4;
+				INFOPLIST_FILE = CodedayProjectUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ArnavChawla.CodedayProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = CodedayProject;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F52393971E58D6870071DC38 /* Build configuration list for PBXProject "CodedayProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F52393B71E58D6870071DC38 /* Debug */,
+				F52393B81E58D6870071DC38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F52393B91E58D6870071DC38 /* Build configuration list for PBXNativeTarget "CodedayProject" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F52393BA1E58D6870071DC38 /* Debug */,
+				F52393BB1E58D6870071DC38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F52393BC1E58D6870071DC38 /* Build configuration list for PBXNativeTarget "CodedayProjectUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F52393BD1E58D6870071DC38 /* Debug */,
+				F52393BE1E58D6870071DC38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F52393941E58D6860071DC38 /* Project object */;
+}
