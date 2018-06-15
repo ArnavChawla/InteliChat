@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,42 +15,44 @@
  **/
 
 import Foundation
-import RestKit
-    
-/** A voice supported by the Text to Speech service. */
-public struct Voice: JSONDecodable {
-    
+
+/** Voice. */
+public struct Voice: Decodable {
+
     /// The URI of the voice.
-    public let url: String
-    
-    /// The gender of the voice: male or female.
-    public let gender: String
-    
-    /// The name of the voice. Use this value as the voice
-    /// identifier in all requests that accept a voice.
-    public let name: String
-    
-    /// The language and region of the voice; for example, en-US for US English.
-    public let language: String
-    
-    /// A description of the voice.
-    public let description: String
-    
-    /// Indicates whether the voice can be customized with a custom voice model.
-    public let customizable: Bool
-    
-    /// A Customization object that provides information about a specific custom voice model
-    /// for the voice. Returned only when a customization_id is is specified with the call.
-    public let customization: Customization?
-    
-    /// Used internally to initialize a `Voice` model from JSON.
-    public init(json: JSON) throws {
-        name = try json.getString(at: "name")
-        gender = try json.getString(at: "gender")
-        language = try json.getString(at: "language")
-        url = try json.getString(at: "url")
-        description = try json.getString(at: "description")
-        customizable = try json.getBool(at: "customizable")
-        customization = try? json.decode(at: "customization")
+    public var url: String
+
+    /// The gender of the voice: `male` or `female`.
+    public var gender: String
+
+    /// The name of the voice. Use this as the voice identifier in all requests.
+    public var name: String
+
+    /// The language and region of the voice (for example, `en-US`).
+    public var language: String
+
+    /// A textual description of the voice.
+    public var description: String
+
+    /// If `true`, the voice can be customized; if `false`, the voice cannot be customized. (Same as `custom_pronunciation`; maintained for backward compatibility.).
+    public var customizable: Bool
+
+    /// Describes the additional service features supported with the voice.
+    public var supportedFeatures: SupportedFeatures
+
+    /// Returns information about a specified custom voice model. **Note:** This field is returned only when you list information about a specific voice and specify the GUID of a custom voice model that is based on that voice.
+    public var customization: VoiceModel?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case url = "url"
+        case gender = "gender"
+        case name = "name"
+        case language = "language"
+        case description = "description"
+        case customizable = "customizable"
+        case supportedFeatures = "supported_features"
+        case customization = "customization"
     }
+
 }

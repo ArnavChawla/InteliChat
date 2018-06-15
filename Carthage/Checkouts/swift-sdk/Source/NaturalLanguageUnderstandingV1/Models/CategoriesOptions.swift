@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,25 @@
  **/
 
 import Foundation
-import RestKit
 
-/** An option specifying if the analyzed content should be categorized into a hierarchical 5-level taxonomy. */
-public struct CategoriesOptions: JSONEncodable {
-    
-    /// The JSON object to internally serialize the model to JSON.
-    public let json: [String: Any]?
-    
+/** The hierarchical 5-level taxonomy the content is categorized into. */
+public struct CategoriesOptions: Encodable {
+
+    /// Additional properties associated with this model.
+    public var additionalProperties: [String: JSON]
+
     /**
-     Initialize a `CategoriesOptions` with all member variables.
-     
+     Initialize a `CategoriesOptions`.
+
      - returns: An initialized `CategoriesOptions`.
-     */
-    public init() {
-        json = [String: Any]()
+    */
+    public init(additionalProperties: [String: JSON] = [:]) {
+        self.additionalProperties = additionalProperties
     }
-    
-    /// Used internally to serialize a `CategoriesOptions` model to JSON.
-    public func toJSONObject() -> Any {
-        return json ?? [String: Any]()
+
+    public func encode(to encoder: Encoder) throws {
+        var dynamicContainer = encoder.container(keyedBy: DynamicKeys.self)
+        try dynamicContainer.encodeIfPresent(additionalProperties)
     }
+
 }

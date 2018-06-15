@@ -10,6 +10,7 @@
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
@@ -36,7 +37,18 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Structs.html">Structs</a>
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/JSON.html">JSON</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/RestError.html">RestError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Structs/AnalysisResults.html">AnalysisResults</a>
@@ -55,6 +67,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ConceptsResult.html">ConceptsResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/DeleteModelResults.html">DeleteModelResults</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/DisambiguationResult.html">DisambiguationResult</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/DocumentEmotionResults.html">DocumentEmotionResults</a>
@@ -78,10 +96,19 @@
                 <a href="Structs/EntitiesResult.html">EntitiesResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/EntitiesResult/EntitySentiment.html">– EntitySentiment</a>
+                <a href="Structs/EntityMention.html">EntityMention</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/FeatureSentimentResults.html">FeatureSentimentResults</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Features.html">Features</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Feed.html">Feed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs.html#/s:30NaturalLanguageUnderstandingV111JSONWrapperV">JSONWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/KeywordsOptions.html">KeywordsOptions</a>
@@ -90,13 +117,16 @@
                 <a href="Structs/KeywordsResult.html">KeywordsResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/KeywordsResult/KeywordSentiment.html">– KeywordSentiment</a>
+                <a href="Structs/ListModelsResults.html">ListModelsResults</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/MetadataOptions.html">MetadataOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/MetadataResult.html">MetadataResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Model.html">Model</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Parameters.html">Parameters</a>
@@ -117,7 +147,7 @@
                 <a href="Structs/SemanticRolesAction.html">SemanticRolesAction</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/SemanticRolesAction/SemanticRolesVerb.html">– SemanticRolesVerb</a>
+                <a href="Structs/SemanticRolesEntity.html">SemanticRolesEntity</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/SemanticRolesKeyword.html">SemanticRolesKeyword</a>
@@ -135,7 +165,7 @@
                 <a href="Structs/SemanticRolesSubject.html">SemanticRolesSubject</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/SemanticRolesSubject/SemanticRolesEntity.html">– SemanticRolesEntity</a>
+                <a href="Structs/SemanticRolesVerb.html">SemanticRolesVerb</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/SentimentOptions.html">SentimentOptions</a>
@@ -169,9 +199,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:C30NaturalLanguageUnderstandingV128NaturalLanguageUnderstanding"></a>
+                    <a name="/s:30NaturalLanguageUnderstandingV10abC0C"></a>
                     <a name="//apple_ref/swift/Class/NaturalLanguageUnderstanding" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C30NaturalLanguageUnderstandingV128NaturalLanguageUnderstanding">NaturalLanguageUnderstanding</a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV10abC0C">NaturalLanguageUnderstanding</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -179,11 +209,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The IBM Watson Natural Language Understanding service enables developers to programmatically
-explore various features of text content at scale. Provide text, raw HTML, or a public URL and
-the service will give you results for the features requested. Features to request for includes
-the ability to pull Concepts, Entities, Keywords, Categories, Sentiment, Emotion, Relations,
-Semantic Roles and Metadata from the content given.</p>
+                        <p>Analyze various features of text content at scale. Provide text, raw HTML, or a public URL, and IBM Watson Natural
+Language Understanding will give you results for the features you request. The service cleans HTML content before
+analysis by default, so the results can ignore most advertisements and other unwanted content.
+You can create <a target="_blank"
+href="https://www.ibm.com/watson/developercloud/doc/natural-language-understanding/customizing.html">custom models</a>
+with Watson Knowledge Studio that can be used to detect custom entities and relations in Natural Language
+Understanding.</p>
 
                         <a href="Classes/NaturalLanguageUnderstanding.html" class="slightly-smaller">See more</a>
                       </div>
@@ -191,7 +223,7 @@ Semantic Roles and Metadata from the content given.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">NaturalLanguageUnderstanding</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">NaturalLanguageUnderstanding</span></code></pre>
 
                         </div>
                       </div>
@@ -203,8 +235,8 @@ Semantic Roles and Metadata from the content given.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

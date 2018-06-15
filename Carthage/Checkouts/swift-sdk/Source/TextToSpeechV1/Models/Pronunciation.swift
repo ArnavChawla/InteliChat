@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  **/
 
 import Foundation
-import RestKit
-    
-/** A pronunciation of text based on the voice and phoneme. */
-public struct Pronunciation: JSONDecodable {
-    
-    /// Pronunciation of the requested text in the specified voice and format.
-    public let pronunciation: String
-    
-    /// Used internally to initialize a `Pronunciation` model from JSON.
-    public init(json: JSON) throws {
-        pronunciation = try json.getString(at: "pronunciation")
+
+/** Pronunciation. */
+public struct Pronunciation: Decodable {
+
+    /// The pronunciation of the requested text in the specified voice and format.
+    public var pronunciation: String
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case pronunciation = "pronunciation"
     }
+
 }

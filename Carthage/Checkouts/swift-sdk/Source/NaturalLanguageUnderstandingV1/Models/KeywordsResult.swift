@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,36 +15,28 @@
  **/
 
 import Foundation
-import RestKit
 
 /** The most important keywords in the content, organized by relevance. */
-public struct KeywordsResult: JSONDecodable {
-    
-    /// Relevance score from 0 to 1. Higher values indicate greater relevance.
-    public let relevance: Double?
-    
-    /// The text of the keyword.
-    public let text: String?
-    
-    /// The sentiment value of the keyword.
-    public let sentiment: KeywordSentiment?
+public struct KeywordsResult: Decodable {
 
-    /// Used internally to initialize a `KeywordsResult` model from JSON.
-    public init(json: JSON) throws {
-        relevance = try? json.getDouble(at: "relevance")
-        text = try? json.getString(at: "text")
-        sentiment = try? json.decode(at: "sentiment", type: KeywordSentiment.self)
+    /// Relevance score from 0 to 1. Higher values indicate greater relevance.
+    public var relevance: Double?
+
+    /// The keyword text.
+    public var text: String?
+
+    /// Emotion analysis results for the keyword, enabled with the "emotion" option.
+    public var emotion: EmotionScores?
+
+    /// Sentiment analysis results for the keyword, enabled with the "sentiment" option.
+    public var sentiment: FeatureSentimentResults?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case relevance = "relevance"
+        case text = "text"
+        case emotion = "emotion"
+        case sentiment = "sentiment"
     }
-    
-    /** The sentiment of the entity. */
-    public struct KeywordSentiment: JSONDecodable {
-        
-        /// The sentiment value of the found entity within the text from 0 to 1.
-        public let score: Double?
-        
-        /// Used internally to initialize an `EntitySentiment` model from JSON.
-        public init(json: JSON) throws {
-            score = try? json.getDouble(at: "score")
-        }
-    }
+
 }

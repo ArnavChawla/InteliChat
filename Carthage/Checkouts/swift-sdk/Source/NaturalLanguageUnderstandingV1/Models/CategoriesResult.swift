@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  **/
 
 import Foundation
-import RestKit
 
 /** The hierarchical 5-level taxonomy the content is categorized into. */
-public struct CategoriesResult: JSONDecodable {
-    
-    /// The path to the category through the taxonomy hierarchy.
-    public let label: String?
-    
-    /// Confidence score for the category classification. Higher values indicate greater confidence.
-    public let score: Double?
+public struct CategoriesResult: Decodable {
 
-    /// Used internally to initialize a `CategoriesResult` model from JSON.
-    public init(json: JSON) throws {
-        label = try? json.getString(at: "label")
-        score = try? json.getDouble(at: "score")
+    /// The path to the category through the taxonomy hierarchy.
+    public var label: String?
+
+    /// Confidence score for the category classification. Higher values indicate greater confidence.
+    public var score: Double?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case label = "label"
+        case score = "score"
     }
+
 }

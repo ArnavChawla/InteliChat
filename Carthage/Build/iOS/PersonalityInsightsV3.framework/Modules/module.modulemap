@@ -7,4 +7,5 @@ framework module PersonalityInsightsV3 {
 
 module PersonalityInsightsV3.Swift {
     header "PersonalityInsightsV3-Swift.h"
+    requires objc
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,44 +15,28 @@
  **/
 
 import Foundation
-import RestKit
 
 /** The relations between entities found in the content. */
-public struct RelationsResult: JSONDecodable {
-    
+public struct RelationsResult: Decodable {
+
     /// Confidence score for the relation. Higher values indicate greater confidence.
-    public let score: Double?
-    
+    public var score: Double?
+
     /// The sentence that contains the relation.
-    public let sentence: String?
-    
+    public var sentence: String?
+
     /// The type of the relation.
-    public let type: String?
-   
+    public var type: String?
+
     /// The extracted relation objects from the text.
-    public let arguments: [RelationArgument]?
+    public var arguments: [RelationArgument]?
 
-    /// Used internally to initialize a `RelationsResult` model from JSON.
-    public init(json: JSON) throws {
-        score = try? json.getDouble(at: "score")
-        sentence = try? json.getString(at: "sentence")
-        type = try? json.getString(at: "type")
-        arguments = try? json.decodedArray(at: "arguments", type: RelationArgument.self)
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case score = "score"
+        case sentence = "sentence"
+        case type = "type"
+        case arguments = "arguments"
     }
-}
 
-/** The extracted relation in the content.. */
-public struct RelationArgument: JSONDecodable {
-    
-    /// The relationship of the entity pulled from a sentence.
-    public let entities: [RelationEntity]?
-    
-    /// Text that corresponds to the argument
-    public let text: String?
-    
-    /// Used internally to initialize a `RelationArgument` model from JSON.
-    public init(json: JSON) throws {
-        entities = try? json.decodedArray(at: "entities", type: RelationEntity.self)
-        text = try? json.getString(at: "text")
-    }
 }

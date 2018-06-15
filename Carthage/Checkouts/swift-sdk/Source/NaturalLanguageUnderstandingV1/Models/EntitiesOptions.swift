@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,48 +15,51 @@
  **/
 
 import Foundation
-import RestKit
 
-/** Whether or not to return important people, places, geopolitical, and other entities detected
- in the analyzed content. */
-public struct EntitiesOptions: JSONEncodable {
-    
+/** Whether or not to return important people, places, geopolitical, and other entities detected in the analyzed content. */
+public struct EntitiesOptions: Encodable {
+
     /// Maximum number of entities to return.
-    public let limit: Int?
-    
+    public var limit: Int?
+
+    /// Set this to true to return locations of entity mentions.
+    public var mentions: Bool?
+
     /// Enter a custom model ID to override the standard entity detection model.
-    public let model: String?
-    
-    /// Set this to false to hide entity disambiguation information in the response.
-    public let disambiguation: Bool?
-    
+    public var model: String?
+
     /// Set this to true to return sentiment information for detected entities.
-    public let sentiment: Bool?
-    
+    public var sentiment: Bool?
+
+    /// Set this to true to analyze emotion for detected keywords.
+    public var emotion: Bool?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case limit = "limit"
+        case mentions = "mentions"
+        case model = "model"
+        case sentiment = "sentiment"
+        case emotion = "emotion"
+    }
+
     /**
-    Initialize a `EntitiesOptions` with all member variables.
+     Initialize a `EntitiesOptions` with member variables.
 
      - parameter limit: Maximum number of entities to return.
+     - parameter mentions: Set this to true to return locations of entity mentions.
      - parameter model: Enter a custom model ID to override the standard entity detection model.
-     - parameter disambiguation: Set this to false to hide entity disambiguation information in the response.
      - parameter sentiment: Set this to true to return sentiment information for detected entities.
+     - parameter emotion: Set this to true to analyze emotion for detected keywords.
 
-    - returns: An initialized `EntitiesOptions`.
+     - returns: An initialized `EntitiesOptions`.
     */
-    public init(limit: Int? = nil, model: String? = nil, disambiguation: Bool? = nil, sentiment: Bool? = nil) {
+    public init(limit: Int? = nil, mentions: Bool? = nil, model: String? = nil, sentiment: Bool? = nil, emotion: Bool? = nil) {
         self.limit = limit
+        self.mentions = mentions
         self.model = model
-        self.disambiguation = disambiguation
         self.sentiment = sentiment
+        self.emotion = emotion
     }
 
-    /// Used internally to serialize a `EntitiesOptions` model to JSON.
-    public func toJSONObject() -> Any {
-        var json = [String: Any]()
-        if let limit = limit { json["limit"] = limit }
-        if let model = model { json["model"] = model }
-        if let disambiguation = disambiguation { json["disambiguation"] = disambiguation }
-        if let sentiment = sentiment { json["sentiment"] = sentiment }
-        return json
-    }
 }

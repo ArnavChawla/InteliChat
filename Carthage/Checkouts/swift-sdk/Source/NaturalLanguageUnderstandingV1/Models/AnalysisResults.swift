@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,76 +15,64 @@
  **/
 
 import Foundation
-import RestKit
 
-/** An object containing the results returned by the NLU service. */
-public struct AnalysisResults: JSONDecodable {
-    
+/** Results of the analysis, organized by feature. */
+public struct AnalysisResults: Decodable {
+
     /// Language used to analyze the text.
-    public let language: String?
-    
-    /// Text that was used in the analysis.
-    public let analyzedText: String?
-    
-    /// URL that was used to retrieve HTML content.
-    public let retrievedUrl: String?
-    
-    /// The number of features used in the API call.
-    public let usage: Usage?
-    
-    /// The general concepts referenced or alluded to in the specified content.
-    public let concepts: [ConceptsResult]?
-    
-    /// The important entities in the specified content.
-    public let entities: [EntitiesResult]?
-    
-    /// The important keywords in content organized by relevance.
-    public let keywords: [KeywordsResult]?
-    
-    /// The hierarchical 5-level taxonomy the content is categorized into.
-    public let categories: [CategoriesResult]?
-    
-    /// The anger, disgust, fear, joy, or sadness conveyed by the content.
-    public let emotion: EmotionResult?
-    
-    /// The metadata holds author information, publication date and the title of the text/HTML content.
-    public let metadata: MetadataResult?
-    
-    /// The relationships between entities in the content.
-    public let relations: [RelationsResult]?
-    
-    /// The subjects of actions and the objects the actions act upon.
-    public let semanticRoles: [SemanticRolesResult]?
-    
-    /// The sentiment of the content.
-    public let sentiment: SentimentResult?
-    
-    /// Used internally to initialize a `AnalysisResults` model from JSON.
-    public init(json: JSON) throws {
-        language = try? json.getString(at: "language")
-        analyzedText = try? json.getString(at: "analyzed_text")
-        retrievedUrl = try? json.getString(at: "retrieved_url")
-        usage = try? json.decode(at: "usage", type: Usage.self)
-        concepts = try? json.decodedArray(at: "concepts", type: ConceptsResult.self)
-        entities = try? json.decodedArray(at: "entities", type: EntitiesResult.self)
-        keywords = try? json.decodedArray(at: "keywords", type: KeywordsResult.self)
-        categories = try? json.decodedArray(at: "categories", type: CategoriesResult.self)
-        emotion = try? json.decode(at: "emotion", type: EmotionResult.self)
-        metadata = try? json.decode(at: "metadata", type: MetadataResult.self)
-        relations = try? json.decodedArray(at: "relations", type: RelationsResult.self)
-        semanticRoles = try? json.decodedArray(at: "semantic_roles", type: SemanticRolesResult.self)
-        sentiment = try? json.decode(at: "sentiment", type: SentimentResult.self)
-    }
-}
+    public var language: String?
 
-/** An object containing how many features used. */
-public struct Usage: JSONDecodable {
-    
-    /// The number of features used in the API call.
-    public let features: Int
-    
-    /// Used internally to initialize a 'Usage' model from JSON.
-    public init(json: JSON) throws {
-        features = try json.getInt(at: "features")
+    /// Text that was used in the analysis.
+    public var analyzedText: String?
+
+    /// URL that was used to retrieve HTML content.
+    public var retrievedUrl: String?
+
+    /// API usage information for the request.
+    public var usage: Usage?
+
+    /// The general concepts referenced or alluded to in the specified content.
+    public var concepts: [ConceptsResult]?
+
+    /// The important entities in the specified content.
+    public var entities: [EntitiesResult]?
+
+    /// The important keywords in content organized by relevance.
+    public var keywords: [KeywordsResult]?
+
+    /// The hierarchical 5-level taxonomy the content is categorized into.
+    public var categories: [CategoriesResult]?
+
+    /// The anger, disgust, fear, joy, or sadness conveyed by the content.
+    public var emotion: EmotionResult?
+
+    /// The metadata holds author information, publication date and the title of the text/HTML content.
+    public var metadata: MetadataResult?
+
+    /// The relationships between entities in the content.
+    public var relations: [RelationsResult]?
+
+    /// The subjects of actions and the objects the actions act upon.
+    public var semanticRoles: [SemanticRolesResult]?
+
+    /// The sentiment of the content.
+    public var sentiment: SentimentResult?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case language = "language"
+        case analyzedText = "analyzed_text"
+        case retrievedUrl = "retrieved_url"
+        case usage = "usage"
+        case concepts = "concepts"
+        case entities = "entities"
+        case keywords = "keywords"
+        case categories = "categories"
+        case emotion = "emotion"
+        case metadata = "metadata"
+        case relations = "relations"
+        case semanticRoles = "semantic_roles"
+        case sentiment = "sentiment"
     }
+
 }

@@ -7,4 +7,5 @@ framework module LanguageTranslatorV2 {
 
 module LanguageTranslatorV2.Swift {
     header "LanguageTranslatorV2-Swift.h"
+    requires objc
 }

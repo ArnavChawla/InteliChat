@@ -1,14 +1,3 @@
-//
-//  ChatViewController.swift
-//  Potential2017CodedayProject
-//
-//  Created by Arnav Chawla on 1/28/17.
-//  Copyright © 2017 Arnav Chawla. All rights reserved.
-//
-// it prevents cyberbullying by checking the messages before it is sent
-// this will apeal to parents who are buying the kids, their first phone
-// it doesn't limit their freedom, but ensures that kids make the right decisions
-
 import UIKit
 import FirebaseAuth
 import GoogleSignIn
@@ -24,6 +13,8 @@ import LanguageTranslatorV2
 import FirebaseCore
 import FirebaseInstanceID
 import SDWebImage
+import TextToSpeechV1
+import AVFoundation
 var CurrentChatUserId = String()
 var otherDude = String()
 var badword = false
@@ -35,7 +26,7 @@ var last = "\(otherDude) & \(CurrentChatUserId)"
 
 class ChatViewController: JSQMessagesViewController {
     
-
+    
     let c = true
     var messages = [JSQMessage]()
     var messageRef = FIRDatabase.database().reference().child("messages")
@@ -88,15 +79,15 @@ class ChatViewController: JSQMessagesViewController {
             }
         }
     }
-
-
+    
+    
     override func viewDidLoad() {
         
-    
         
-
+        
+        
         JSQMessagesCollectionViewCell.registerMenuAction(#selector(report(_sender:)))
-//        UIMenuController.shared.menuItems = [UIMenuItem.init(title: "spam", action: Selector("spam:"))]
+        //        UIMenuController.shared.menuItems = [UIMenuItem.init(title: "spam", action: Selector("spam:"))]
         UIMenuController.shared.menuItems = [UIMenuItem.init(title: "report", action : #selector(report(_sender:)))]
         connectToFcm()
         newthing = "\(CurrentChatUserId) & \(otherDude)"
@@ -139,29 +130,19 @@ class ChatViewController: JSQMessagesViewController {
         badword = false
         obsereveMessage()
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
         super.collectionView(collectionView, shouldShowMenuForItemAt: indexPath)
         return true
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
         return action == #selector(UIResponderStandardEditActions.copy(_:)) || action == #selector(report(_sender:))
-
+        
     }
     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
         if  action == #selector(report(_sender:)){
-//           // self.delete(indexPath.item)
-//            self.delete(indexPath.row)
-            print("PLLLLSSS")
             print(indexPath.row)
-            //collectionView.delete(JSQMessagesCollectionViewCell.self)
-            //self.collectionView.reloadData()
-         
-            Ref.child("posts").child(newthing).observe(.value, with: { (snapsho) in
-//                let x = snapsho.value
-//                if x == JSQMessagesCollectionViewCell.tex
-            })
         }
     }
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -183,8 +164,6 @@ class ChatViewController: JSQMessagesViewController {
             if let dict = snapshot.value as? [String: AnyObject]
             {
                 let avatarUrl = dict["url"] as! String
-                
-                ////print(avatarUrl)
                 self.setupAvatar(url: avatarUrl, id: id)
             }
         })
@@ -192,13 +171,13 @@ class ChatViewController: JSQMessagesViewController {
     func setupAvatar(url: String, id: String)
     {
         let fileUrl = NSURL(string: url)
-        print("it is\(fileUrl)")
+        
         
         let data = NSData(contentsOf: fileUrl as! URL)
         let image = UIImage(data: data as! Data)
         let usrImg = JSQMessagesAvatarImageFactory.avatarImage(with: image, diameter: 30)
         avatarDict[id] = usrImg
-        print("jkjhcbjljmnbvbnjkl;jnbvcnmjkl;jbnv b")
+        //print("jkjhcbjljmnbvbnjkl;jnbvcnmjkl;jbnv b")
         collectionView.reloadData()
     }
     public func obsereveMessage()
@@ -225,93 +204,78 @@ class ChatViewController: JSQMessagesViewController {
                         self.collectionView.reloadData()
                         
                     }
-                    let username = "cb6fa619-4208-431b-8d30-e55a9c1e4b55"
+                    let username = "7250a6c6-ade7-4049-880f-e4a6253a3923"
                     
-                    let password = "N4ToMv11PVCT                                    "
+                    let password = "utmrn3kyBtb1"
                     let languageTranslator = LanguageTranslator(username: username, password: password)
                     
                     let failure = { (error: Error) in print(error) }
+
                     
+                    // The AVAudioPlayer object will stop playing if it falls out-of-scope.
+                    // Therefore, to prevent it from falling out-of-scope we declare it as
+                    // a property outside the completion handler where it will be played.
+                
                     if spanish == true
                     {
-                        languageTranslator.translate(text, from: "en", to: "es", failure: failure) {
-                            
+                        let failure = { (error: Error) in print("error") }
+                        let request = TranslateRequest(text: [text], source: "en", target: "es")
+                        languageTranslator.translate(request: request, failure: failure) {
                             translation in
-                            //let translation: String = value.objectForKey("id") as! String
+                            print(translation)
+                            print("it is \(translation.translations[0].translationOutput)")
+                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translationOutput))
                             
-                            print("it is \(translation.translations[0].translation)")
-                            //for (translations, value) in translation {
-                            //  println("\(key) -> \(value)")
-                            //}
-                            //         var translation = translation.components(separtedBy: )
-                            
-                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translation))
-                            
-                            self.collectionView.reloadData()
-                            
-                            
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
                         }
                     }
                     else if french == true
                     {
-                        languageTranslator.translate(text, from: "en", to: "fr", failure: failure) {
-                            
+                        let failure = { (error: Error) in print(error) }
+                        let request = TranslateRequest(text: [text], source: "en", target: "fr")
+                        languageTranslator.translate(request: request, failure: failure) {
                             translation in
-                            //let translation: String = value.objectForKey("id") as! String
+                            print(translation)
+                            print("it is \(translation.translations[0].translationOutput)")
+                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translationOutput))
                             
-                            print("it is \(translation.translations[0].translation)")
-                            //for (translations, value) in translation {
-                            //  println("\(key) -> \(value)")
-                            //}
-                            //         var translation = translation.components(separtedBy: )
-                            
-                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translation))
-                            self.collectionView.reloadData()
-                            
-                            
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
                         }
                         
                     }
                     else if olive == true
                     {
-                        languageTranslator.translate(text, from: "en", to: "it", failure: failure) {
-                            
+                        let failure = { (error: Error) in print(error) }
+                        let request = TranslateRequest(text: [text], source: "en", target: "it")
+                        languageTranslator.translate(request: request, failure: failure) {
                             translation in
-                            //let translation: String = value.objectForKey("id") as! String
+                            print(translation)
+                            print("it is \(translation.translations[0].translationOutput)")
+                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translationOutput))
                             
-                            print("it is \(translation.translations[0].translation)")
-                            //for (translations, value) in translation {
-                            //  println("\(key) -> \(value)")
-                            //}
-                            //         var translation = translation.components(separtedBy: )
-                            
-                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translation))
-                            self.collectionView.reloadData()
-                            
-                            
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
                         }
                         
                     }
                     else if arabic == true
                     {
-                        languageTranslator.translate(text, from: "en", to: "ar", failure: failure) {
-                            
+                        let failure = { (error: Error) in print(error) }
+                        let request = TranslateRequest(text: [text], source: "en", target: "ar")
+                        languageTranslator.translate(request: request, failure: failure) {
                             translation in
-                            //let translation: String = value.objectForKey("id") as! String
+                            print(translation)
+                            print("it is \(translation.translations[0].translationOutput)")
+                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translationOutput))
                             
-                            print("it is \(translation.translations[0].translation)")
-                            //for (translations, value) in translation {
-                            //  println("\(key) -> \(value)")
-                            //}
-                            //         var translation = translation.components(separtedBy: )
-                            
-                            self.messages.append(JSQMessage(senderId: senderId, displayName: senderName , text: translation.translations[0].translation))
-                            self.collectionView.reloadData()
-                            
-                            self.collectionView.reloadData()
-                            
-                            
-                            
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
                         }
                         
                     }
@@ -333,7 +297,7 @@ class ChatViewController: JSQMessagesViewController {
                             self.collectionView.reloadData()
                         })
                     })
-
+                    
                     if self.senderId == senderId
                     {
                         photo!.appliesMediaViewMaskAsOutgoing = true
@@ -370,19 +334,19 @@ class ChatViewController: JSQMessagesViewController {
         })
         
     }
-     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         badword = false
         u = false
-        let banned  = ["gay", "g*y", "retarded", "retard", "r*tard", "ret*rd", "joke", "adopted", "nigga", "nigger", "spastic", "midget", "dwarf", "autistic", "bipolar", "depressed", "ocd", "nazi", "republican", "democrat", "Trump", "Obama", "uptight", "stupid", "stup*d", "st*pid", "stupidest", "stupider", "angry", "annoy", "annoying", "annoyed", "awful", "awf*l", "awfully", "awfullest", "alarming", "ashamed", "ashaming", "bad", "badly", "boring", "bored", "bitch", "b*tch", "bitchy", "callous", "can’t", "crazy", "cutting", "cutter", "cut", "coon", "crybaby", "cry", "cruel", "creepy", "creep", "corrosive", "cold-hearted", "cold", "cunt", "clumsy", "complaining", "dead", "depressed", "disappointment", "despicable", "die", "dirty", "dumb", "dumber", "dumbest", "disgusting", "dreadful", "dreary", "evil", "failure", "failing", "fail", "faulty", "fag", "f*g", "feeble", "filthy", "fucking", "fucked", "foul", "fool", "fuck", "f*ck", "f**k", "f***", "ghastly", "grim", "gross", "grotesque", "gruesome", "haggard", "harmful", "hate", "hideous", "hoe", "h*e", "horrendous", "horrible", "hurt", "icky", "ignore", "inferior", "immature", "imperfect", "impossible", "incompetent", "insane", "junk", "loser", "l*ser", "lazy", "malicious", "mean", "mess", "monstrous", "mistake", "naive", "nazi", "nasty", "naughty", "never", "nobody", "nonsense", "odious", "offensive", "pain", "pessimistic", "porn", "pr0n", "p0rn", "p*rn", "p**n", "petty", "poisonous", "poor", "questionable", "quirky", "quit", "reject", "repulsive", "revolting", "rotten", "rude", "ruthless", "ridiculous", "sad", "scary", "suck", "s*ck", "slut", "sl*t", "sickening", "stupid", "st*pid", "stup*d", "st*p*d", "s****d", "smell", "stink", "substandard", "sex", "xxx", "suicide", "kill", "terrible", "threatening", "ugly", "unfavorable", "unhappy", "unpleasant", "upset", "unsightly", "unwanted", "unwelcome", "vile", "weak", "wicked", "whore", "wh*re", "wh0re","wrong", "weird", "worthless", "yucky", "zero","penis"]
+        let banned  = ["gay", "g*y", "retarded", "retard", "r*tard", "ret*rd", "joke", "adopted", "nigga", "nigger", "spastic", "midget", "dwarf", "autistic", "bipolar", "depressed", "ocd", "nazi", "republican", "democrat", "Trump", "Obama", "uptight", "stupid", "stup*d", "st*pid", "stupidest", "stupider", "angry", "annoy", "annoying", "annoyed", "awful", "awf*l", "awfully", "awfullest", "alarming", "ashamed", "ashaming", "bad", "badly", "boring", "bored", "bitch", "b*tch", "bitchy", "callous", "can’t", "crazy", "cutting", "cutter", "cut", "coon", "crybaby", "cry", "cruel", "creepy", "creep", "corrosive", "cold-hearted", "cold", "cunt", "clumsy", "complaining", "dead", "depressed", "disappointment", "despicable", "die", "dirty", "dumb", "dumber", "dumbest", "disgusting", "dreadful", "dreary", "evil", "failure", "failing", "fail", "faulty", "fag", "f*g", "feeble", "filthy", "fucking", "fucked", "foul", "fool", "fuck", "f*ck", "f**k", "f***", "ghastly", "grim", "gross", "grotesque", "gruesome", "haggard", "harmful", "hate", "hideous", "hoe", "h*e", "horrendous", "horrible", "hurt", "icky", "ignore", "inferior", "immature", "imperfect", "impossible", "incompetent", "insane", "junk", "loser", "l*ser", "lazy", "malicious", "mean", "mess", "monstrous", "mistake", "naive", "nazi", "nasty", "naughty", "never", "nobody", "nonsense", "odious", "offensive", "pain", "pessimistic", "porn", "pr0n", "p0rn", "p*rn", "p**n", "petty", "poisonous", "poor", "questionable", "quirky", "quit", "reject", "repulsive", "revolting", "rotten", "rude", "ruthless", "ridiculous", "sad", "scary", "suck", "s*ck", "slut", "sl*t", "sickening", "stupid", "st*pid", "stup*d", "st*p*d", "s****d", "smell", "stink", "substandard", "sex", "xxx", "suicide", "kill", "terrible", "threatening", "ugly", "unfavorable", "unhappy", "unpleasant", "upset", "unsightly", "unwanted", "unwelcome", "vile", "weak", "wicked", "whore", "wh*re", "wh0re","wrong", "weird", "worthless", "yucky", "zero","penis", "shit"]
         
         
-        let phrases = ["never mind, you wouldn't get it", "makes me want to kill myself", "like a girl", "take a chill pill", "i don’t care", "you’re just confused", "have you been living under a rock", "you’re in the way", "no one cares if you die", "waste of oxygen", "no one likes you", "you asked for it", "grow up", "kill yourself",  "just putting up with you", "be better"]
+        let phrases = ["never mind, you wouldn't  wget it", "makes me want to kill myself", "like a girl", "take a chill pill", "i don’t care", "you’re just confused", "have you been living under a rock", "you’re in the way", "no one cares if you die", "waste of oxygen", "no one likes you", "you asked for it", "grow up", "kill yourself",  "just putting up with you", "be better", "go kill yourself"]
         
         
         
         let you=["you", "you’re","your","ur", "u","penis"]
         
-
+        
         let newMessage = Ref.child("posts").child(newthing).childByAutoId()
         let otherNewMessage = Ref.child("posts").child(last).childByAutoId()
         let messageData: [String : String] = ["text": text, "senderId": senderId, "senderName":  senderDisplayName, "MediaType": "TEXT"]
@@ -401,27 +365,11 @@ class ChatViewController: JSQMessagesViewController {
             var messageSnippet = analyzedMessage[i].lowercased()
             x = banned.count - 1
             
-            let username = "a6b23ef3-db7d-43cd-a1c2-400ed9e78e5d"
+            let username = "7250a6c6-ade7-4049-880f-e4a6253a3923"
             
-            let password = "7cFuiixOmQtr"
+            let password = "utmrn3kyBtb1"
             let languageTranslator = LanguageTranslator(username: username, password: password)
             
-            let failure = { (error: Error) in print(error) }
-            languageTranslator.translate(text, from: "en", to: "es", failure: failure) {
-                
-                translation in
-                //let translation: String = value.objectForKey("id") as! String
-                
-                print("it is \(translation.translations[0].translation)")
-                //for (translations, value) in translation {
-                //  println("\(key) -> \(value)")
-                //}
-                //                                        var translation = translation.components(separtedBy: )
-                
-                
-                
-                
-            }
             
             
             while x >= 0

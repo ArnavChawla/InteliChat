@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,20 @@
  **/
 
 import Foundation
-import RestKit
-    
-/** The results of performing tone analysis on a document. */
-public struct ToneAnalysis: JSONDecodable {
-    
-    /// Tone analysis results of the entire document's text. This includes three
-    /// tone categories: social tone, emotional tone, and language tone.
-    public let documentTone: [ToneCategory]
-    
-    /// Tone analysis results for each sentence contained in the document.
-    public let sentencesTones: [SentenceAnalysis]?
-    
-    /// Used internally to initialize a `ToneAnalysis` model from JSON.
-    public init(json: JSON) throws {
-        documentTone = try json.decodedArray(at: "document_tone", "tone_categories", type: ToneCategory.self)
-        sentencesTones = try? json.decodedArray(at: "sentences_tone", type: SentenceAnalysis.self)
-        
+
+/** ToneAnalysis. */
+public struct ToneAnalysis: Decodable {
+
+    /// An object of type `DocumentAnalysis` that provides the results of the analysis for the full input document.
+    public var documentTone: DocumentAnalysis
+
+    /// An array of `SentenceAnalysis` objects that provides the results of the analysis for the individual sentences of the input content. The service returns results only for the first 100 sentences of the input. The field is omitted if the `sentences` parameter of the request is set to `false`.
+    public var sentencesTone: [SentenceAnalysis]?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case documentTone = "document_tone"
+        case sentencesTone = "sentences_tone"
     }
+
 }

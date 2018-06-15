@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  **/
 
 import Foundation
-import RestKit
 
-/** An identified language. */
-public struct IdentifiedLanguage: JSONDecodable {
-    
-    /// The code of the identified language.
-    public let language: String
-    
-    /// The confidence score of the identified language.
-    public let confidence: Double
+/** IdentifiedLanguage. */
+public struct IdentifiedLanguage: Decodable {
 
-    /// Used internally to initialize an `IdentifiedLanguage` model from JSON.
-    public init(json: JSON) throws {
-        language = try json.getString(at: "language")
-        confidence = try json.getDouble(at: "confidence")
+    /// The language code for an identified language.
+    public var language: String
+
+    /// The confidence score for the identified language.
+    public var confidence: Double
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case language = "language"
+        case confidence = "confidence"
     }
+
 }

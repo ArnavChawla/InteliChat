@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,35 +15,27 @@
  **/
 
 import Foundation
-import RestKit
 
 /** Whether or not to analyze content for general concepts that are referenced or alluded to. */
-public struct ConceptsOptions: JSONEncodable {
-    
+public struct ConceptsOptions: Encodable {
+
     /// Maximum number of concepts to return.
-    public let limit: Int?
-    
-    /// Set this to false to hide Linked Data information in the response.
-    public let linkedData: Bool?
-    
+    public var limit: Int?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case limit = "limit"
+    }
+
     /**
-    Initialize a `ConceptsOptions` with all member variables.
+     Initialize a `ConceptsOptions` with member variables.
 
      - parameter limit: Maximum number of concepts to return.
-     - parameter linkedData: Set this to false to hide Linked Data information in the response.
 
-    - returns: An initialized `ConceptsOptions`.
+     - returns: An initialized `ConceptsOptions`.
     */
-    public init(limit: Int? = nil, linkedData: Bool? = nil) {
+    public init(limit: Int? = nil) {
         self.limit = limit
-        self.linkedData = linkedData
     }
-    
-    /// Used internally to serialize a `ConceptsOptions` model to JSON.
-    public func toJSONObject() -> Any {
-        var json = [String: Any]()
-        if let limit = limit { json["limit"] = limit }
-        if let linkedData = linkedData { json["linked_data"] = linkedData }
-        return json
-    }
+
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,32 @@
  **/
 
 import Foundation
-import RestKit
 
-/** The Authors, Publication Date, and Title of the document. Supports URL
-    and HTML input types. */
-public struct MetadataResult: JSONDecodable {
-    
+/** The Authors, Publication Date, and Title of the document. Supports URL and HTML input types. */
+public struct MetadataResult: Decodable {
+
     /// The authors of the document.
-    public let authors: [Author]?
-    
-    /// The publication date in the format ISO 8601.
-    public let publicationDate: String?
-    
-    /// The title of the document.
-    public let title: String?
+    public var authors: [Author]?
 
-    /// Used internally to initialize a `MetadataResult` model from JSON.
-    public init(json: JSON) throws {
-        authors = try? json.decodedArray(at: "authors", type: Author.self)
-        publicationDate = try? json.getString(at: "publication_date")
-        title = try? json.getString(at: "title")
+    /// The publication date in the format ISO 8601.
+    public var publicationDate: String?
+
+    /// The title of the document.
+    public var title: String?
+
+    /// URL of a prominent image on the webpage.
+    public var image: String?
+
+    /// RSS/ATOM feeds found on the webpage.
+    public var feeds: [Feed]?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case authors = "authors"
+        case publicationDate = "publication_date"
+        case title = "title"
+        case image = "image"
+        case feeds = "feeds"
     }
+
 }

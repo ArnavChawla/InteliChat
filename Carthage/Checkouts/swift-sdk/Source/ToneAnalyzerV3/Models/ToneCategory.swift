@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,24 +15,24 @@
  **/
 
 import Foundation
-import RestKit
-    
-/** The tone analysis for a particular tone category (e.g. social, emotion, or writing). */
-public struct ToneCategory: JSONDecodable {
-    
-    /// The name of this tone category (e.g. emotion, social, or language).
-    public let name: String
-    
-    /// A unique number identifying this tone category, irrespective of language or localization.
-    public let categoryID: String
-    
-    /// The individual tone results within this category.
-    public let tones: [ToneScore]
-    
-    /// Used internally to initialize a `ToneCategory` model from JSON.
-    public init(json: JSON) throws {
-        name = try json.getString(at: "category_name")
-        categoryID = try json.getString(at: "category_id")
-        tones = try json.decodedArray(at: "tones", type: ToneScore.self)
+
+/** ToneCategory. */
+public struct ToneCategory: Decodable {
+
+    /// An array of `ToneScore` objects that provides the results for the tones of the category.
+    public var tones: [ToneScore]
+
+    /// The unique, non-localized identifier of the category for the results. The service can return results for the following category IDs: `emotion_tone`, `language_tone`, and `social_tone`.
+    public var categoryID: String
+
+    /// The user-visible, localized name of the category.
+    public var categoryName: String
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case tones = "tones"
+        case categoryID = "category_id"
+        case categoryName = "category_name"
     }
+
 }

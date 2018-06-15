@@ -15,21 +15,20 @@
  **/
 
 import Foundation
-import RestKit
 
 /** A class associated with a Visual Recognition classifier. */
 public struct PositiveExample {
-    
+
     /// The name of the class.
     public let name: String
-    
+
     /// A compressed (.zip) file of images that prominently
     /// depict the visual subject of the given class.
     public let examples: URL
-    
+
     /**
      Define a set of positive examples that shall be recognized by a classifier.
-     
+
      - parameter name: The name of the class.
      - parameter examples: A compressed (.zip) file of images that prominently depict the visual
         subject of the given class.

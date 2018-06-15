@@ -7,4 +7,5 @@ framework module ConversationV1 {
 
 module ConversationV1.Swift {
     header "ConversationV1-Swift.h"
+    requires objc
 }

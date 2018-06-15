@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>MetadataResult Struct Reference</title>
+    <title>MetadataResult Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -11,7 +11,7 @@
   </head>
   <body>
     <a name="//apple_ref/swift/Struct/MetadataResult" class="dashAnchor"></a>
-    <a title="MetadataResult Struct Reference"></a>
+    <a title="MetadataResult Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        MetadataResult Struct Reference
+        MetadataResult Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -37,7 +37,18 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/JSON.html">JSON</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RestError.html">RestError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AnalysisResults.html">AnalysisResults</a>
@@ -56,6 +67,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ConceptsResult.html">ConceptsResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DeleteModelResults.html">DeleteModelResults</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DisambiguationResult.html">DisambiguationResult</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DocumentEmotionResults.html">DocumentEmotionResults</a>
@@ -79,10 +96,19 @@
                 <a href="../Structs/EntitiesResult.html">EntitiesResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/EntitiesResult/EntitySentiment.html">– EntitySentiment</a>
+                <a href="../Structs/EntityMention.html">EntityMention</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FeatureSentimentResults.html">FeatureSentimentResults</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Features.html">Features</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Feed.html">Feed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:30NaturalLanguageUnderstandingV111JSONWrapperV">JSONWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/KeywordsOptions.html">KeywordsOptions</a>
@@ -91,13 +117,16 @@
                 <a href="../Structs/KeywordsResult.html">KeywordsResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/KeywordsResult/KeywordSentiment.html">– KeywordSentiment</a>
+                <a href="../Structs/ListModelsResults.html">ListModelsResults</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/MetadataOptions.html">MetadataOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/MetadataResult.html">MetadataResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Model.html">Model</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Parameters.html">Parameters</a>
@@ -118,7 +147,7 @@
                 <a href="../Structs/SemanticRolesAction.html">SemanticRolesAction</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/SemanticRolesAction/SemanticRolesVerb.html">– SemanticRolesVerb</a>
+                <a href="../Structs/SemanticRolesEntity.html">SemanticRolesEntity</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/SemanticRolesKeyword.html">SemanticRolesKeyword</a>
@@ -136,7 +165,7 @@
                 <a href="../Structs/SemanticRolesSubject.html">SemanticRolesSubject</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/SemanticRolesSubject/SemanticRolesEntity.html">– SemanticRolesEntity</a>
+                <a href="../Structs/SemanticRolesVerb.html">SemanticRolesVerb</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/SentimentOptions.html">SentimentOptions</a>
@@ -163,12 +192,11 @@
             <h1>MetadataResult</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MetadataResult</span><span class="p">:</span> <span class="kt">JSONDecodable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MetadataResult</span> <span class="p">:</span> <span class="kt">Decodable</span></code></pre>
 
                 </div>
               </div>
-            <p>The Authors, Publication Date, and Title of the document. Supports URL
-    and HTML input types.</p>
+            <p>The Authors, Publication Date, and Title of the document. Supports URL and HTML input types.</p>
 
           </section>
           <section class="section task-group-section">
@@ -177,9 +205,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV30NaturalLanguageUnderstandingV114MetadataResult7authorsGSqGSaVS_6Author__"></a>
+                    <a name="/s:30NaturalLanguageUnderstandingV114MetadataResultV7authorsSayAA6AuthorVGSgvp"></a>
                     <a name="//apple_ref/swift/Property/authors" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV30NaturalLanguageUnderstandingV114MetadataResult7authorsGSqGSaVS_6Author__">authors</a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV114MetadataResultV7authorsSayAA6AuthorVGSgvp">authors</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -194,7 +222,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">authors</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Author.html">Author</a></span><span class="p">]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">authors</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Author.html">Author</a></span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -204,9 +232,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV30NaturalLanguageUnderstandingV114MetadataResult15publicationDateGSqSS_"></a>
+                    <a name="/s:30NaturalLanguageUnderstandingV114MetadataResultV15publicationDateSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/publicationDate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV30NaturalLanguageUnderstandingV114MetadataResult15publicationDateGSqSS_">publicationDate</a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV114MetadataResultV15publicationDateSSSgvp">publicationDate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -221,7 +249,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">publicationDate</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">publicationDate</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -231,9 +259,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV30NaturalLanguageUnderstandingV114MetadataResult5titleGSqSS_"></a>
+                    <a name="/s:30NaturalLanguageUnderstandingV114MetadataResultV5titleSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/title" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV30NaturalLanguageUnderstandingV114MetadataResult5titleGSqSS_">title</a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV114MetadataResultV5titleSSSgvp">title</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -248,7 +276,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -258,9 +286,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV30NaturalLanguageUnderstandingV114MetadataResultcFzT4jsonV7RestKit4JSON_S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(json:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV30NaturalLanguageUnderstandingV114MetadataResultcFzT4jsonV7RestKit4JSON_S0_">init(json:)</a>
+                    <a name="/s:30NaturalLanguageUnderstandingV114MetadataResultV5imageSSSgvp"></a>
+                    <a name="//apple_ref/swift/Property/image" class="dashAnchor"></a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV114MetadataResultV5imageSSSgvp">image</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -268,14 +296,41 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Used internally to initialize a <code>MetadataResult</code> model from JSON.</p>
+                        <p>URL of a prominent image on the webpage.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">json</span><span class="p">:</span> <span class="kt">JSON</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:30NaturalLanguageUnderstandingV114MetadataResultV5feedsSayAA4FeedVGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/feeds" class="dashAnchor"></a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV114MetadataResultV5feedsSayAA4FeedVGSgvp">feeds</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>RSS/ATOM feeds found on the webpage.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">feeds</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/Feed.html">Feed</a></span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -287,8 +342,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

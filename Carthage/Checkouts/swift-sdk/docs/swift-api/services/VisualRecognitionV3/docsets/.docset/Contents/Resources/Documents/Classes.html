@@ -10,6 +10,7 @@
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
@@ -36,13 +37,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Structs.html">Structs</a>
+            <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Structs/Age.html">Age</a>
+                <a href="Enums/JSON.html">JSON</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/Classification.html">Classification</a>
+                <a href="Enums/RestError.html">RestError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Class.html">Class</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ClassResult.html">ClassResult</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ClassifiedImage.html">ClassifiedImage</a>
@@ -54,16 +66,16 @@
                 <a href="Structs/Classifier.html">Classifier</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ClassifierResults.html">ClassifierResults</a>
+                <a href="Structs/Classifier/Status.html">– Status</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/Collection.html">Collection</a>
+                <a href="Structs/ClassifierResult.html">ClassifierResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/CollectionImage.html">CollectionImage</a>
+                <a href="Structs/Classifiers.html">Classifiers</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/CollectionImages.html">CollectionImages</a>
+                <a href="Structs/DetectedFaces.html">DetectedFaces</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ErrorInfo.html">ErrorInfo</a>
@@ -72,28 +84,25 @@
                 <a href="Structs/Face.html">Face</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/FaceAge.html">FaceAge</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/FaceGender.html">FaceGender</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/FaceIdentity.html">FaceIdentity</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/FaceLocation.html">FaceLocation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/Gender.html">Gender</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/Identity.html">Identity</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ImageWithFaces.html">ImageWithFaces</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ImagesWithFaces.html">ImagesWithFaces</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/Metadata.html">Metadata</a>
+                <a href="Structs.html#/s:19VisualRecognitionV311JSONWrapperV">JSONWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/PositiveExample.html">PositiveExample</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/SimilarImages.html">SimilarImages</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/WarningInfo.html">WarningInfo</a>
@@ -115,9 +124,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:C19VisualRecognitionV317VisualRecognition"></a>
+                    <a name="/s:19VisualRecognitionV30aB0C"></a>
                     <a name="//apple_ref/swift/Class/VisualRecognition" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C19VisualRecognitionV317VisualRecognition">VisualRecognition</a>
+                    <a class="token" href="#/s:19VisualRecognitionV30aB0C">VisualRecognition</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -125,9 +134,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The IBM Watson Visual Recognition service uses deep learning algorithms to analyze images,
-identify scenes, objects, faces, text, and other content, and return keywords that provide
-information about that content.</p>
+                        <p>The IBM Watson Visual Recognition service uses deep learning algorithms to identify scenes, objects, and faces  in
+images you upload to the service. You can create and train a custom classifier to identify subjects that suit your
+needs.</p>
 
                         <a href="Classes/VisualRecognition.html" class="slightly-smaller">See more</a>
                       </div>
@@ -135,7 +144,7 @@ information about that content.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">VisualRecognition</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">VisualRecognition</span></code></pre>
 
                         </div>
                       </div>
@@ -147,8 +156,8 @@ information about that content.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

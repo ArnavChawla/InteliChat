@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,66 +15,66 @@
  **/
 
 import Foundation
-import RestKit
 
-/** A translation model that can be used to translate between a source and target language. */
-public struct TranslationModel: JSONDecodable {
+/** Response payload for models. */
+public struct TranslationModel: Decodable {
 
-    /// A globally unique string that identifies the underllying model that is used for
-    /// translation. This string contains all the information about source language,
-    /// target language, domain, and various other related configurations.
-    public let modelID: String
+    /// Availability of a model.
+    public enum Status: String {
+        case uploading = "uploading"
+        case uploaded = "uploaded"
+        case dispatching = "dispatching"
+        case queued = "queued"
+        case training = "training"
+        case trained = "trained"
+        case publishing = "publishing"
+        case available = "available"
+        case deleted = "deleted"
+        case error = "error"
+    }
 
-    /// If a model is trained by a user, there might be an optional "name" parameter
-    /// attached during training to help the user identify the model.
-    public let name: String
+    /// A globally unique string that identifies the underlying model that is used for translation.
+    public var modelID: String
 
-    /// Source language in two-letter language code. Use the five letter code when clarifying
-    /// between multiple supported languages. When `modelID` is used directly, it will
-    /// override the source-target language combination. Also, when a two-letter language
-    /// code is used, but no suitable default is found, it returns an error.
-    public let source: String
+    /// Optional name that can be specified when the model is created.
+    public var name: String?
 
-    /// Target language in two-letter language code.
-    public let target: String
+    /// Translation source language code.
+    public var source: String?
 
-    /// If this model is a custom model, this returns the base model that it is trained on.
-    /// For a base model, this response value is empty.
-    public let baseModelID: String
+    /// Translation target language code.
+    public var target: String?
+
+    /// Model ID of the base model that was used to customize the model. If the model is not a custom model, this will be an empty string.
+    public var baseModelID: String?
 
     /// The domain of the translation model.
-    public let domain: String
+    public var domain: String?
 
-    /// Whether this model can be used as a base for customization.
-    public let customizable: Bool
+    /// Whether this model can be used as a base for customization. Customized models are not further customizable, and some base models are not customizable.
+    public var customizable: Bool?
 
-    /// Whether this model is considered a default model and is used when the source and
-    /// target languages are specified without the `modelID`.
-    public let defaultModel: Bool
+    /// Whether or not the model is a default model. A default model is the model for a given language pair that will be used when that language pair is specified in the source and target parameters.
+    public var defaultModel: Bool?
 
-    /// Returns the Bluemix ID of the instance that created the model, or an empty
-    /// string if it is a model that is trained by IBM.
-    public let owner: String
+    /// Either an empty string, indicating the model is not a custom model, or the ID of the service instance that created the model.
+    public var owner: String?
 
-    /// Availability of model (available, training, or error).
-    public let status: TrainingStatus
+    /// Availability of a model.
+    public var status: String?
 
-    /// Used internally to initialize a `TranslationModel` model from JSON.
-    public init(json: JSON) throws {
-        modelID = try json.getString(at: "model_id")
-        name = try json.getString(at: "name")
-        source = try json.getString(at: "source")
-        target = try json.getString(at: "target")
-        baseModelID = try json.getString(at: "base_model_id")
-        domain = try json.getString(at: "domain")
-        customizable = try json.getBool(at: "customizable")
-        defaultModel = try json.getBool(at: "default_model")
-        owner = try json.getString(at: "owner")
-
-        guard let status = TrainingStatus(rawValue: try json.getString(at: "status")) else {
-            let type = type(of: TrainingStatus.available)
-            throw JSON.Error.valueNotConvertible(value: json, to: type)
-        }
-        self.status = status
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case modelID = "model_id"
+        case name = "name"
+        case source = "source"
+        case target = "target"
+        case baseModelID = "base_model_id"
+        case domain = "domain"
+        case customizable = "customizable"
+        case defaultModel = "default_model"
+        case owner = "owner"
+        case status = "status"
     }
+
 }

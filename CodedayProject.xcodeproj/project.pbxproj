@@ -29,10 +29,6 @@
 		F59F75081E5CFEB500AD97F3 /* 4s.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F59F75071E5CFEB500AD97F3 /* 4s.storyboard */; };
 		F5B9D61D1E595138008E49D1 /* profiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B9D61C1E595137008E49D1 /* profiles.swift */; };
 		F5BFDC8A1E882286005827D5 /* EulaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BFDC891E882286005827D5 /* EulaViewController.swift */; };
-		F5D4E2041E59A0120045D18F /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D4E2031E59A0120045D18F /* RestKit.framework */; };
-		F5D4E2051E59A1330045D18F /* RestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D4E2031E59A0120045D18F /* RestKit.framework */; };
-		F5D4E2061E59A1330045D18F /* RestKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5D4E2031E59A0120045D18F /* RestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F5D4E20B1E59A5EE0045D18F /* settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D4E20A1E59A5EE0045D18F /* settings.swift */; };
 		F5D4E20D1E59A6560045D18F /* settingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D4E20C1E59A6560045D18F /* settingsViewController.swift */; };
 		F5DFC4F91E5B6F6500F2E182 /* LanguageTranslatorV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F5DFC4F71E5B6F6500F2E182 /* LanguageTranslatorV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5DFC4FA1E5B6F7900F2E182 /* LanguageTranslatorV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5DFC4F71E5B6F6500F2E182 /* LanguageTranslatorV2.framework */; };
@@ -57,7 +53,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F5DFC4F91E5B6F6500F2E182 /* LanguageTranslatorV2.framework in Embed Frameworks */,
-				F5D4E2061E59A1330045D18F /* RestKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,7 +91,6 @@
 		F5BFDC891E882286005827D5 /* EulaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EulaViewController.swift; sourceTree = "<group>"; };
 		F5D4E2011E599FE20045D18F /* LanguageTranslatorV2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LanguageTranslatorV2.framework; path = CodedayProject/LanguageTranslatorV2.framework; sourceTree = "<group>"; };
 		F5D4E2031E59A0120045D18F /* RestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RestKit.framework; path = Carthage/Build/iOS/RestKit.framework; sourceTree = "<group>"; };
-		F5D4E20A1E59A5EE0045D18F /* settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = settings.swift; sourceTree = "<group>"; };
 		F5D4E20C1E59A6560045D18F /* settingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = settingsViewController.swift; sourceTree = "<group>"; };
 		F5D4E20E1E59CFC40045D18F /* CodedayProject.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodedayProject.entitlements; sourceTree = "<group>"; };
 		F5DFC4F71E5B6F6500F2E182 /* LanguageTranslatorV2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LanguageTranslatorV2.framework; path = Carthage/Build/iOS/LanguageTranslatorV2.framework; sourceTree = "<group>"; };
@@ -110,9 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5DFC4FA1E5B6F7900F2E182 /* LanguageTranslatorV2.framework in Frameworks */,
-				F5D4E2041E59A0120045D18F /* RestKit.framework in Frameworks */,
 				AEFB7A34F9001776ADB979CD /* Pods_CodedayProject.framework in Frameworks */,
-				F5D4E2051E59A1330045D18F /* RestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,7 +188,6 @@
 				F560AAA71E598F32009A4F43 /* download.png */,
 				F5EB54E21E5CC1060082FF89 /* setup.swift */,
 				F51B445E1E590854003A6071 /* ChatViewController.swift */,
-				F5D4E20A1E59A5EE0045D18F /* settings.swift */,
 				F51B445A1E58F623003A6071 /* LoginViewController.swift */,
 				F5BFDC891E882286005827D5 /* EulaViewController.swift */,
 				F59EB4051E881DD900DCFCE9 /* GoogleService-Info.plist */,
@@ -443,7 +434,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/LanguageTranslatorV2.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RestKit.framework",
 			);
 			outputPaths = (
 			);
@@ -464,7 +454,6 @@
 				F51B445F1E590854003A6071 /* ChatViewController.swift in Sources */,
 				F5EB54E31E5CC1060082FF89 /* setup.swift in Sources */,
 				F52393A01E58D6870071DC38 /* AppDelegate.swift in Sources */,
-				F5D4E20B1E59A5EE0045D18F /* settings.swift in Sources */,
 				F5D4E20D1E59A6560045D18F /* settingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

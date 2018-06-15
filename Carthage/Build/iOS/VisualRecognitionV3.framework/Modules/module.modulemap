@@ -7,4 +7,5 @@ framework module VisualRecognitionV3 {
 
 module VisualRecognitionV3.Swift {
     header "VisualRecognitionV3-Swift.h"
+    requires objc
 }

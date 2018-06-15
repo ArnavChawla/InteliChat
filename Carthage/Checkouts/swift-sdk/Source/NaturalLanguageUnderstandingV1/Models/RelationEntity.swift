@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  **/
 
 import Foundation
-import RestKit
 
-/** The entities extracted from a sentence in a given document. */
-public struct RelationEntity: JSONDecodable {
-    
+/** An entity that corresponds with an argument in a relation. */
+public struct RelationEntity: Decodable {
+
     /// Text that corresponds to the entity.
-    public let text: String?
-    
-    /// Entity type.
-    public let type: String?
+    public var text: String?
 
-    /// Used internally to initialize a `RelationEntity` model from JSON.
-    public init(json: JSON) throws {
-        text = try? json.getString(at: "text")
-        type = try? json.getString(at: "type")
+    /// Entity type.
+    public var type: String?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case text = "text"
+        case type = "type"
     }
+
 }

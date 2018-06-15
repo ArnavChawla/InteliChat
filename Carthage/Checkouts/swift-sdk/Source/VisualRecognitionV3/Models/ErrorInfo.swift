@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,24 @@
  **/
 
 import Foundation
-import RestKit
 
-/** Information about an error that occurred during classification. */
-public struct ErrorInfo: JSONDecodable {
-    
-    /// A codified error string (e.g. "input_error").
-    public let errorID: String
-    
-    /// A human-readable error string (e.g. "Ignoring image with no valid data").
-    public let description: String
-    
-    /// Used internally to initialize an `ErrorInfo` model from JSON.
-    public init(json: JSON) throws {
-        errorID = try json.getString(at: "error_id")
-        description = try json.getString(at: "description")
+/** Information about what might have caused a failure, such as an image that is too large. Not returned when there is no error. */
+public struct ErrorInfo: Decodable {
+
+    /// HTTP status code.
+    public var code: Int
+
+    /// Human-readable error description. For example, `File size limit exceeded`.
+    public var description: String
+
+    /// Codified error string. For example, `limit_exceeded`.
+    public var errorID: String
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case code = "code"
+        case description = "description"
+        case errorID = "error_id"
     }
+
 }

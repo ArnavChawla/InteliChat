@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  **/
 
 import Foundation
-import RestKit
 
-/** A language that can be identified by the Language Translator service. */
-public struct IdentifiableLanguage: JSONDecodable {
-    
-    /// The code of the identifiable language.
-    public let language: String
-    
+/** IdentifiableLanguage. */
+public struct IdentifiableLanguage: Decodable {
+
+    /// The language code for an identifiable language.
+    public var language: String
+
     /// The name of the identifiable language.
-    public let name: String
+    public var name: String
 
-    /// Used internally to initialize an `IdentifiableLanguage` model from JSON.
-    public init(json: JSON) throws {
-        language = try json.getString(at: "language")
-        name = try json.getString(at: "name")
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case language = "language"
+        case name = "name"
     }
+
 }

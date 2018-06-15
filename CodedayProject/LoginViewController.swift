@@ -1,11 +1,3 @@
-//
-//  LoginViewController.swift
-//  CodedayProject
-//
-//  Created by Arnav Chawla on 2/18/17.
-//  Copyright © 2017 Arnav Chawla. All rights reserved.
-//
-
 import UIKit
 import FirebaseAuth
 import GoogleSignIn

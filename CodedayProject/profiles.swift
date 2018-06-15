@@ -4,12 +4,8 @@ import Firebase
 import FirebaseStorage
 import FirebaseDatabase
 import GoogleSignIn
-import FacebookLogin
-import TwitterKit
-import FBSDKLoginKit
 struct user {
     let username : String!
-    
     let uid : String!
     let url : String!
 }
@@ -82,8 +78,6 @@ class profileVc: UITableViewController
         }
     }
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        // action one
         let editAction = UITableViewRowAction(style: .default, title: "Block", handler: { (action, indexPath) in
             print("Edit tapped")
             CurrentChatUserId = self.users[indexPath.row].uid
@@ -103,10 +97,6 @@ class profileVc: UITableViewController
 
         })
         editAction.backgroundColor = UIColor.red
-        
-        // action two
-
-        
         return [editAction]
     }
     func move()
@@ -175,39 +165,31 @@ class profileVc: UITableViewController
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         
-        if self.users[indexPath.row].username != FIRAuth.auth()?.currentUser?.displayName
+        if self.users[indexPath.row].uid != FIRAuth.auth()?.currentUser?.uid
         {
-       
-        
-        
-        let imageView = cell?.viewWithTag(1) as! UIImageView
-        imageView.alpha = 0
-        
-        let nameLbl = cell?.viewWithTag(2) as! UILabel
-        nameLbl.alpha = 0
-        nameLbl.text = users[indexPath.row].username
-        
-        
-        
-        
-        
-        let fileURL =  self.users[indexPath.row].url as String
-        let url = NSURL(string: fileURL)
-        let data = NSData(contentsOf: url as! URL)
-        let picture = UIImage(data: data! as Data)
-        imageView.image = picture
-        nameLbl.text = self.users[indexPath.row].username
-        
-        DispatchQueue.main.async(execute: {
-            UIView.animate(withDuration: 0.5, animations: {
-                if nameLbl.text != "Label"
-                {
-                nameLbl.alpha = 1
-                imageView.alpha = 1
-                }
-                
+            let imageView = cell?.viewWithTag(1) as! UIImageView
+            imageView.alpha = 0
+            
+            let nameLbl = cell?.viewWithTag(2) as! UILabel
+            nameLbl.alpha = 0
+            nameLbl.text = users[indexPath.row].username
+            let fileURL =  self.users[indexPath.row].url as String
+            let url = NSURL(string: fileURL)
+            let data = NSData(contentsOf: url as! URL)
+            let picture = UIImage(data: data! as Data)
+            imageView.image = picture
+            nameLbl.text = self.users[indexPath.row].username
+            
+            DispatchQueue.main.async(execute: {
+                UIView.animate(withDuration: 0.5, animations: {
+                    if nameLbl.text != "Label"
+                    {
+                    nameLbl.alpha = 1
+                    imageView.alpha = 1
+                    }
+                    
+                })
             })
-        })
         }
           return cell!
         

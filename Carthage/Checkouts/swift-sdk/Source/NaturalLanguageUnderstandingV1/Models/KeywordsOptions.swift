@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,35 +15,39 @@
  **/
 
 import Foundation
-import RestKit
 
 /** An option indicating whether or not important keywords from the analyzed content should be returned. */
-public struct KeywordsOptions: JSONEncodable {
-    
+public struct KeywordsOptions: Encodable {
+
     /// Maximum number of keywords to return.
-    public let limit: Int?
-    
+    public var limit: Int?
+
     /// Set this to true to return sentiment information for detected keywords.
-    public let sentiment: Bool?
+    public var sentiment: Bool?
+
+    /// Set this to true to analyze emotion for detected keywords.
+    public var emotion: Bool?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case limit = "limit"
+        case sentiment = "sentiment"
+        case emotion = "emotion"
+    }
 
     /**
-    Initialize a `KeywordsOptions` with all member variables.
+     Initialize a `KeywordsOptions` with member variables.
 
-     - parameter limit: Maximum number of keywords to return
-     - parameter sentiment: Set this to true to return sentiment information for detected keywords
+     - parameter limit: Maximum number of keywords to return.
+     - parameter sentiment: Set this to true to return sentiment information for detected keywords.
+     - parameter emotion: Set this to true to analyze emotion for detected keywords.
 
-    - returns: An initialized `KeywordsOptions`.
+     - returns: An initialized `KeywordsOptions`.
     */
-    public init(limit: Int? = nil, sentiment: Bool? = nil) {
+    public init(limit: Int? = nil, sentiment: Bool? = nil, emotion: Bool? = nil) {
         self.limit = limit
         self.sentiment = sentiment
+        self.emotion = emotion
     }
 
-    /// Used internally to serialize a `KeywordsOptions` model to JSON.
-    public func toJSONObject() -> Any {
-        var json = [String: Any]()
-        if let limit = limit { json["limit"] = limit }
-        if let sentiment = sentiment { json["sentiment"] = sentiment }
-        return json
-    }
 }

@@ -10,6 +10,7 @@
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
@@ -36,28 +37,60 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Structs.html">Structs</a>
+            <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Structs/BehaviorNode.html">BehaviorNode</a>
+                <a href="Enums/JSON.html">JSON</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ConsumptionPreferencesCategoryNode.html">ConsumptionPreferencesCategoryNode</a>
+                <a href="Enums/RestError.html">RestError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Behavior.html">Behavior</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/ConsumptionPreferencesNode.html">ConsumptionPreferencesNode</a>
+                <a href="Structs/ConsumptionPreferences.html">ConsumptionPreferences</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ConsumptionPreferencesCategory.html">ConsumptionPreferencesCategory</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Content.html">Content</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ContentItem.html">ContentItem</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/ContentItem/Contenttype.html">– Contenttype</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ContentItem/Language.html">– Language</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs.html#/s:21PersonalityInsightsV311JSONWrapperV">JSONWrapper</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Profile.html">Profile</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/TraitTreeNode.html">TraitTreeNode</a>
+                <a href="Structs/Profile/ProcessedLanguage.html">– ProcessedLanguage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Trait.html">Trait</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Trait/Category.html">– Category</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Warning.html">Warning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Warning/WarningID.html">– WarningID</a>
               </li>
             </ul>
           </li>
@@ -76,9 +109,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:C21PersonalityInsightsV319PersonalityInsights"></a>
+                    <a name="/s:21PersonalityInsightsV30aB0C"></a>
                     <a name="//apple_ref/swift/Class/PersonalityInsights" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C21PersonalityInsightsV319PersonalityInsights">PersonalityInsights</a>
+                    <a class="token" href="#/s:21PersonalityInsightsV30aB0C">PersonalityInsights</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -86,9 +119,22 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The Watson Personality Insights service uses linguistic analytics to extract a spectrum
-of cognitive and social characteristics from the text data that a person generates
-through blogs, tweets, forum posts, and more.</p>
+                        <p>The IBM Watson Personality Insights service enables applications to derive insights from social media, enterprise data,
+or other digital communications. The service uses linguistic analytics to infer individuals&rsquo; intrinsic personality
+characteristics, including Big Five, Needs, and Values, from digital communications such as email, text messages,
+tweets, and forum posts.
+The service can automatically infer, from potentially noisy social media, portraits of individuals that reflect their
+personality characteristics. The service can infer consumption preferences based on the results of its analysis and,
+for JSON content that is timestamped, can report temporal behavior.</p>
+
+<ul>
+<li>For information about the meaning of the models that the service uses to describe personality characteristics, see
+<a href="https://console.bluemix.net/docs/services/personality-insights/models.html">Personality models</a>.</li>
+<li>For information about the meaning of the consumption preferences, see <a href="https://console.bluemix.net/docs/services/personality-insights/preferences.html">Consumption
+preferences</a>.
+<strong>Note:</strong> Request logging is disabled for the Personality Insights service. The service neither logs nor retains data
+from requests and responses, regardless of whether the <code>X-Watson-Learning-Opt-Out</code> request header is set.</li>
+</ul>
 
                         <a href="Classes/PersonalityInsights.html" class="slightly-smaller">See more</a>
                       </div>
@@ -96,7 +142,7 @@ through blogs, tweets, forum posts, and more.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonalityInsights</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">PersonalityInsights</span></code></pre>
 
                         </div>
                       </div>
@@ -108,8 +154,8 @@ through blogs, tweets, forum posts, and more.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

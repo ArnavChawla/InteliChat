@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SentenceAnalysis Struct Reference</title>
+    <title>SentenceAnalysis Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -11,7 +11,7 @@
   </head>
   <body>
     <a name="//apple_ref/swift/Struct/SentenceAnalysis" class="dashAnchor"></a>
-    <a title="SentenceAnalysis Struct Reference"></a>
+    <a title="SentenceAnalysis Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        SentenceAnalysis Struct Reference
+        SentenceAnalysis Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -37,8 +37,25 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/JSON.html">JSON</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RestError.html">RestError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/DocumentAnalysis.html">DocumentAnalysis</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:14ToneAnalyzerV311JSONWrapperV">JSONWrapper</a>
+              </li>
               <li class="nav-group-task">
                 <a href="../Structs/SentenceAnalysis.html">SentenceAnalysis</a>
               </li>
@@ -49,7 +66,25 @@
                 <a href="../Structs/ToneCategory.html">ToneCategory</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/ToneChatInput.html">ToneChatInput</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ToneChatScore.html">ToneChatScore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ToneInput.html">ToneInput</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/ToneScore.html">ToneScore</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Utterance.html">Utterance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UtteranceAnalyses.html">UtteranceAnalyses</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/UtteranceAnalysis.html">UtteranceAnalysis</a>
               </li>
             </ul>
           </li>
@@ -61,11 +96,11 @@
             <h1>SentenceAnalysis</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">SentenceAnalysis</span><span class="p">:</span> <span class="kt">JSONDecodable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">SentenceAnalysis</span> <span class="p">:</span> <span class="kt">Decodable</span></code></pre>
 
                 </div>
               </div>
-            <p>The result of analyzing a sentence within a document.</p>
+            <p>SentenceAnalysis.</p>
 
           </section>
           <section class="section task-group-section">
@@ -74,9 +109,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV14ToneAnalyzerV316SentenceAnalysis10sentenceIDSi"></a>
+                    <a name="/s:14ToneAnalyzerV316SentenceAnalysisV10sentenceIDSivp"></a>
                     <a name="//apple_ref/swift/Property/sentenceID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV14ToneAnalyzerV316SentenceAnalysis10sentenceIDSi">sentenceID</a>
+                    <a class="token" href="#/s:14ToneAnalyzerV316SentenceAnalysisV10sentenceIDSivp">sentenceID</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -84,14 +119,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A unique number identifying this sentence within the document.</p>
+                        <p>The unique identifier of a sentence of the input content. The first sentence has ID 0, and the ID of each subsequent sentence is incremented by one.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">sentenceID</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">sentenceID</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
 
                         </div>
                       </div>
@@ -101,64 +136,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV14ToneAnalyzerV316SentenceAnalysis9inputFromSi"></a>
-                    <a name="//apple_ref/swift/Property/inputFrom" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV14ToneAnalyzerV316SentenceAnalysis9inputFromSi">inputFrom</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The index of the character in the document where this sentence starts.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">inputFrom</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV14ToneAnalyzerV316SentenceAnalysis7inputToSi"></a>
-                    <a name="//apple_ref/swift/Property/inputTo" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV14ToneAnalyzerV316SentenceAnalysis7inputToSi">inputTo</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The index of the character in the document after the end of this sentence
-(i.e. <code>inputTo - inputFrom</code> is the length of the sentence in characters).</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">inputTo</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:vV14ToneAnalyzerV316SentenceAnalysis4textSS"></a>
+                    <a name="/s:14ToneAnalyzerV316SentenceAnalysisV4textSSvp"></a>
                     <a name="//apple_ref/swift/Property/text" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV14ToneAnalyzerV316SentenceAnalysis4textSS">text</a>
+                    <a class="token" href="#/s:14ToneAnalyzerV316SentenceAnalysisV4textSSvp">text</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -166,14 +146,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The text of this sentence.</p>
+                        <p>The text of the input sentence.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -183,9 +163,36 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV14ToneAnalyzerV316SentenceAnalysis14toneCategoriesGSaVS_12ToneCategory_"></a>
+                    <a name="/s:14ToneAnalyzerV316SentenceAnalysisV5tonesSayAA0A5ScoreVGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/tones" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ToneAnalyzerV316SentenceAnalysisV5tonesSayAA0A5ScoreVGSgvp">tones</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>2017-09-21</code>:** An array of <code><a href="../Structs/ToneScore.html">ToneScore</a></code> objects that provides the results of the analysis for each qualifying tone of the sentence. The array includes results for any tone whose score is at least 0.5. The array is empty if no tone has a score that meets this threshold. <strong><code>2016-05-19</code>:</strong> Not returned.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">tones</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/ToneScore.html">ToneScore</a></span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ToneAnalyzerV316SentenceAnalysisV14toneCategoriesSayAA0A8CategoryVGSgvp"></a>
                     <a name="//apple_ref/swift/Property/toneCategories" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV14ToneAnalyzerV316SentenceAnalysis14toneCategoriesGSaVS_12ToneCategory_">toneCategories</a>
+                    <a class="token" href="#/s:14ToneAnalyzerV316SentenceAnalysisV14toneCategoriesSayAA0A8CategoryVGSgvp">toneCategories</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -193,15 +200,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The tone analysis results for this sentence, divided into
-three categories: social tone, emotion tone, and writing tone.</p>
+                        <p><code>2017-09-21</code>:** Not returned. <strong><code>2016-05-19</code>:</strong> An array of <code><a href="../Structs/ToneCategory.html">ToneCategory</a></code> objects that provides the results of the tone analysis for the sentence. The service returns results only for the tones specified with the <code><a href="../Structs/SentenceAnalysis.html#/s:14ToneAnalyzerV316SentenceAnalysisV5tonesSayAA0A5ScoreVGSgvp">tones</a></code> parameter of the request.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">toneCategories</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/ToneCategory.html">ToneCategory</a></span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">toneCategories</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/ToneCategory.html">ToneCategory</a></span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -211,9 +217,9 @@ three categories: social tone, emotion tone, and writing tone.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV14ToneAnalyzerV316SentenceAnalysiscFzT4jsonV7RestKit4JSON_S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(json:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV14ToneAnalyzerV316SentenceAnalysiscFzT4jsonV7RestKit4JSON_S0_">init(json:)</a>
+                    <a name="/s:14ToneAnalyzerV316SentenceAnalysisV9inputFromSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/inputFrom" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ToneAnalyzerV316SentenceAnalysisV9inputFromSiSgvp">inputFrom</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -221,14 +227,41 @@ three categories: social tone, emotion tone, and writing tone.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Used internally to initialize a <code>SentenceAnalysis</code> model from JSON.</p>
+                        <p><code>2017-09-21</code>:** Not returned. <strong><code>2016-05-19</code>:</strong> The offset of the first character of the sentence in the overall input content.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">json</span><span class="p">:</span> <span class="kt">JSON</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">inputFrom</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:14ToneAnalyzerV316SentenceAnalysisV7inputToSiSgvp"></a>
+                    <a name="//apple_ref/swift/Property/inputTo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:14ToneAnalyzerV316SentenceAnalysisV7inputToSiSgvp">inputTo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p><code>2017-09-21</code>:** Not returned. <strong><code>2016-05-19</code>:</strong> The offset of the last character of the sentence in the overall input content.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">inputTo</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -240,8 +273,8 @@ three categories: social tone, emotion tone, and writing tone.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

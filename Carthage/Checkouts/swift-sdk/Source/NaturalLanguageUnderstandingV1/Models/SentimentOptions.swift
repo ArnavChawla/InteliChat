@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,37 +15,33 @@
  **/
 
 import Foundation
-import RestKit
 
-/** An options specifying if sentiment of detected entities, keywords, or phrases should be returned. */
-public struct SentimentOptions: JSONEncodable {
-    
+/** An option specifying if sentiment of detected entities, keywords, or phrases should be returned. */
+public struct SentimentOptions: Encodable {
+
     /// Set this to false to hide document-level sentiment results.
-    public let document: Bool?
-    
+    public var document: Bool?
+
     /// Sentiment results will be returned for each target string that is found in the document.
-    public let targets: [String]?
+    public var targets: [String]?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case document = "document"
+        case targets = "targets"
+    }
 
     /**
-    Initialize a `SentimentOptions` with all member variables.
+     Initialize a `SentimentOptions` with member variables.
 
      - parameter document: Set this to false to hide document-level sentiment results.
      - parameter targets: Sentiment results will be returned for each target string that is found in the document.
 
-    - returns: An initialized `SentimentOptions`.
+     - returns: An initialized `SentimentOptions`.
     */
     public init(document: Bool? = nil, targets: [String]? = nil) {
         self.document = document
         self.targets = targets
     }
 
-    /// Used internally to serialize a `SentimentOptions` model to JSON.
-    public func toJSONObject() -> Any {
-        var json = [String: Any]()
-        if let document = document { json["document"] = document }
-        if let targets = targets {
-            json["targets"] = targets
-        }
-        return json
-    }
 }

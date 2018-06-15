@@ -1,11 +1,3 @@
-//
-//  settingsViewController.swift
-//  CodedayProject
-//
-//  Created by Arnav Chawla on 2/19/17.
-//  Copyright © 2017 Arnav Chawla. All rights reserved.
-//
-
 import UIKit
 
 var french = false

@@ -20,45 +20,44 @@ import Foundation
  A `RestToken` object retrieves, stores, and refreshes an authentication token. The token is
  retrieved at a particular URL using basic authentication credentials (i.e. username and password).
  */
-public class RestToken {
-    
-    public var token: String?
-    public var isRefreshing = false
-    public var retries = 0
-    
+internal class RestToken {
+
+    internal var token: String?
+    internal var isRefreshing = false
+    internal var retries = 0
+
     private var tokenURL: String
     private var credentials: Credentials
-    
+    private let domain = "com.ibm.watson.developer-cloud.RestKit"
+
     /**
      Create a `RestToken`.
-     
-     - parameter tokenURL:   The URL that shall be used to obtain a token.
-     - parameter username:   The username credential used to obtain a token.
-     - parameter password:   The password credential used to obtain a token.
+
+     - parameter tokenURL: The URL that shall be used to obtain a token.
+     - parameter credentials: The credentials that shall be used to obtain a token.
      */
-    public init(tokenURL: String, username: String, password: String) {
+    internal init(tokenURL: String, credentials: Credentials) {
         self.tokenURL = tokenURL
-        self.credentials = Credentials.basicAuthentication(username: username, password: password)
+        self.credentials = credentials
     }
-    
+
     /**
      Refresh the authentication token.
 
      - parameter failure: A function executed if an error occurs.
      - parameter success: A function executed after a new token is retrieved.
      */
-    public func refreshToken(
+    internal func refreshToken(
         failure: ((Error) -> Void)? = nil,
-        success: ((Void) -> Void)? = nil)
+        success: (() -> Void)? = nil)
     {
         let request = RestRequest(
             method: "GET",
             url: tokenURL,
             credentials: credentials,
             headerParameters: [:])
-        
-        // TODO - validate request
-        request.responseString { response in
+
+        request.responseString(responseToError: responseToError) { response in
             switch response.result {
             case .success(let token):
                 self.token = token
@@ -68,4 +67,41 @@ public class RestToken {
             }
         }
     }
+
+    /**
+     Returns an NSError if the response/data represents an error. Otherwise, returns nil.
+
+     - parameter response: an http response from the token url
+     - parameter data: raw body data from the token url response
+     */
+    private func responseToError(response: HTTPURLResponse?, data: Data?) -> NSError? {
+
+        // fail if no response from token url
+        guard let response = response else {
+            let description = "Token authentication failed. No response from token url."
+            let userInfo = [NSLocalizedDescriptionKey: description]
+            return NSError(domain: domain, code: 400, userInfo: userInfo)
+        }
+
+        // succeed if status code indicates success
+        if (200..<300).contains(response.statusCode) {
+            return nil
+        }
+
+        // default error description
+        let code = response.statusCode
+        var userInfo = [NSLocalizedDescriptionKey: "Token authentication failed."]
+
+        // update error description, if available
+        if let data = data {
+            do {
+                let json = try JSONWrapper(data: data)
+                let description = try json.getString(at: "description")
+                userInfo[NSLocalizedDescriptionKey] = description
+            } catch { /* no need to catch -- falls back to default description */ }
+        }
+
+        return NSError(domain: domain, code: code, userInfo: userInfo)
+    }
+
 }

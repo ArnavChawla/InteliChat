@@ -35,3 +35,7 @@ Packages/
 
 # Carthage
 Carthage/
+
+# swagger-codegen
+.swagger-codegen-ignore
+.swagger-codegen/

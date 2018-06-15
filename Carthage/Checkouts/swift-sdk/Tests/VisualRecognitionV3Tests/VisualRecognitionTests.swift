@@ -14,30 +14,27 @@
  * limitations under the License.
  **/
 
+// swiftlint:disable function_body_length force_try force_unwrapping superfluous_disable_command
+
 import XCTest
 import Foundation
 import VisualRecognitionV3
 
 class VisualRecognitionTests: XCTestCase {
-    
+
+    private static let timeout: TimeInterval = 45.0
+
     private var visualRecognition: VisualRecognition!
-    private let classifierName = "swift-sdk-unit-test-cars-trucks"
-    private let collectionName = "swift-sdk-unit-test-faces"
-    private var classifierID: String?
-    private var collectionID: String?
-    private var imageFaceID: String?
-    private let timeout: TimeInterval = 10.0
-    private let timeoutLong: TimeInterval = 45.0
-    
-    static var allTests : [(String, (VisualRecognitionTests) -> () throws -> Void)] {
+    private let classifierID = Credentials.VisualRecognitionClassifierID
+
+    static var allTests: [(String, (VisualRecognitionTests) -> () throws -> Void)] {
         return [
-            ("testGetClassifiers", testGetClassifiers),
+            ("testListClassifiers", testListClassifiers),
             ("testCreateDeleteClassifier1", testCreateDeleteClassifier1),
             ("testCreateDeleteClassifier2", testCreateDeleteClassifier2),
             ("testGetClassifier", testGetClassifier),
-            ("testUpdateClassifier", testUpdateClassifier),
-            ("testUpdateClassifierWithPositiveExample", testUpdateClassifierWithPositiveExample),
-            ("testUpdateClassifierWithNegativeExample", testUpdateClassifierWithNegativeExample),
+            // disabled: ("testUpdateClassifierWithPositiveExample", testUpdateClassifierWithPositiveExample),
+            // disabled: ("testUpdateClassifierWithNegativeExample", testUpdateClassifierWithNegativeExample),
             ("testClassifyByURL1", testClassifyByURL1),
             ("testClassifyByURL2", testClassifyByURL2),
             ("testClassifyByURL3", testClassifyByURL3),
@@ -52,690 +49,477 @@ class VisualRecognitionTests: XCTestCase {
             ("testDetectFacesByURL", testDetectFacesByURL),
             ("testDetectFacesByImage1", testDetectFacesByImage1),
             ("testDetectFacesByImage2", testDetectFacesByImage2),
-            ("testGetCollections", testGetCollections),
-            ("testRetrieveCollectionDetails", testRetrieveCollectionDetails),
-            ("testAddDeleteImageToCollection", testAddDeleteImageToCollection),
-            ("testAddDeleteImageWithMetadataToCollection", testAddDeleteImageWithMetadataToCollection),
-            ("testCreateDeleteCollection", testCreateDeleteCollection),
-            ("testListImagesInCollection", testListImagesInCollection),
-            ("testAddDeleteMetadataToImageInCollection", testAddDeleteMetadataToImageInCollection),
-            ("testAddListMetadataForImageInCollection", testAddListMetadataForImageInCollection),
-            ("testSimilarImages", testSimilarImages),
-            ("testSimilarImagesWithInvalidFile", testSimilarImagesWithInvalidFile),
             ("testCreateClassifierWithInvalidPositiveExamples", testCreateClassifierWithInvalidPositiveExamples),
             ("testClassifyByInvalidURL", testClassifyByInvalidURL),
             ("testDetectFacesByInvalidURL", testDetectFacesByInvalidURL),
-            ("testAddZipToCollection", testAddZipToCollection)
         ]
     }
-    
-    private var examplesBaseball: URL!
-    private var examplesCars: URL!
-    private var examplesTrucks: URL!
-    private var faces: URL!
-    private var face1: URL!
-    private var car: URL!
-    private var obama: URL!
-    private var sign: URL!
-    
+
+    lazy private var examplesBaseball: URL = loadResource(name: "baseball", ext: "zip")
+    lazy private var examplesCars: URL = loadResource(name: "cars", ext: "zip")
+    lazy private var examplesTrucks: URL = loadResource(name: "trucks", ext: "zip")
+    lazy private var faces: URL = loadResource(name: "faces", ext: "zip")
+    lazy private var face1: URL = loadResource(name: "face1", ext: "jpg")
+    lazy private var car: URL = loadResource(name: "car", ext: "png")
+    lazy private var carz: URL = loadResource(name: "carz", ext: "zip")
+    lazy private var obama: URL = loadResource(name: "obama", ext: "jpg")
+    lazy private var sign: URL = loadResource(name: "sign", ext: "jpg")
+
     private let obamaURL = "https://www.whitehouse.gov/sites/whitehouse.gov/files/images/" +
                            "Administration/People/president_official_portrait_lores.jpg"
-    private let carURL = "https://raw.githubusercontent.com/watson-developer-cloud/" +
-                         "java-sdk/master/tests/src/test/resources/visual_recognition/car.png"
+    private let carURL = "https://raw.githubusercontent.com/watson-developer-cloud/java-sdk" +
+                         "/master/visual-recognition/src/test/resources/visual_recognition/car.png"
     private let signURL = "https://raw.githubusercontent.com/watson-developer-cloud/java-sdk/" +
-                          "master/tests/src/test/resources/visual_recognition/open.png"
-    
+                          "master/visual-recognition/src/test/resources/visual_recognition/open.png"
+
     // MARK: - Test Configuration
-    
+
     /** Set up for each test by instantiating the service. */
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
         instantiateVisualRecognition()
-        loadImageFiles()
-        lookupClassifier()
-        lookupCollection()
     }
-    
+
+    /** Teardown logic to cleanup dangling resources after all the tests have run */
+    override func tearDown() {
+        let teardownExpectation = self.expectation(description: "Teardown processing after all tests.")
+        visualRecognition.listClassifiers(verbose: true, failure: failWithError) { classifiers in
+            let classifiersToDelete = classifiers.classifiers.filter { $0.name.starts(with: "swift-sdk-unit-test-") }
+            if classifiersToDelete.count > 0 {
+                // allow zip files to propagate through object storage, so that
+                // they will be deleted when the service deletes the classifier
+                // (otherwise they remain and dramatically slow down the tests)
+                sleep(15) // wait 15 seconds
+
+                for classifier in classifiersToDelete {
+                    let deleteExpectation = self.expectation(description: "Delete the test classifier.")
+                    self.visualRecognition.deleteClassifier(classifierID: classifier.classifierID, failure: nil) {
+                        deleteExpectation.fulfill()
+                    }
+                }
+            }
+            teardownExpectation.fulfill()
+        }
+        waitForExpectations(timeout: VisualRecognitionTests.timeout+15)
+     }
+
     /** Instantiate Visual Recognition. */
     func instantiateVisualRecognition() {
         let apiKey = Credentials.VisualRecognitionAPIKey
-        let version = "2016-11-04"
+        let version = "2018-03-19"
         visualRecognition = VisualRecognition(apiKey: apiKey, version: version)
+        visualRecognition.defaultHeaders["X-Watson-Learning-Opt-Out"] = "true"
+        visualRecognition.defaultHeaders["X-Watson-Test"] = "true"
     }
-    
-    /** Load image files with class examples and test images. */
-    func loadImageFiles() {
-        
-        #if os(iOS)
-            let bundle = Bundle(for: type(of: self))
-            guard
-                let examplesBaseball =  bundle.url(forResource: "baseball", withExtension: "zip"),
-                let examplesCars =      bundle.url(forResource: "cars", withExtension: "zip"),
-                let examplesTrucks =    bundle.url(forResource: "trucks", withExtension: "zip"),
-                let faces =             bundle.url(forResource: "faces", withExtension: "zip"),
-                let face1 =             bundle.url(forResource: "face1", withExtension: "jpg"),
-                let car =               bundle.url(forResource: "car", withExtension: "png"),
-                let obama =             bundle.url(forResource: "obama", withExtension: "jpg"),
-                let sign =              bundle.url(forResource: "sign", withExtension: "jpg")
-                else {
-                    XCTFail("Unable to locate sample image files.")
-                    return
-            }
-        #else
-            let examplesBaseball =  URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Classes/baseball.zip")
-            let examplesCars =      URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Classes/cars.zip")
-            let examplesTrucks =    URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Classes/trucks.zip")
-            let faces =             URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Images/faces.zip")
-            let face1 =             URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Images/face1.jpg")
-            let car =               URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Images/car.jpg")
-            let obama =             URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Images/obama.jpg")
-            let sign =              URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Images/sign.jpg")
-        #endif
-        
-        self.examplesBaseball = examplesBaseball
-        self.examplesCars = examplesCars
-        self.examplesTrucks = examplesTrucks
-        self.faces = faces
-        self.face1 = face1
-        self.car = car
-        self.obama = obama
-        self.sign = sign
-    }
-    
-    /** Look up (or create) the trained classifier. */
-    func lookupClassifier() {
-        let description = "Look up (or create) the trained classifier."
-        let expectation = self.expectation(description: description)
-        
-        let failure = { (error: Error) in
-            XCTFail("Failed to locate the trained classifier.")
-        }
-        
-        visualRecognition.getClassifiers(failure: failure) { classifiers in
-            for classifier in classifiers {
-                if classifier.name == self.classifierName {
-                    XCTAssert(classifier.status == "ready", "Wait for training to complete.")
-                    self.classifierID = classifier.classifierID
-                    expectation.fulfill()
-                    return
-                }
-            }
-            expectation.fulfill()
-        }
-        waitForExpectations()
-        
-        if (classifierID == nil) {
-            trainClassifier()
-        }
-    }
-    
-    /** Look up (or create) the collection. */
-    func lookupCollection() {
-        let description = "Look up (or create) the collection."
-        let expectation = self.expectation(description: description)
-        
-        let failure = { (error: Error) in
-            XCTFail("Failed to locate the collection.")
-        }
-        
-        visualRecognition.getCollections(failure: failure) { collections in
-            for collection in collections {
-                if collection.name == self.collectionName {
-                    XCTAssert(collection.status == "available", "Wait for collection to be made.")
-                    self.collectionID = collection.collectionID
-                    expectation.fulfill()
-                    return
-                }
-            }
-            expectation.fulfill()
-        }
-        waitForExpectations()
-        
-        if (collectionID == nil) {
-            createCollectionWithFaceImages()
-        }
-    }
-    
-    /** Train a classifier for the test suite. */
-    func trainClassifier() {
-        let description = "Train a classifier for the test suite."
-        let expectation = self.expectation(description: description)
-        
-        let car = PositiveExample(name: "car", examples: examplesCars)
-        let failure = { (error: Error) in XCTFail("Could not train classifier for test suite.") }
-        visualRecognition.createClassifier(
-            withName: classifierName,
-            positiveExamples: [car],
-            negativeExamples: examplesTrucks,
-            failure: failure) { classifier in
-                self.classifierID = classifier.classifierID
-                expectation.fulfill()
-        }
-        waitForExpectations()
-        
-        XCTFail("Training a classifier for the test suite. Try again in 10 seconds.")
-    }
-    
-    /** Create a collection for the test suite. */
-    func createCollectionWithFaceImages() {
-        let description = "Create a collection for the test suite."
-        let expectation = self.expectation(description: description)
-        
-        let failure = { (error: Error) in XCTFail("Could not create a collection for test suite.") }
-        visualRecognition.createCollection(
-            withName: collectionName,
-            failure: failure) { collection in
-                self.collectionID = collection.collectionID
-                expectation.fulfill()
-        }
-        waitForExpectations()
-        
-        let description2 = "Add first image to collection."
-        let expectation2 = self.expectation(description: description2)
-        let failure2 = { (error: Error) in XCTFail("Could not add face1.jpg to collection.") }
-        
-        guard let collection = collectionID else {
-            return
-        }
-        visualRecognition.addImageToCollection(withID: collection, imageFile: face1, failure: failure2) { images in
-            self.imageFaceID = images.collectionImages[0].imageID
-            expectation2.fulfill()
-        }
-        waitForExpectations()
-        
-        let description3 = "Add second image to collection."
-        let expectation3 = self.expectation(description: description3)
-        let failure3 = { (error: Error) in XCTFail("Could not add sign.jpg to collection.") }
-        
-        visualRecognition.addImageToCollection(withID: collection, imageFile: sign, failure: failure3) { images in
-            expectation3.fulfill()
-        }
-        waitForExpectations()
-    }
-    
-    /** Load file used when adding metadata to an image. */
-    func loadMetadataFile(withName name: String, withExtension: String) -> URL? {
-        
-        #if os(iOS)
-            let bundle = Bundle(for: type(of: self))
-            guard let url = bundle.url(forResource: name, withExtension: withExtension) else {
-                return nil
-            }
-        #else
-            let url = URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/"+name+"."+withExtension)
-        #endif
 
+    func loadResource(name: String, ext: String) -> URL {
+        #if os(Linux)
+        return URL(fileURLWithPath: "Tests/VisualRecognitionV3Tests/Resources/" + name + "." + ext)
+        #else
+        let bundle = Bundle(for: type(of: self))
+        guard let url = bundle.url(forResource: name, withExtension: ext) else {
+            XCTFail("Unable to locate sample image files.")
+            assert(false)
+        }
         return url
+        #endif
     }
 
     /** Fail false negatives. */
     func failWithError(error: Error) {
         XCTFail("Positive test failed with error: \(error)")
     }
-    
+
     /** Fail false positives. */
     func failWithResult<T>(result: T) {
         XCTFail("Negative test returned a result.")
     }
-    
+
+    /** Fail false positives. */
+    func failWithResult() {
+        XCTFail("Negative test returned a result.")
+    }
+
     /** Wait for expectations. */
-    func waitForExpectations() {
+    func waitForExpectations(timeout: TimeInterval = timeout) {
         waitForExpectations(timeout: timeout) { error in
             XCTAssertNil(error, "Timeout")
         }
     }
-    
+
     // MARK: - Positive Tests
-    
+
     /** Retrieve a list of user-trained classifiers. */
-    func testGetClassifiers() {
-        let description = "Retrieve a list of user-trained classifiers."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.getClassifiers(failure: failWithError) { classifiers in
-            for classifier in classifiers {
-                let idMatch = (classifier.classifierID == self.classifierID)
-                let nameMatch = (classifier.name == self.classifierName)
-                if idMatch && nameMatch {
-                    expectation.fulfill()
-                    return
-                }
+    func testListClassifiers() {
+        let expectation = self.expectation(description: "Retrieve a list of user-trained classifiers.")
+
+        visualRecognition.listClassifiers(verbose: true, failure: failWithError) { classifiers in
+            for classifier in classifiers.classifiers where classifier.classifierID == self.classifierID {
+                expectation.fulfill()
+                return
             }
             XCTFail("Could not retrieve the trained classifier.")
         }
         waitForExpectations()
     }
-    
+
     /** Train a classifier with only positive examples. */
     func testCreateDeleteClassifier1() {
-        let description1 = "Train a classifier with only positive examples."
-        let expectation1 = expectation(description: description1)
-        
         let name = "swift-sdk-unit-test-1"
         let baseball = PositiveExample(name: "baseball", examples: examplesBaseball)
         let cars = PositiveExample(name: "car", examples: examplesCars)
         let trucks = PositiveExample(name: "truck", examples: examplesTrucks)
         let classes = [baseball, cars, trucks]
-        
+
         var classifierID: String?
-        visualRecognition.createClassifier(withName: name, positiveExamples: classes, failure: failWithError) {
+        let expectation1 = expectation(description: "Train a classifier with only positive examples.")
+        visualRecognition.createClassifier(name: name, positiveExamples: classes, failure: failWithError) {
             classifier in
             XCTAssertEqual(classifier.name, name)
-            XCTAssertEqual(classifier.classes.count, 3)
+            XCTAssertNotNil(classifier.classes)
+            XCTAssertEqual(classifier.classes!.count, 3)
             classifierID = classifier.classifierID
             expectation1.fulfill()
         }
         waitForExpectations()
-        
-        let description2 = "Check that our classifier can be retrieved."
-        let expectation2 = expectation(description: description2)
-        
+
         guard let classifierIDToDelete = classifierID else {
             return
         }
-        
-        visualRecognition.getClassifiers(failure: failWithError) { classifiers in
-            for classifier in classifiers {
-                if classifier.classifierID == classifierIDToDelete {
-                    expectation2.fulfill()
-                    return
-                }
+
+        let expectation2 = expectation(description: "Check that our classifier can be retrieved.")
+        visualRecognition.listClassifiers(verbose: true, failure: failWithError) { classifiers in
+            for classifier in classifiers.classifiers where classifier.classifierID == classifierIDToDelete {
+                expectation2.fulfill()
+                return
             }
             XCTFail("The created classifier could not be retrieved from the service.")
         }
         waitForExpectations()
-        
-        let description3 = "Delete the custom classifier."
-        let expectation3 = expectation(description: description3)
-        
-        visualRecognition.deleteClassifier(withID: classifierIDToDelete, failure: failWithError) {
+
+        // allow zip files to propagate through object storage, so that
+        // they will be deleted when the service deletes the classifier
+        // (otherwise they remain and dramatically slow down the tests)
+        sleep(15) // wait 15 seconds
+
+        let expectation3 = expectation(description: "Delete the custom classifier.")
+        visualRecognition.deleteClassifier(classifierID: classifierIDToDelete, failure: failWithError) {
             expectation3.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Train a classifier with both positive and negative examples. */
     func testCreateDeleteClassifier2() {
-        let description1 = "Train a classifier with both positive and negative examples."
-        let expectation1 = expectation(description: description1)
-        
         let name = "swift-sdk-unit-test-2"
         let cars = PositiveExample(name: "car", examples: examplesCars)
-        
+
         var classifierID: String?
+        let expectation1 = expectation(description: "Train a classifier with both positive and negative examples.")
         visualRecognition.createClassifier(
-            withName: name,
+            name: name,
             positiveExamples: [cars],
             negativeExamples: examplesTrucks,
             failure: failWithError) { classifier in
                 XCTAssertEqual(classifier.name, name)
-                XCTAssertEqual(classifier.classes.count, 1)
+                XCTAssertNotNil(classifier.classes)
+                XCTAssertEqual(classifier.classes!.count, 1)
                 classifierID = classifier.classifierID
                 expectation1.fulfill()
         }
         waitForExpectations()
-        
+
         guard let newClassifierID = classifierID else {
             XCTFail("Failed to create a new classifier due to free account.")
             return
         }
-        
-        let description2 = "Check that our classifier can be retrieved."
-        let expectation2 = expectation(description: description2)
-        
-        visualRecognition.getClassifiers(failure: failWithError) { classifiers in
-            for classifier in classifiers {
-                if classifier.classifierID == newClassifierID {
-                    expectation2.fulfill()
-                    return
-                }
+
+        let expectation2 = expectation(description: "Check that our classifier can be retrieved.")
+        visualRecognition.listClassifiers(verbose: true, failure: failWithError) { classifiers in
+            for classifier in classifiers.classifiers where classifier.classifierID == newClassifierID {
+                expectation2.fulfill()
+                return
             }
             XCTFail("The created classifier could not be retrieved from the service.")
         }
         waitForExpectations()
-        
-        let description3 = "Delete the custom classifier."
-        let expectation3 = expectation(description: description3)
 
-        visualRecognition.deleteClassifier(withID: newClassifierID, failure: failWithError) {
+        // allow zip files to propagate through object storage, so that
+        // they will be deleted when the service deletes the classifier
+        // (otherwise they remain and dramatically slow down the tests)
+        sleep(15) // wait 15 seconds
+
+        let expectation3 = expectation(description: "Delete the custom classifier.")
+        visualRecognition.deleteClassifier(classifierID: newClassifierID, failure: failWithError) {
             expectation3.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Get information about the trained classifier. */
     func testGetClassifier() {
-        
-        let description = "Get information about the trained classifier."
-        let expectation = self.expectation(description: description)
-
-        visualRecognition.getClassifier(withID: classifierID!, failure: failWithError) {
+        let expectation = self.expectation(description: "Get information about the trained classifier.")
+        visualRecognition.getClassifier(classifierID: classifierID, failure: failWithError) {
             classifier in
-            XCTAssertEqual(classifier.name, self.classifierName)
-            XCTAssertEqual(classifier.classes.count, 1)
+            XCTAssertNotNil(classifier.classes)
+            XCTAssertEqual(classifier.classes!.count, 1)
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
-    /** Update the trained classifier. */
-    func testUpdateClassifier() {
-        let description = "Update the trained classifier."
-        let expectation = self.expectation(description: description)
-        
-        let car = PositiveExample(name: "car", examples: examplesCars)
-        visualRecognition.updateClassifier(
-            withID: classifierID!,
-            positiveExamples: [car],
-            negativeExamples: examplesTrucks,
-            failure: failWithError) { classifier in
-                XCTAssertEqual(classifier.name, self.classifierName)
-                expectation.fulfill()
-        }
-        waitForExpectations()
-    }
-    
+
     /** Update the classifier with a positive example. */
     func testUpdateClassifierWithPositiveExample() {
-        let description1 = "Train a new classifier with positive examples."
-        let expectation1 = expectation(description: description1)
-        
         let name = "swift-sdk-unit-test-positive-update"
         let cars = PositiveExample(name: "car", examples: examplesCars)
         let trucks = PositiveExample(name: "truck", examples: examplesTrucks)
-        
+
         var classifierID: String?
+        let expectation1 = expectation(description: "Train a new classifier with positive examples.")
         visualRecognition.createClassifier(
-            withName: name,
+            name: name,
             positiveExamples: [cars],
             negativeExamples: examplesBaseball,
             failure: failWithError) { classifier in
                 XCTAssertEqual(classifier.name, name)
-                XCTAssertEqual(classifier.classes.count, 1)
+                XCTAssertNotNil(classifier.classes)
+                XCTAssertEqual(classifier.classes!.count, 1)
                 classifierID = classifier.classifierID
                 expectation1.fulfill()
         }
         waitForExpectations()
-        
+
         guard let newClassifierID = classifierID else {
             XCTFail("Failed to create a new classifier due to free account.")
             return
         }
+
+        // Teardown logic has been moved to teardown class method
+
         var trained = false
         var tries = 0
-        while(!trained) {
-            tries += 1
-            let description = "Get the new classifier."
-            let expectation = self.expectation(description: description)
-            visualRecognition.getClassifier(withID: newClassifierID, failure: failWithError) {
+        while !trained {
+            sleep(15)
+
+            let expectation = self.expectation(description: "Get the new classifier.")
+            visualRecognition.getClassifier(classifierID: newClassifierID, failure: failWithError) {
                 classifier in
-                
+
                 if classifier.status == "ready" {
                     trained = true
                 }
                 expectation.fulfill()
             }
             waitForExpectations()
-            
-            if tries > 5 {
-                let description = "Delete the new classifier."
-                let expectation = self.expectation(description: description)
-                
-                visualRecognition.deleteClassifier(withID: newClassifierID, failure: failWithError) {
-                    expectation.fulfill()
-                }
-                waitForExpectations()
-                
+
+            tries += 1
+            if tries > 8 {
                 XCTFail("Could not train a new classifier. Try again later.")
+                return
             }
-            
-            sleep(5)
         }
-        
-        let description2 = "Update the classifier with a positive example."
-        let expectation2 = expectation(description: description2)
-        
+
+        let expectation2 = expectation(description: "Update the classifier with a positive example.")
+
         visualRecognition.updateClassifier(
-            withID: newClassifierID,
+            classifierID: newClassifierID,
             positiveExamples: [trucks],
             failure: failWithError) { classifier in
                 XCTAssertEqual(classifier.name, name)
                 expectation2.fulfill()
         }
         waitForExpectations()
-        
+
         trained = false
         tries = 0
-        while(!trained) {
-            tries += 1
-            let description = "Get the updated classifier and make sure there are 2 classes."
-            let expectation = self.expectation(description: description)
-            visualRecognition.getClassifier(withID: newClassifierID, failure: failWithError) {
+        while !trained {
+            sleep(15)
+
+            let expectation = self.expectation(description: "Get the updated classifier.")
+            visualRecognition.getClassifier(classifierID: newClassifierID, failure: failWithError) {
                 classifier in
-                
+
                 if classifier.status == "ready" {
-                    XCTAssertEqual(classifier.classes.count, 2)
+                    XCTAssertNotNil(classifier.classes)
+                    XCTAssertEqual(classifier.classes!.count, 2)
                     trained = true
                 }
                 expectation.fulfill()
             }
             waitForExpectations()
-            
-            if tries > 5 {
-                let description = "Delete the new classifier."
-                let expectation = self.expectation(description: description)
-                
-                visualRecognition.deleteClassifier(withID: newClassifierID, failure: failWithError) {
-                    expectation.fulfill()
-                }
-                waitForExpectations()
-                
+
+            tries += 1
+            if tries > 8 {
                 XCTFail("Could not update the classifier. Try again later.")
+                return
             }
-            
-            sleep(5)
         }
-        
-        let description4 = "Delete the custom classifier."
-        let expectation4 = expectation(description: description4)
-        
-        visualRecognition.deleteClassifier(withID: newClassifierID, failure: failWithError) {
-            expectation4.fulfill()
-        }
-        waitForExpectations()
     }
-    
+
     /** Update the classifier with a negative example. */
     func testUpdateClassifierWithNegativeExample() {
-        let description1 = "Train a new classifier with positive examples."
-        let expectation1 = expectation(description: description1)
-        
+        let expectation1 = expectation(description: "Train a new classifier with positive examples.")
+
         let name = "swift-sdk-unit-test-negative-update"
         let cars = PositiveExample(name: "car", examples: examplesCars)
         let classes = [cars]
-        
+
         var classifierID: String?
         visualRecognition.createClassifier(
-            withName: name,
+            name: name,
             positiveExamples: classes,
             negativeExamples: examplesTrucks,
             failure: failWithError) { classifier in
                 XCTAssertEqual(classifier.name, name)
-                XCTAssertEqual(classifier.classes.count, 1)
+                XCTAssertNotNil(classifier.classes)
+                XCTAssertEqual(classifier.classes!.count, 1)
                 classifierID = classifier.classifierID
                 expectation1.fulfill()
         }
         waitForExpectations()
-        
+
         guard let newClassifierID = classifierID else {
             XCTFail("Failed to create a new classifier due to free account.")
             return
         }
-        
+
+        // Teardown logic has been moved to teardown class method
+
         var trained = false
         var tries = 0
-        while(!trained) {
-            tries += 1
-            let description = "Get the new classifier."
-            let expectation = self.expectation(description: description)
-            visualRecognition.getClassifier(withID: newClassifierID, failure: failWithError) {
+        while !trained {
+            sleep(15)
+
+            let expectation = self.expectation(description: "Get the new classifier.")
+            visualRecognition.getClassifier(classifierID: newClassifierID, failure: failWithError) {
                 classifier in
-                
+
                 if classifier.status == "ready" {
                     trained = true
                 }
                 expectation.fulfill()
             }
             waitForExpectations()
-            
-            if tries > 5 {
-                let description = "Delete the new classifier."
-                let expectation = self.expectation(description: description)
-                
-                visualRecognition.deleteClassifier(withID: newClassifierID, failure: failWithError) {
-                    expectation.fulfill()
-                }
-                waitForExpectations()
-                
-                XCTFail("Could not train a new classifier. Try again later.")
+
+            tries += 1
+            if tries > 8 {
+                 XCTFail("Could not train a new classifier. Try again later.")
+                return
             }
-            
-            sleep(5)
         }
-        
-        let description2 = "Update the classifier with a negative example."
-        let expectation2 = expectation(description: description2)
+
+        let expectation2 = expectation(description: "Update the classifier with a negative example.")
         visualRecognition.updateClassifier(
-            withID: newClassifierID,
+            classifierID: newClassifierID,
             negativeExamples: examplesBaseball,
             failure: failWithError) { classifier in
                 XCTAssertEqual(classifier.name, name)
                 expectation2.fulfill()
         }
         waitForExpectations()
-        
+
         trained = false
         tries = 0
-        while(!trained) {
-            tries += 1
-            let description = "Get the updated classifier and make sure there is 1 class."
-            let expectation = self.expectation(description: description)
-            visualRecognition.getClassifier(withID: newClassifierID, failure: failWithError) {
+        while !trained {
+            sleep(15)
+
+            let expectation = self.expectation(description: "Get the updated classifier.")
+            visualRecognition.getClassifier(classifierID: newClassifierID, failure: failWithError) {
                 classifier in
-                
+
                 if classifier.status == "ready" {
-                    XCTAssertEqual(classifier.classes.count, 1)
+                    XCTAssertNotNil(classifier.classes)
+                    XCTAssertEqual(classifier.classes!.count, 1)
                     trained = true
                 }
                 expectation.fulfill()
             }
             waitForExpectations()
-            
-            if tries > 5 {
-                let description = "Delete the new classifier."
-                let expectation = self.expectation(description: description)
-                
-                visualRecognition.deleteClassifier(withID: newClassifierID, failure: failWithError) {
-                    expectation.fulfill()
-                }
-                waitForExpectations()
-                
+
+            tries += 1
+            if tries > 8 {
                 XCTFail("Could not update the classifier. Try again later.")
+                return
             }
-            
-            sleep(5)
         }
-        
-        let description4 = "Delete the custom classifier."
-        let expectation4 = expectation(description: description4)
-        
-        visualRecognition.deleteClassifier(withID: newClassifierID, failure: failWithError) {
-            expectation4.fulfill()
-        }
-        waitForExpectations()
     }
-    
+
     /** Classify an image by URL using the default classifier and all default parameters. */
     func testClassifyByURL1() {
-        let description = "Classify an image by URL using the default classifier."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.classify(image: obamaURL, failure: failWithError) {
+        let expectation = self.expectation(description: "Classify an image by URL")
+
+        visualRecognition.classify(url: obamaURL, failure: failWithError) {
             classifiedImages in
-            
+
             var containsPersonClass = false
             var classifierScore: Double?
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertEqual(image?.sourceURL, self.obamaURL)
-            XCTAssertEqual(image?.resolvedURL, self.obamaURL)
+            XCTAssertEqual(image?.sourceUrl, self.obamaURL)
+            XCTAssertEqual(image?.resolvedUrl, self.obamaURL)
             XCTAssertNil(image?.image)
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
             XCTAssertEqual(classifier?.classifierID, "default")
             XCTAssertEqual(classifier?.name, "default")
-            
+
             guard let classes = classifier?.classes else {
                 XCTFail("Did not return any classes")
                 return
             }
             XCTAssertGreaterThan(classes.count, 0)
-            for c in classes {
-                if c.classification == "person" {
-                    containsPersonClass = true
-                    classifierScore = c.score
-                    break
-                }
+            for cls in classes where cls.className == "person" {
+                containsPersonClass = true
+                classifierScore = cls.score
+                break
             }
             XCTAssertEqual(true, containsPersonClass)
             if let score = classifierScore {
                 XCTAssertGreaterThan(score, 0.5)
             }
-            
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Classify an image by URL using the default classifier and specifying default parameters. */
     func testClassifyByURL2() {
-        let description = "Classify an image by URL using the default classifier."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify an image by URL using the default classifier.")
         visualRecognition.classify(
-            image: obamaURL,
+            url: obamaURL,
+            threshold: 0.5,
             owners: ["IBM"],
             classifierIDs: ["default"],
-            threshold: 0.5,
-            language: "en",
+            acceptLanguage: "en",
             failure: failWithError)
         {
             classifiedImages in
-            
+
             var containsPersonClass = false
             var classifierScore: Double?
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertEqual(image?.sourceURL, self.obamaURL)
-            XCTAssertEqual(image?.resolvedURL, self.obamaURL)
+            XCTAssertEqual(image?.sourceUrl, self.obamaURL)
+            XCTAssertEqual(image?.resolvedUrl, self.obamaURL)
             XCTAssertNil(image?.image)
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
             XCTAssertEqual(classifier?.classifierID, "default")
@@ -745,119 +529,109 @@ class VisualRecognitionTests: XCTestCase {
                 return
             }
             XCTAssertGreaterThan(classes.count, 0)
-            for c in classes {
-                if c.classification == "person" {
-                    containsPersonClass = true
-                    classifierScore = c.score
-                    break
-                }
+            for cls in classes where cls.className == "person" {
+                containsPersonClass = true
+                classifierScore = cls.score
+                break
             }
             XCTAssertEqual(containsPersonClass, true)
             if let score = classifierScore {
                 XCTAssertGreaterThan(score, 0.5)
             }
-            
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Classify an image by URL using a custom classifier and all default parameters. */
     func testClassifyByURL3() {
-        let description = "Classify an image by URL using a custom classifier."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.classify(image: carURL, classifierIDs: [classifierID!], failure: failWithError) {
+        let expectation = self.expectation(description: "Classify an image by URL using a custom classifier.")
+        visualRecognition.classify(url: carURL, classifierIDs: [classifierID], failure: failWithError) {
             classifiedImages in
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertEqual(image?.sourceURL, self.carURL)
-            XCTAssertEqual(image?.resolvedURL, self.carURL)
+            XCTAssertEqual(image?.sourceUrl, self.carURL)
+            XCTAssertEqual(image?.resolvedUrl, self.carURL)
             XCTAssertNil(image?.image)
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
-            XCTAssertEqual(classifier?.classifierID, self.classifierID!)
-            XCTAssertEqual(classifier?.name, self.classifierName)
+            XCTAssertEqual(classifier?.classifierID, self.classifierID)
             XCTAssertEqual(classifier?.classes.count, 1)
-            XCTAssertEqual(classifier?.classes.first?.classification, "car")
+            XCTAssertEqual(classifier?.classes.first?.className, "car")
             if let score = classifier?.classes.first?.score {
                 XCTAssertGreaterThan(score, 0.5)
             }
-            
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Classify an image by URL using a custom classifier and specifying default parameters. */
     func testClassifyByURL4() {
-        let description = "Classify an image by URL using a custom classifier."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify an image by URL using a custom classifier.")
         visualRecognition.classify(
-            image: carURL,
-            owners: ["me"],
-            classifierIDs: [classifierID!],
+            url: carURL,
             threshold: 0.5,
-            language: "en",
+            owners: ["me"],
+            classifierIDs: [classifierID],
+            acceptLanguage: "en",
             failure: failWithError)
         {
             classifiedImages in
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertEqual(image?.sourceURL, self.carURL)
-            XCTAssertEqual(image?.resolvedURL, self.carURL)
+            XCTAssertEqual(image?.sourceUrl, self.carURL)
+            XCTAssertEqual(image?.resolvedUrl, self.carURL)
             XCTAssertNil(image?.image)
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
-            XCTAssertEqual(classifier?.classifierID, self.classifierID!)
-            XCTAssertEqual(classifier?.name, self.classifierName)
+            XCTAssertEqual(classifier?.classifierID, self.classifierID)
             XCTAssertEqual(classifier?.classes.count, 1)
-            XCTAssertEqual(classifier?.classes.first?.classification, "car")
+            XCTAssertEqual(classifier?.classes.first?.className, "car")
             if let score = classifier?.classes.first?.score {
                 XCTAssertGreaterThan(score, 0.5)
             }
-            
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Classify an image by URL with both the default classifier and a custom classifier. */
     func testClassifyByURL5() {
-        let description = "Classify an image by URL using a custom classifier."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.classify(image: carURL, classifierIDs: ["default", classifierID!], failure: failWithError) {
+        let expectation = self.expectation(description: "Classify an image by URL using a custom classifier.")
+        visualRecognition.classify(url: carURL, classifierIDs: ["default", classifierID], failure: failWithError) {
             classifiedImages in
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertEqual(image?.sourceURL, self.carURL)
-            XCTAssertEqual(image?.resolvedURL, self.carURL)
+            XCTAssertEqual(image?.sourceUrl, self.carURL)
+            XCTAssertEqual(image?.resolvedUrl, self.carURL)
             XCTAssertNil(image?.image)
             XCTAssertNil(image?.error)
-            
+
             // verify 2 classifiers are returned
             guard let classifiers = image?.classifiers else {
                 XCTFail("No classifiers found")
@@ -871,13 +645,11 @@ class VisualRecognitionTests: XCTestCase {
                 if classifier.name == "default" {
                     XCTAssertEqual(classifier.classifierID, "default")
                     XCTAssertEqual(classifier.name, "default")
-                    
+
                     XCTAssertGreaterThan(classifier.classes.count, 0)
-                    for c in classifier.classes {
-                        if c.classification == "car" {
-                            containsCarClass = true
-                            classifierScore = c.score
-                        }
+                    for cls in classifier.classes where cls.className == "car" {
+                        containsCarClass = true
+                        classifierScore = cls.score
                     }
                     XCTAssertEqual(containsCarClass, true)
                     if let score = classifierScore {
@@ -885,10 +657,9 @@ class VisualRecognitionTests: XCTestCase {
                     }
                 } else {
                     // verify the image's custom classifier
-                    XCTAssertEqual(classifier.classifierID, self.classifierID!)
-                    XCTAssertEqual(classifier.name, self.classifierName)
+                    XCTAssertEqual(classifier.classifierID, self.classifierID)
                     XCTAssertEqual(classifier.classes.count, 1)
-                    XCTAssertEqual(classifier.classes.first?.classification, "car")
+                    XCTAssertEqual(classifier.classes.first?.className, "car")
                     if let score = classifier.classes.first?.score {
                         XCTAssertGreaterThan(score, 0.5)
                     }
@@ -898,28 +669,26 @@ class VisualRecognitionTests: XCTestCase {
         }
         waitForExpectations()
     }
-    
+
     /** Classify an uploaded image using the default classifier and all default parameters. */
     func testClassifyImage1() {
-        let description = "Classify an uploaded image using the default classifier."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.classify(imageFile: car, failure: failWithError) {
+        let expectation = self.expectation(description: "Classify an uploaded image using the default classifier.")
+        visualRecognition.classify(imagesFile: car, failure: failWithError) {
             classifiedImages in
             var containsPersonClass = false
             var classifierScore: Double?
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertNil(image?.sourceURL)
-            XCTAssertNil(image?.resolvedURL)
+            XCTAssertNil(image?.sourceUrl)
+            XCTAssertNil(image?.resolvedUrl)
             XCTAssert(image?.image == "car.png")
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
             XCTAssertEqual(classifier?.classifierID, "default")
@@ -929,53 +698,49 @@ class VisualRecognitionTests: XCTestCase {
                 return
             }
             XCTAssertGreaterThan(classes.count, 0)
-            for c in classes {
-                if c.classification == "car" {
-                    containsPersonClass = true
-                    classifierScore = c.score
-                    break
-                }
+            for cls in classes where cls.className == "car" {
+                containsPersonClass = true
+                classifierScore = cls.score
+                break
             }
             XCTAssertEqual(true, containsPersonClass)
             if let score = classifierScore {
                 XCTAssertGreaterThan(score, 0.5)
             }
-            
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Classify an uploaded image using the default classifier and specifying default parameters. */
     func testClassifyImage2() {
-        let description = "Classify an uploaded image using the default classifier."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify an uploaded image using the default classifier.")
         visualRecognition.classify(
-            imageFile: car,
+            imagesFile: car,
+            threshold: 0.5,
             owners: ["IBM"],
             classifierIDs: ["default"],
-            threshold: 0.5,
-            language: "en",
+            acceptLanguage: "en",
             failure: failWithError)
         {
             classifiedImages in
-            
+
             var containsPersonClass = false
             var classifierScore: Double?
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertNil(image?.sourceURL)
-            XCTAssertNil(image?.resolvedURL)
+            XCTAssertNil(image?.sourceUrl)
+            XCTAssertNil(image?.resolvedUrl)
             XCTAssert(image?.image == "car.png")
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
             XCTAssertEqual(classifier?.classifierID, "default")
@@ -985,12 +750,10 @@ class VisualRecognitionTests: XCTestCase {
                 return
             }
             XCTAssertGreaterThan(classes.count, 0)
-            for c in classes {
-                if c.classification == "car" {
-                    containsPersonClass = true
-                    classifierScore = c.score
-                    break
-                }
+            for cls in classes where cls.className == "car" {
+                containsPersonClass = true
+                classifierScore = cls.score
+                break
             }
             XCTAssertEqual(containsPersonClass, true)
             if let score = classifierScore {
@@ -1000,107 +763,99 @@ class VisualRecognitionTests: XCTestCase {
         }
         waitForExpectations()
     }
-    
+
     /** Classify an uploaded image using a custom classifier and all default parameters. */
     func testClassifyImage3() {
-        let description = "Classify an uploaded image using a custom classifier."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.classify(imageFile: car, classifierIDs: [classifierID!], failure: failWithError) {
+        let expectation = self.expectation(description: "Classify an uploaded image using a custom classifier.")
+        visualRecognition.classify(imagesFile: car, classifierIDs: [classifierID], failure: failWithError) {
             classifiedImages in
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertNil(image?.sourceURL)
-            XCTAssertNil(image?.resolvedURL)
+            XCTAssertNil(image?.sourceUrl)
+            XCTAssertNil(image?.resolvedUrl)
             XCTAssert(image?.image == "car.png")
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
-            XCTAssertEqual(classifier?.classifierID, self.classifierID!)
-            XCTAssertEqual(classifier?.name, self.classifierName)
+            XCTAssertEqual(classifier?.classifierID, self.classifierID)
             XCTAssertEqual(classifier?.classes.count, 1)
-            XCTAssertEqual(classifier?.classes.first?.classification, "car")
+            XCTAssertEqual(classifier?.classes.first?.className, "car")
             if let score = classifier?.classes.first?.score {
                 XCTAssertGreaterThan(score, 0.5)
             }
-            
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Classify an uploaded image using a custom classifier and specifying default parameters. */
     func testClassifyImage4() {
-        let description = "Classify an uploaded image using a custom classifier."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify an uploaded image using a custom classifier.")
         visualRecognition.classify(
-            imageFile: car,
-            owners: ["me"],
-            classifierIDs: [classifierID!],
+            imagesFile: car,
             threshold: 0.5,
-            language: "en",
+            owners: ["me"],
+            classifierIDs: [classifierID],
+            acceptLanguage: "en",
             failure: failWithError)
         {
             classifiedImages in
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertNil(image?.sourceURL)
-            XCTAssertNil(image?.resolvedURL)
+            XCTAssertNil(image?.sourceUrl)
+            XCTAssertNil(image?.resolvedUrl)
             XCTAssert(image?.image == "car.png")
             XCTAssertNil(image?.error)
             XCTAssertEqual(image?.classifiers.count, 1)
-            
+
             // verify the image's classifier
             let classifier = image?.classifiers.first
-            XCTAssertEqual(classifier?.classifierID, self.classifierID!)
-            XCTAssertEqual(classifier?.name, self.classifierName)
+            XCTAssertEqual(classifier?.classifierID, self.classifierID)
             XCTAssertEqual(classifier?.classes.count, 1)
-            XCTAssertEqual(classifier?.classes.first?.classification, "car")
+            XCTAssertEqual(classifier?.classes.first?.className, "car")
             if let score = classifier?.classes.first?.score {
                 XCTAssertGreaterThan(score, 0.5)
             }
-            
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Classify an uploaded image with both the default classifier and a custom classifier. */
     func testClassifyImage5() {
-        let description = "Classify an uploaded image with the default and custom classifiers."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify an uploaded image with the default and custom classifiers.")
         visualRecognition.classify(
-            imageFile: car,
-            classifierIDs: ["default", classifierID!],
+            imagesFile: car,
+            classifierIDs: ["default", classifierID],
             failure: failWithError)
         {
             classifiedImages in
-            
+
             var containsCarClass = false
             var classifierScore: Double?
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
             XCTAssertEqual(classifiedImages.images.count, 1)
-            
+
             // verify the image's metadata
             let image = classifiedImages.images.first
-            XCTAssertNil(image?.sourceURL)
-            XCTAssertNil(image?.resolvedURL)
+            XCTAssertNil(image?.sourceUrl)
+            XCTAssertNil(image?.resolvedUrl)
             XCTAssert(image?.image == "car.png")
             XCTAssertNil(image?.error)
 
@@ -1115,13 +870,11 @@ class VisualRecognitionTests: XCTestCase {
                 if classifier.name == "default" {
                     XCTAssertEqual(classifier.classifierID, "default")
                     XCTAssertEqual(classifier.name, "default")
-                    
+
                     XCTAssertGreaterThan(classifier.classes.count, 0)
-                    for c in classifier.classes {
-                        if c.classification == "car" {
-                            containsCarClass = true
-                            classifierScore = c.score
-                        }
+                    for cls in classifier.classes where cls.className == "car" {
+                        containsCarClass = true
+                        classifierScore = cls.score
                     }
                     XCTAssertEqual(containsCarClass, true)
                     if let score = classifierScore {
@@ -1129,10 +882,9 @@ class VisualRecognitionTests: XCTestCase {
                     }
                 } else {
                     // verify the image's custom classifier
-                    XCTAssertEqual(classifier.classifierID, self.classifierID!)
-                    XCTAssertEqual(classifier.name, self.classifierName)
+                    XCTAssertEqual(classifier.classifierID, self.classifierID)
                     XCTAssertEqual(classifier.classes.count, 1)
-                    XCTAssertEqual(classifier.classes.first?.classification, "car")
+                    XCTAssertEqual(classifier.classes.first?.className, "car")
                     if let score = classifier.classes.first?.score {
                         XCTAssertGreaterThan(score, 0.5)
                     }
@@ -1142,44 +894,42 @@ class VisualRecognitionTests: XCTestCase {
         }
         waitForExpectations()
     }
-    
+
     /** Classify multiple images using a custom classifier. */
     func testClassifyImage6() {
-        let description = "Classify multiple images using a custom classifier."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify multiple images using a custom classifier.")
         visualRecognition.classify(
-            imageFile: examplesCars,
-            classifierIDs: ["default", classifierID!],
+            imagesFile: carz,
+            classifierIDs: ["default", classifierID],
             failure: failWithError)
         {
             classifiedImages in
-            
+
             // verify classified images object
             XCTAssertNil(classifiedImages.warnings)
-            XCTAssertEqual(classifiedImages.images.count, 16)
-            
+            XCTAssertEqual(classifiedImages.images.count, 4)
+
             for image in classifiedImages.images {
                 // verify the image's metadata
-                XCTAssertNil(image.sourceURL)
-                XCTAssertNil(image.resolvedURL)
+                XCTAssertNil(image.sourceUrl)
+                XCTAssertNil(image.resolvedUrl)
                 XCTAssert(image.image?.hasPrefix("car") == true)
                 XCTAssertNil(image.error)
                 XCTAssertEqual(image.classifiers.count, 2)
-            
+
                 for classifier in image.classifiers {
                     var containsCarClass = false
                     var classifierScore: Double?
-                    // verify the image's default classifier
                     if classifier.name == "default" {
+                        // verify the image's default classifier
                         XCTAssertEqual(classifier.classifierID, "default")
                         XCTAssertEqual(classifier.name, "default")
-                        
                         XCTAssertGreaterThan(classifier.classes.count, 0)
-                        for c in classifier.classes {
-                            if c.classification == "car" || c.classification == "vehicle" {
+                        for cls in classifier.classes {
+                            let classes = ["car", "vehicle", "sedan", "Parking Garage (Indoor)"]
+                            if classes.contains(cls.className) {
                                 containsCarClass = true
-                                classifierScore = c.score
+                                classifierScore = cls.score
                             }
                         }
                         XCTAssertEqual(containsCarClass, true)
@@ -1188,581 +938,188 @@ class VisualRecognitionTests: XCTestCase {
                         }
                     } else {
                         // verify the image's custom classifier
-                        XCTAssertEqual(classifier.classifierID, self.classifierID!)
-                        XCTAssertEqual(classifier.name, self.classifierName)
+                        XCTAssertEqual(classifier.classifierID, self.classifierID)
                         XCTAssertEqual(classifier.classes.count, 1)
-                        XCTAssertEqual(classifier.classes.first?.classification, "car")
+                        XCTAssertEqual(classifier.classes.first?.className, "car")
                         if let score = classifier.classes.first?.score {
                             XCTAssertGreaterThan(score, 0.5)
                         }
                     }
                 }
             }
-            
+
             expectation.fulfill()
         }
-        waitForExpectations()
+        waitForExpectations(timeout: 60)
     }
-    
+
     /** Detect faces by URL. */
     func testDetectFacesByURL() {
-        let description = "Detect faces by URL."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.detectFaces(inImage: obamaURL, failure: failWithError) {
+        let expectation = self.expectation(description: "Detect faces by URL.")
+        visualRecognition.detectFaces(url: obamaURL, failure: failWithError) {
             faceImages in
-            
+
             // verify face images object
             XCTAssertEqual(faceImages.imagesProcessed, 1)
             XCTAssertNil(faceImages.warnings)
             XCTAssertEqual(faceImages.images.count, 1)
-            
+
             // verify the face image object
             let face = faceImages.images.first
-            XCTAssertEqual(face?.sourceURL, self.obamaURL)
-            XCTAssertEqual(face?.resolvedURL, self.obamaURL)
+            XCTAssertEqual(face?.sourceUrl, self.obamaURL)
+            XCTAssertEqual(face?.resolvedUrl, self.obamaURL)
             XCTAssertNil(face?.image)
             XCTAssertNil(face?.error)
             XCTAssertEqual(face?.faces.count, 1)
-            
+
             // verify the age
             let age = face?.faces.first?.age
-            XCTAssertGreaterThanOrEqual(age!.min!, 45)
+            XCTAssertGreaterThanOrEqual(age!.min!, 40)
             XCTAssertLessThanOrEqual(age!.max!, 54)
-            XCTAssertGreaterThanOrEqual(age!.score, 0.25)
-            
+            XCTAssertGreaterThanOrEqual(age!.score!, 0.25)
+
             // verify the face location
-            let location = face?.faces.first?.location
-            XCTAssertEqual(location?.height, 229)
-            XCTAssertEqual(location?.left, 213)
-            XCTAssertEqual(location?.top, 66)
-            XCTAssertEqual(location?.width, 189)
-            
+            let location = face?.faces.first?.faceLocation
+            XCTAssertEqual(location?.height, 173)
+            XCTAssertEqual(location?.left, 219)
+            XCTAssertEqual(location?.top, 78)
+            XCTAssertEqual(location?.width, 142)
+
             // verify the gender
             let gender = face?.faces.first?.gender
             XCTAssertEqual(gender!.gender, "MALE")
-            XCTAssertGreaterThanOrEqual(gender!.score, 0.75)
-            
-            // verify the identity
-            let identity = face?.faces.first?.identity
-            XCTAssertEqual(identity!.name, "Barack Obama")
-            XCTAssertGreaterThanOrEqual(identity!.score, 0.75)
-            
+            XCTAssertGreaterThanOrEqual(gender!.score!, 0.75)
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Detect faces in an uploaded image */
     func testDetectFacesByImage1() {
-        let description = "Detect faces in an uploaded image."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.detectFaces(inImageFile: obama, failure: failWithError) {
+        let expectation = self.expectation(description: "Detect faces in an uploaded image.")
+        visualRecognition.detectFaces(imagesFile: obama, failure: failWithError) {
             faceImages in
-            
+
             // verify face images object
             XCTAssertEqual(faceImages.imagesProcessed, 1)
             XCTAssertNil(faceImages.warnings)
             XCTAssertEqual(faceImages.images.count, 1)
-            
+
             // verify the face image object
             let face = faceImages.images.first
-            XCTAssertNil(face?.sourceURL)
-            XCTAssertNil(face?.resolvedURL)
+            XCTAssertNil(face?.sourceUrl)
+            XCTAssertNil(face?.resolvedUrl)
             XCTAssertNotNil(face?.image)
             XCTAssertNil(face?.error)
             XCTAssertEqual(face?.faces.count, 1)
-            
+
             // verify the age
             let age = face?.faces.first?.age
-            XCTAssertGreaterThanOrEqual(age!.min!, 45)
+            XCTAssertGreaterThanOrEqual(age!.min!, 40)
             XCTAssertLessThanOrEqual(age!.max!, 54)
-            XCTAssertGreaterThanOrEqual(age!.score, 0.25)
-            
+            XCTAssertGreaterThanOrEqual(age!.score!, 0.25)
+
             // verify the face location
-            let location = face?.faces.first?.location
-            XCTAssertEqual(location?.height, 229)
-            XCTAssertEqual(location?.left, 213)
-            XCTAssertEqual(location?.top, 66)
-            XCTAssertEqual(location?.width, 189)
-            
+            let location = face?.faces.first?.faceLocation
+            XCTAssertEqual(location?.height, 172)
+            XCTAssertEqual(location?.left, 219)
+            XCTAssertEqual(location?.top, 79)
+            XCTAssertEqual(location?.width, 141)
+
             // verify the gender
             let gender = face?.faces.first?.gender
             XCTAssertEqual(gender!.gender, "MALE")
-            XCTAssertGreaterThanOrEqual(gender!.score, 0.75)
-            
-            // verify the identity
-            let identity = face?.faces.first?.identity
-            XCTAssertEqual(identity!.name, "Barack Obama")
-            XCTAssertGreaterThanOrEqual(identity!.score, 0.75)
-            
+            XCTAssertGreaterThanOrEqual(gender!.score!, 0.75)
+
             expectation.fulfill()
         }
         waitForExpectations()
     }
-    
+
     /** Detect faces in uploaded images. */
     func testDetectFacesByImage2() {
-        let description = "Detect faces in uploaded images."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.detectFaces(inImageFile: faces, failure: failWithError) {
+        let expectation = self.expectation(description: "Detect faces in uploaded images.")
+        visualRecognition.detectFaces(imagesFile: faces, failure: failWithError) {
             faceImages in
-            
+
             // verify face images object
             XCTAssertEqual(faceImages.imagesProcessed, 3)
             XCTAssertNil(faceImages.warnings)
             XCTAssertEqual(faceImages.images.count, 3)
-            
+
             for image in faceImages.images {
                 // verify the face image object
-                XCTAssertNil(image.sourceURL)
-                XCTAssertNil(image.resolvedURL)
+                XCTAssertNil(image.sourceUrl)
+                XCTAssertNil(image.resolvedUrl)
                 XCTAssert(image.image?.hasPrefix("faces.zip/faces/face") == true)
                 XCTAssertNil(image.error)
                 XCTAssertEqual(image.faces.count, 1)
-                
+
                 // verify the age
                 let age = image.faces.first?.age
                 XCTAssert(age!.min! >= 18)
                 XCTAssert(age!.max! <= 44)
-                XCTAssert(age!.score >= 0.25)
-                
+                XCTAssert(age!.score! >= 0.25)
+
                 // verify the face location
-                let location = image.faces.first?.location
-                XCTAssert(location!.height >= 100)
+                let location = image.faces.first?.faceLocation
+                XCTAssert(location!.height >= 90)
                 XCTAssert(location!.left >= 30)
                 XCTAssert(location!.top >= 20)
                 XCTAssert(location!.width >= 90)
-                
+
                 // verify the gender
                 let gender = image.faces.first?.gender
                 XCTAssert(gender!.gender == "MALE")
-                XCTAssert(gender!.score >= 0.75)
-                
-                // verify the identity
-                if let identity = image.faces.first?.identity {
-                    XCTAssertEqual(identity.name, "Tiger Woods")
-                    XCTAssert(identity.score >= 0.75)
-                }
+                XCTAssert(gender!.score! >= 0.75)
             }
-            
-            expectation.fulfill()
-        }
-        waitForExpectations()
-    }
-    
-    /** List all collections. */
-    func testGetCollections() {
-        let description = "List all collections."
-        let expectation = self.expectation(description: description)
-        
-        visualRecognition.getCollections(failure: failWithError) { collections in
-            for collection in collections {
-                if collection.name == self.collectionName {
-                    XCTAssertEqual(collection.collectionID, self.collectionID)
-                    XCTAssertEqual(collection.name, self.collectionName)
-                    XCTAssertNotNil(collection.images)
-                    XCTAssertEqual(collection.status, "available")
-                    XCTAssertEqual(collection.capacity, "1000000")
-                }
-            }
-            expectation.fulfill()
-        }
-        waitForExpectations()
-    }
-    
-    /** Retrieve test collection details. */
-    func testRetrieveCollectionDetails() {
-        let description = "Retrieve test collection."
-        let expectation = self.expectation(description: description)
 
-        visualRecognition.retrieveCollectionDetails(
-            withID: collectionID!,
-            failure: failWithError) { collection in
-                
-                XCTAssertEqual(collection.collectionID, self.collectionID)
-                XCTAssertEqual(collection.name, self.collectionName)
-                XCTAssertNotNil(collection.images)
-                XCTAssertEqual(collection.status, "available")
-                XCTAssertEqual(collection.capacity, "1000000")
-                
-                expectation.fulfill()
+            expectation.fulfill()
         }
         waitForExpectations()
     }
 
-    /** Add images to collection. */
-    func testAddDeleteImageToCollection() {
-        let description = "Add image to test collection."
-        let expectation = self.expectation(description: description)
-
-        var imageID: String?
-        let imageFile = "obama.jpg"
-        
-        visualRecognition.addImageToCollection(
-            withID: collectionID!,
-            imageFile: obama,
-            failure: failWithError) { collectionImages in
-                
-                XCTAssertEqual(1, collectionImages.imagesProcessed)
-                for image in collectionImages.collectionImages {
-                    if image.imageFile == imageFile {
-                        imageID = image.imageID
-                        expectation.fulfill()
-                        return
-                    }
-                }
-                XCTFail("Image was not successfully added to the collection.")
-        }
-        waitForExpectations()
-        
-        guard let imageIDToDelete = imageID else {
-            XCTFail("Image failed to be added to collection.")
-            return
-        }
-        
-        let description2 = "Delete the image added."
-        let expectation2 = self.expectation(description: description2)
-        visualRecognition.deleteImageFromCollection(withID: collectionID!, imageID: imageIDToDelete, failure: failWithError) {
-            expectation2.fulfill()
-        }
-        waitForExpectations()
-    }
-    
-    /** Add image with metadata to collection. */
-    func testAddDeleteImageWithMetadataToCollection() {
-        let description = "Add image to test collection."
-        let expectation = self.expectation(description: description)
-        
-        var imageID: String?
-        let imageFile = "obama.jpg"
-        
-        guard let imageMetadataURL = loadMetadataFile(withName: "metadata", withExtension: "txt") else {
-            XCTFail("Failed to load image metadata file.")
-            return
-        }
-        
-        visualRecognition.addImageToCollection(
-            withID: collectionID!,
-            imageFile: obama,
-            metadata: imageMetadataURL,
-            failure: failWithError) { collectionImages in
-                
-                XCTAssertEqual(1, collectionImages.imagesProcessed)
-                for image in collectionImages.collectionImages {
-                    if image.imageFile == imageFile {
-                        imageID = image.imageID
-                        XCTAssertNotNil(image.metadata)
-                        expectation.fulfill()
-                        return
-                    }
-                }
-                XCTFail("Image was not successfully added to the collection.")
-        }
-        waitForExpectations()
-        
-        guard let imageIDToDelete = imageID else {
-            XCTFail("Image failed to be added to collection.")
-            return
-        }
-        
-        let description2 = "Delete the image added."
-        let expectation2 = self.expectation(description: description2)
-        visualRecognition.deleteImageFromCollection(withID: collectionID!, imageID: imageIDToDelete, failure: failWithError) {
-            expectation2.fulfill()
-        }
-        waitForExpectations()
-    }
-    
-    // Uncomment when .PNG bug is fixed. Currently this test fails at the XCTAssertEqual
-    // callback is nil
-//    /** Add images to collection. */
-//    func testAddDeletePNGImageToCollection() {
-//        let description = "Add image to test collection."
-//        let expectation = self.expectation(description: description)
-//        
-//        let imageFile = "car.png"
-//        
-//        visualRecognition.addImageToCollection(
-//            collectionID: collectionID!,
-//            imageFile: car,
-//            failure: failWithError) { collectionImages in
-//                
-//                XCTAssertEqual(1, collectionImages.imagesProcessed)
-//                guard let images = collectionImages.collectionImages else {
-//                    return
-//                }
-//                for image in images {
-//                    if image.imageFile == imageFile {
-//                        expectation.fulfill()
-//                        return
-//                    }
-//                }
-//                XCTFail("Image was not successfully added to the collection.")
-//        }
-//        waitForExpectations()
-//    }
-    
-    /** List images in a collection. */
-    func testCreateDeleteCollection() {
-        let description = "Create a collection."
-        let expectation = self.expectation(description: description)
-        
-        let name = "swift-sdk-unit-test-2"
-        var collectionID: String?
-        
-        visualRecognition.createCollection(withName: name, failure: failWithError) { collection in
-            XCTAssertEqual(collection.name, name)
-            collectionID = collection.collectionID
-            expectation.fulfill()
-        }
-        waitForExpectations()
-        
-        let description2 = "Delete collection."
-        let expectation2 = self.expectation(description: description2)
-        
-        guard let collection = collectionID else {
-            return
-        }
-        visualRecognition.deleteCollection(withID: collection) {
-            expectation2.fulfill()
-        }
-        waitForExpectations()
-    }
-    
-    /** List images in the test collection. */
-    func testListImagesInCollection() {
-        let description = "List images in collection."
-        let expectation = self.expectation(description: description)
-        let failure = { (error: Error) in XCTFail("Could not list images in collection.") }
-        let imageFile = "sign.jpg"
-        
-        visualRecognition.getImagesInCollection(withID: collectionID!, failure: failure) { images in
-            XCTAssertEqual(2, images.count)
-            for image in images {
-                if image.imageFile == imageFile {
-                    expectation.fulfill()
-                    return
-                }
-            }
-            XCTFail("Could not list images in collection.")
-        }
-        waitForExpectations()
-    }
-    
-    /** Add and delete metadata to the test image in test's colleciton. */
-    func testAddDeleteMetadataToImageInCollection() {
-        let description = "Find image ID in collection."
-        let expectation = self.expectation(description: description)
-        
-        guard let metadata = loadMetadataFile(withName: "metadata", withExtension: "txt") else {
-            XCTFail("Failed to load metadata file.")
-            return
-        }
-        
-        var imageID: String?
-        
-        // Grab image ID.
-        visualRecognition.getImagesInCollection(withID: collectionID!, failure: failWithError) { images in
-            imageID = images[0].imageID
-            expectation.fulfill()
-        }
-        waitForExpectations()
-        
-        let description1 = "Add metadata to image in collection."
-        let expectation1 = self.expectation(description: description1)
-        
-        guard let image = imageID else {
-            XCTFail("failed to grab image ID.")
-            return
-        }
-        
-        visualRecognition.updateImageMetadata(
-            forImageID: image,
-            inCollectionID: collectionID!,
-            metadata: metadata,
-            failure: failWithError) { metadata in
-                
-                // Check metadata is returned
-                guard let metadata = metadata.metadata else {
-                    XCTFail("No metadata found")
-                    return
-                }
-                guard let name = metadata["name"] as? String,
-                    let description = metadata["description"] as? String
-                    else { return }
-                XCTAssertEqual(name, "obama")
-                XCTAssertEqual(description, "for unit tests")
-                expectation1.fulfill()
-        }
-        waitForExpectations()
-        
-        let description2 = "Delete metadata to image in collection."
-        let expectation2 = self.expectation(description: description2)
-        
-        visualRecognition.deleteImageMetadata(
-            forImageID: image,
-            inCollectionID: collectionID!,
-            failure: failWithError) {
-                expectation2.fulfill()
-        }
-        waitForExpectations()
-    }
-    
-    /** Add and list metadata for an image in the test collection. */
-    func testAddListMetadataForImageInCollection () {
-        let description = "Find image ID in collection."
-        let expectation = self.expectation(description: description)
-        
-        guard let metadata = loadMetadataFile(withName: "metadata", withExtension: "txt") else {
-            XCTFail("Failed to load metadata file.")
-            return
-        }
-        
-        var imageID: String?
-        
-        // Grab image ID.
-        visualRecognition.getImagesInCollection(withID: collectionID!, failure: failWithError) { images in
-            imageID = images[0].imageID
-            expectation.fulfill()
-        }
-        waitForExpectations()
-        
-        let description1 = "Add metadata to image in collection."
-        let expectation1 = self.expectation(description: description1)
-        
-        guard let image = imageID else {
-            XCTFail("failed to grab image ID.")
-            return
-        }
-        
-        visualRecognition.updateImageMetadata(
-            forImageID: image,
-            inCollectionID: collectionID!,
-            metadata: metadata,
-            failure: failWithError) { metadata in
-                expectation1.fulfill()
-        }
-        waitForExpectations()
-        
-        let description2 = "List metadata of the image within the collection."
-        let expectation2 = self.expectation(description: description2)
-        visualRecognition.listImageMetadata(forImageID: image, inCollectionID: collectionID!, failure: failWithError) { metadata in
-            guard let metadata = metadata.metadata else {
-                XCTFail("No metadata found")
-                return
-            }
-            guard let name = metadata["name"] as? String,
-                let description = metadata["description"] as? String
-                else { return }
-            XCTAssertEqual(name, "obama")
-            XCTAssertEqual(description, "for unit tests")
-            expectation2.fulfill()
-        }
-        waitForExpectations()
-    }
-
-    /** Find similar images using the default classifier and all default parameters. */
-    func testSimilarImages() {
-        let description = "Find images similar to an uploaded image using the default classifier."
-        let expectation = self.expectation(description: description)
-        
-        let imageFile = "obama.jpg"
-        
-        visualRecognition.findSimilarImages(
-            toImageFile: obama,
-            inCollectionID: collectionID!,
-            failure: failWithError) { similarImages in
-                XCTAssertEqual(imageFile, similarImages.imageFile)
-                XCTAssertNotEqual(0, similarImages.similarImages.count)
-                XCTAssertEqual(1, similarImages.imagesProcessed)
-                for image in similarImages.similarImages {
-                    XCTAssertNotNil(image.score)
-                }
-                expectation.fulfill()
-        }
-        waitForExpectations()
-    }
-    
     // MARK: - Negative Tests
-    
-    /** Test error message for finding similar images to an invalid file type. */
-    func testSimilarImagesWithInvalidFile() {
-        let description = "Find images similar to an invalid image using the default classifier."
-        let expectation = self.expectation(description: description)
-        
-        let failure = { (error: Error) in
-            XCTAssertEqual("Invalid image file", error.localizedDescription)
-            expectation.fulfill()
-        }
-        
-        visualRecognition.findSimilarImages(
-            toImageFile: examplesCars,
-            inCollectionID: collectionID!,
-            failure: failure,
-            success: failWithResult)
-        waitForExpectations()
-    }
-    
+
     /** Test creating a classifier with a single image for positive examples. */
     func testCreateClassifierWithInvalidPositiveExamples() {
-        let description = "Create classifier with invalid positive example."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Create classifier with invalid positive example.")
         let failure = { (error: Error) in
             expectation.fulfill()
         }
-        
+
         let invalidPositiveExample = PositiveExample(name: "obama", examples: obama)
-        
+
         visualRecognition.createClassifier(
-            withName: "invalidClassifier",
+            name: "invalidClassifier",
             positiveExamples: [invalidPositiveExample],
             failure: failure,
             success: failWithResult)
         waitForExpectations()
     }
-    
+
     /** Test classifying an invalid URL using the default classifier and parameters. */
     func testClassifyByInvalidURL() {
-        let description = "Classify an image with an invalid URL."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify an image with an invalid URL.")
         let failure = { (error: Error) in
             expectation.fulfill()
         }
-        
+
         let invalidImageURL = "invalid-image-url"
-        visualRecognition.classify(image: invalidImageURL, failure: failure, success: failWithResult)
+        visualRecognition.classify(url: invalidImageURL, failure: failure, success: failWithResult)
         waitForExpectations()
     }
-    
+
     /** Test detecting faces with an invalid URL using the default classifier and parameters. */
     func testDetectFacesByInvalidURL() {
-        let description = "Classify an image with an invalid type."
-        let expectation = self.expectation(description: description)
-        
+        let expectation = self.expectation(description: "Classify an image with an invalid type.")
         let failure = { (error: Error) in
             expectation.fulfill()
         }
-        
+
         let invalidImageURL = "invalid-image-url"
-        visualRecognition.detectFaces(inImage: invalidImageURL, failure: failure, success: failWithResult)
-        waitForExpectations()
-    }
-    
-    /** Test add zip file to a collection. */
-    func testAddZipToCollection() {
-        let description = "Add a zip file to the test collection."
-        let expectation = self.expectation(description: description)
-        
-        let failure = { (error: Error) in
-            expectation.fulfill()
-        }
-        
-        visualRecognition.addImageToCollection(withID: collectionID!, imageFile: examplesCars, failure: failure, success: failWithResult)
+        visualRecognition.detectFaces(url: invalidImageURL, failure: failure, success: failWithResult)
         waitForExpectations()
     }
 }

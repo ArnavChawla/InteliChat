@@ -10,6 +10,7 @@
     
   </head>
   <body>
+    <a name="//apple_ref/swift/Section/Classes" class="dashAnchor"></a>
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
@@ -36,45 +37,66 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Enums.html">Enums</a>
+            <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/AudioFormat.html">AudioFormat</a>
+                <a href="Enums/JSON.html">JSON</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/PhonemeFormat.html">PhonemeFormat</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/SynthesisVoice.html">SynthesisVoice</a>
+                <a href="Enums/RestError.html">RestError</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Structs.html">Structs</a>
+            <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Structs/CustomVoiceUpdate.html">CustomVoiceUpdate</a>
+                <a href="Structs/CreateVoiceModel.html">CreateVoiceModel</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/Customization.html">Customization</a>
+                <a href="Structs/CreateVoiceModel/Language.html">– Language</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/CustomizationID.html">CustomizationID</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/CustomizationWords.html">CustomizationWords</a>
+                <a href="Structs.html#/s:14TextToSpeechV111JSONWrapperV">JSONWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Pronunciation.html">Pronunciation</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/SupportedFeatures.html">SupportedFeatures</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Text.html">Text</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Translation.html">Translation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Translation/PartOfSpeech.html">– PartOfSpeech</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/UpdateVoiceModel.html">UpdateVoiceModel</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/Voice.html">Voice</a>
               </li>
               <li class="nav-group-task">
+                <a href="Structs/VoiceModel.html">VoiceModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/VoiceModels.html">VoiceModels</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Voices.html">Voices</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Structs/Word.html">Word</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Word/PartOfSpeech.html">– PartOfSpeech</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/Words.html">Words</a>
               </li>
             </ul>
           </li>
@@ -93,9 +115,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:C14TextToSpeechV112TextToSpeech"></a>
+                    <a name="/s:14TextToSpeechV10abC0C"></a>
                     <a name="//apple_ref/swift/Class/TextToSpeech" class="dashAnchor"></a>
-                    <a class="token" href="#/s:C14TextToSpeechV112TextToSpeech">TextToSpeech</a>
+                    <a class="token" href="#/s:14TextToSpeechV10abC0C">TextToSpeech</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -103,10 +125,56 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The Text to Speech service provides an API that uses IBM&rsquo;s speech-synthesis capabilities to
-synthesize text into natural-sounding speech in a variety of languages, accents, and voices. The
-service supports at least one male or female voice, sometimes both, for each language. The audio
-is streamed back to the client with minimal delay.</p>
+                        <h3 id='service-overview' class='heading'>Service Overview</h3>
+
+<p>The IBM&reg; Text to Speech service provides an API that uses IBM&rsquo;s speech-synthesis capabilities to synthesize text
+into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one male or
+female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay. For more
+information about the service, see the <a href="https://console.bluemix.net/docs/services/text-to-speech/getting-started.html">IBM&reg; Cloud
+documentation</a>.</p>
+<h3 id='api-overview' class='heading'>API Overview</h3>
+
+<p>The Text to Speech service provides the following endpoints:</p>
+
+<ul>
+<li><strong>Voices</strong> provides information about the voices available for synthesized speech.</li>
+<li><strong>Synthesis</strong> synthesizes written text to audio speech.</li>
+<li><strong>Pronunciation</strong> returns the pronunciation for a specified word. Currently a beta feature.</li>
+<li><strong>Custom models</strong> and let users create custom voice models, which are dictionaries of words and their translations
+for use in speech synthesis. All custom model methods are currently beta features.</li>
+<li><strong>Custom words</strong> let users manage the words in a custom voice model. All custom word methods are currently beta
+features.
+### API Usage
+The following information provides details about using the service to synthesize audio:</li>
+<li><strong>Audio formats:</strong> The service supports a number of audio formats (MIME types). For more information about audio
+formats and sampling rates, including links to a number of Internet sites that provide technical and usage details
+about the different formats, see <a href="https://console.bluemix.net/docs/services/text-to-speech/http.html#format">Specifying an audio
+format</a>.</li>
+<li><strong>SSML:</strong> Many methods refer to the Speech Synthesis Markup Language (SSML), an XML-based markup language that
+provides annotations of text for speech-synthesis applications; for example, many methods accept or produce
+translations that use an SSML-based phoneme format. See <a href="https://console.bluemix.net/docs/services/text-to-speech/SSML.html">Using
+SSML</a> and <a href="https://console.bluemix.net/docs/services/text-to-speech/SPRs.html">Using IBM
+SPR</a>.</li>
+<li><strong>Word translations:</strong> Many customization methods accept or return sounds-like or phonetic translations for words. A
+phonetic translation is based on the SSML format for representing the phonetic string of a word. Phonetic translations
+can use standard International Phonetic Alphabet (IPA) representation:
+&lt;phoneme alphabet=<q>ipa</q> ph=<q>t&#601;m&#712;&#593;to</q>&gt;&lt;/phoneme&gt;
+or the proprietary IBM Symbolic Phonetic Representation (SPR):
+&lt;phoneme alphabet=<q>ibm</q> ph=<q>1gAstroEntxrYFXs</q>&gt;&lt;/phoneme&gt;
+For more information about customization and about sounds-like and phonetic translations, see <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-intro.html">Understanding
+customization</a>.</li>
+<li><strong>WebSocket interface:</strong> The service also offers a WebSocket interface as an alternative to its HTTP REST interface
+for speech synthesis. The WebSocket interface supports both plain text and SSML input, including the SSML &lt;mark&gt;
+element and word timings. See <a href="https://console.bluemix.net/docs/services/text-to-speech/websockets.html">The WebSocket
+interface</a>.</li>
+<li><strong>GUIDs:</strong> The pronunciation and customization methods accept or return a Globally Unique Identifier (GUID). For
+example, customization IDs (specified with the <code>customization_id</code> parameter) and service credentials are GUIDs. GUIDs
+are hexadecimal strings that have the format <code>xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</code>.</li>
+<li><strong>Custom voice model ownership:</strong> In all cases, you must use service credentials created for the instance of the
+service that owns a custom voice model to use the methods described in this documentation with that model. For more
+information, see <a href="https://console.bluemix.net/docs/services/text-to-speech/custom-models.html#customOwner">Ownership of custom voice
+models</a>.</li>
+</ul>
 
                         <a href="Classes/TextToSpeech.html" class="slightly-smaller">See more</a>
                       </div>
@@ -114,7 +182,7 @@ is streamed back to the client with minimal delay.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">TextToSpeech</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">TextToSpeech</span></code></pre>
 
                         </div>
                       </div>
@@ -126,8 +194,8 @@ is streamed back to the client with minimal delay.</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

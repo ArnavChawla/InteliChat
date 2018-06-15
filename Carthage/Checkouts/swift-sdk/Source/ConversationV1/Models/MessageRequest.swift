@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,43 +15,51 @@
  **/
 
 import Foundation
-import RestKit
 
 /** A request formatted for the Conversation service. */
-public struct MessageRequest: JSONEncodable {
-    
-    private let input: Input
-    private let alternateIntents: Bool?
-    private let context: Context?
-    private let entities: [Entity]?
-    private let intents: [Intent]?
-    private let output: Output?
-    
+public struct MessageRequest: Codable {
+
+    /// An input object that includes the input text.
+    public var input: InputData?
+
+    /// Whether to return more than one intent. Set to `true` to return all matching intents.
+    public var alternateIntents: Bool?
+
+    /// State information for the conversation. Continue a conversation by including the context object from the previous response.
+    public var context: Context?
+
+    /// Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input.
+    public var entities: [RuntimeEntity]?
+
+    /// Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input.
+    public var intents: [RuntimeIntent]?
+
+    /// System output. Include the output from the previous response to maintain intermediate information over multiple requests.
+    public var output: OutputData?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case input = "input"
+        case alternateIntents = "alternate_intents"
+        case context = "context"
+        case entities = "entities"
+        case intents = "intents"
+        case output = "output"
+    }
+
     /**
-     Create a `MessageRequest`.
-     
+     Initialize a `MessageRequest` with member variables.
+
      - parameter input: An input object that includes the input text.
-     - parameter alternateIntents: Whether to return more than one intent. Set to `true` to return
-        all matching intents. For example, return all intents when the confidence is not high
-        to allow users to choose their intent.
-     - parameter context: State information for the conversation. Include the context object from
-        the previous response when you send multiple requests for the same conversation.
-     - parameter entities: Include the entities from a previous response when they do not need to
-        change and to prevent Watson from trying to identify them.
-     - parameter intents: An array of name-confidence pairs for the user input. Include the intents
-        from the request when they do not need to change so that Watson does not try to identify
-        them.
-     - parameter output: System output. Include the output from the request when you have several
-        requests within the same Dialog turn to pass back in the intermediate information.
-     */
-    public init(
-        input: Input,
-        alternateIntents: Bool? = nil,
-        context: Context? = nil,
-        entities: [Entity]? = nil,
-        intents: [Intent]? = nil,
-        output: Output? = nil)
-    {
+     - parameter alternateIntents: Whether to return more than one intent. Set to `true` to return all matching intents.
+     - parameter context: State information for the conversation. Continue a conversation by including the context object from the previous response.
+     - parameter entities: Entities to use when evaluating the message. Include entities from the previous response to continue using those entities rather than detecting entities in the new input.
+     - parameter intents: Intents to use when evaluating the user input. Include intents from the previous response to continue using those intents rather than trying to recognize intents in the new input.
+     - parameter output: System output. Include the output from the previous response to maintain intermediate information over multiple requests.
+
+     - returns: An initialized `MessageRequest`.
+    */
+    public init(input: InputData? = nil, alternateIntents: Bool? = nil, context: Context? = nil, entities: [RuntimeEntity]? = nil, intents: [RuntimeIntent]? = nil, output: OutputData? = nil) {
         self.input = input
         self.alternateIntents = alternateIntents
         self.context = context
@@ -59,59 +67,5 @@ public struct MessageRequest: JSONEncodable {
         self.intents = intents
         self.output = output
     }
-    
-    /**
-     Create a `MessageRequest`.
-     
-     - parameter text: The input text.
-     - parameter alternateIntents: Whether to return more than one intent. Set to `true` to return
-        all matching intents. For example, return all intents when the confidence is not high
-        to allow users to choose their intent.
-     - parameter context: State information for the conversation. Include the context object from
-        the previous response when you send multiple requests for the same conversation.
-     - parameter entities: Include the entities from a previous response when they do not need to
-        change and to prevent Watson from trying to identify them.
-     - parameter intents: An array of name-confidence pairs for the user input. Include the intents
-        from the request when they do not need to change so that Watson does not try to identify
-        them.
-     - parameter output: System output. Include the output from the request when you have several
-        requests within the same Dialog turn to pass back in the intermediate information.
-     */
-    public init(
-        text: String,
-        alternateIntents: Bool? = nil,
-        context: Context? = nil,
-        entities: [Entity]? = nil,
-        intents: [Intent]? = nil,
-        output: Output? = nil)
-    {
-        self.input = Input(text: text)
-        self.alternateIntents = alternateIntents
-        self.context = context
-        self.entities = entities
-        self.intents = intents
-        self.output = output
-    }
-    
-    /// Used internally to serialize a `MessageRequest` model to JSON.
-    public func toJSONObject() -> Any {
-        var json = [String: Any]()
-        json["input"] = input.toJSONObject()
-        if let alternateIntents = alternateIntents {
-            json["alternate_intents"] = alternateIntents
-        }
-        if let context = context {
-            json["context"] = context.toJSONObject()
-        }
-        if let entities = entities {
-            json["entities"] = entities.map { $0.toJSONObject() }
-        }
-        if let intents = intents {
-            json["intents"] = intents.map { $0.toJSONObject() }
-        }
-        if let output = output {
-            json["output"] = output.toJSONObject()
-        }
-        return json
-    }
+
 }

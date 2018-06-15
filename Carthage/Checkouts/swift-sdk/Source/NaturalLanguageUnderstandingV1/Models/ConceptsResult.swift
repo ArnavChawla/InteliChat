@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,24 +15,24 @@
  **/
 
 import Foundation
-import RestKit
 
 /** The general concepts referenced or alluded to in the specified content. */
-public struct ConceptsResult: JSONDecodable {
-    
-    /// Name of the concept.
-    public let name: String?
-    
-    /// Relevance score between 0 and 1. Higher scores indicate greater relevance.
-    public let relevance: Double?
-    
-    /// Link to the corresponding DBpedia resource.
-    public let dbpediaResource: String?
+public struct ConceptsResult: Decodable {
 
-    /// Used internally to initialize a `ConceptsResult` model from JSON.
-    public init(json: JSON) throws {
-        name = try? json.getString(at: "text")
-        relevance = try? json.getDouble(at: "relevance")
-        dbpediaResource = try? json.getString(at: "dbpedia_resource")
+    /// Name of the concept.
+    public var text: String?
+
+    /// Relevance score between 0 and 1. Higher scores indicate greater relevance.
+    public var relevance: Double?
+
+    /// Link to the corresponding DBpedia resource.
+    public var dbpediaResource: String?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case text = "text"
+        case relevance = "relevance"
+        case dbpediaResource = "dbpedia_resource"
     }
+
 }

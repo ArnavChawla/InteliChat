@@ -1,3 +1,5 @@
+// swift-tools-version:4.0
+
 /**
  * Copyright IBM Corporation 2016
  *
@@ -14,35 +16,48 @@
  * limitations under the License.
  **/
 
+// Note: The Speech to Text and Text to Speech services are not supported with
+// Swift Package Manager. Unfortunately, the package manager does not provide
+// a convenient way to include the dependencies required for these services
+// (e.g. libogg, libopus, and Starscream). If you would like to use Speech
+// to Text or Text to Speech, please try an alternative dependency management
+// tool (e.g. Carthage). If you would like support for the Swift Package Manager,
+// feel free to open an issue or even contribute a pull request that adds
+// support for the required libraries.
+
 import PackageDescription
 
 let package = Package(
-  name: "WatsonDeveloperCloud",
+    name: "WatsonDeveloperCloud",
+    products: [
+        .library(name: "AssistantV1", targets: ["AssistantV1"]),
+        .library(name: "ConversationV1", targets: ["ConversationV1"]),
+        .library(name: "DiscoveryV1", targets: ["DiscoveryV1"]),
+        .library(name: "LanguageTranslatorV2", targets: ["LanguageTranslatorV2"]),
+        .library(name: "NaturalLanguageClassifierV1", targets: ["NaturalLanguageClassifierV1"]),
+        .library(name: "NaturalLanguageUnderstandingV1", targets: ["NaturalLanguageUnderstandingV1"]),
+        .library(name: "PersonalityInsightsV3", targets: ["PersonalityInsightsV3"]),
+        .library(name: "ToneAnalyzerV3", targets: ["ToneAnalyzerV3"]),
+        .library(name: "VisualRecognitionV3", targets: ["VisualRecognitionV3"]),
+    ],
     targets: [
-        Target(name: "RestKit"),
-        Target(name: "AlchemyDataNewsV1",            dependencies: [.Target(name: "RestKit")]),
-        Target(name: "AlchemyLanguageV1",            dependencies: [.Target(name: "RestKit")]),
-        Target(name: "AlchemyVisionV1",              dependencies: [.Target(name: "RestKit")]),
-        Target(name: "ConversationV1",               dependencies: [.Target(name: "RestKit")]),
-        Target(name: "DialogV1",                     dependencies: [.Target(name: "RestKit")]),
-        Target(name: "DiscoveryV1",                  dependencies: [.Target(name: "RestKit")]),
-        Target(name: "DocumentConversionV1",         dependencies: [.Target(name: "RestKit")]),
-        Target(name: "LanguageTranslatorV2",         dependencies: [.Target(name: "RestKit")]),
-        Target(name: "NaturalLanguageClassifierV1",  dependencies: [.Target(name: "RestKit")]),
-        Target(name: "NaturalLanguageUnderstandingV1", dependencies: [.Target(name: "RestKit")]),
-        Target(name: "PersonalityInsightsV2",        dependencies: [.Target(name: "RestKit")]),
-        Target(name: "PersonalityInsightsV3",        dependencies: [.Target(name: "RestKit")]),
-        Target(name: "RelationshipExtractionV1Beta", dependencies: [.Target(name: "RestKit")]),
-        Target(name: "RetrieveAndRankV1",            dependencies: [.Target(name: "RestKit")]),
-        Target(name: "TextToSpeechV1",               dependencies: [.Target(name: "RestKit")]),
-        Target(name: "ToneAnalyzerV3",               dependencies: [.Target(name: "RestKit")]),
-        Target(name: "TradeoffAnalyticsV1",          dependencies: [.Target(name: "RestKit")]),
-        Target(name: "VisualRecognitionV3",          dependencies: [.Target(name: "RestKit")]),
-    ],
-    dependencies: [
-    ],
-    exclude: [
-        "Source/SpeechToTextV1",
-        "Tests/SpeechToTextV1Tests"
+        .target(name: "AssistantV1", dependencies: []),
+        .testTarget(name: "AssistantV1Tests", dependencies: ["AssistantV1"]),
+        .target(name: "ConversationV1", dependencies: []),
+        .testTarget(name: "ConversationV1Tests", dependencies: ["ConversationV1"]),
+        .target(name: "DiscoveryV1", dependencies: []),
+        .testTarget(name: "DiscoveryV1Tests", dependencies: ["DiscoveryV1"]),
+        .target(name: "LanguageTranslatorV2", dependencies: []),
+        .testTarget(name: "LanguageTranslatorV2Tests", dependencies: ["LanguageTranslatorV2"]),
+        .target(name: "NaturalLanguageClassifierV1", dependencies: []),
+        .testTarget(name: "NaturalLanguageClassifierV1Tests", dependencies: ["NaturalLanguageClassifierV1"]),
+        .target(name: "NaturalLanguageUnderstandingV1", dependencies: []),
+        .testTarget(name: "NaturalLanguageUnderstandingV1Tests", dependencies: ["NaturalLanguageUnderstandingV1"]),
+        .target(name: "PersonalityInsightsV3", dependencies: []),
+        .testTarget(name: "PersonalityInsightsV3Tests", dependencies: ["PersonalityInsightsV3"]),
+        .target(name: "ToneAnalyzerV3", dependencies: []),
+        .testTarget(name: "ToneAnalyzerV3Tests", dependencies: ["ToneAnalyzerV3"]),
+        .target(name: "VisualRecognitionV3", dependencies: []),
+        .testTarget(name: "VisualRecognitionV3Tests", dependencies: ["VisualRecognitionV3"]),
     ]
 )

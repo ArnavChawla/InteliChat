@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,61 +15,45 @@
  **/
 
 import Foundation
-import RestKit
-    
-/** A request to translate input text from a source language to a target language. */
-internal struct TranslateRequest: JSONEncodable {
 
-    private let modelID: String?
-    private let source: String?
-    private let target: String?
-    private let text: [String]
+/** TranslateRequest. */
+public struct TranslateRequest: Encodable {
 
-    /**
-     Initialize a translation request with input text and a model id.
+    /// Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response.
+    public var text: [String]
 
-     - parameter text: Input text in UTF-8 encoding. It is a list so that multiple
-        sentences/paragraphs can be submitted.
-     - parameter modelID: The unique modelID of the translation model being used to
-        translate text. The modelID inherently specifies source language, target
-        language and domain.
+    /// Model ID of the translation model to use. If this is specified, the **source** and **target** parameters will be ignored. The method requires either a model ID or both the **source** and **target** parameters.
+    public var modelID: String?
 
-     - returns: An initialized `TranslateRequest` that represents a translation
-        request to the Language Translator service.
-     */
-    init(text: [String], modelID: String) {
-        self.modelID = modelID
-        self.source = nil
-        self.target = nil
-        self.text = text
+    /// Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain).
+    public var source: String?
+
+    /// Language code of the translation target language. Use with source as an alternative way to select a translation model.
+    public var target: String?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case text = "text"
+        case modelID = "model_id"
+        case source = "source"
+        case target = "target"
     }
 
     /**
-     Initialize a translation request with input text, a source language, and a
-     target language.
+     Initialize a `TranslateRequest` with member variables.
 
-     - parameter text: Input text in UTF-8 encoding. It is a list so that multiple
-        sentences/paragraphs can be submitted.
-     - parameter source: The source language of the input text.
-     - parameter target: The target language that the input text will be translated to.
+     - parameter text: Input text in UTF-8 encoding. Multiple entries will result in multiple translations in the response.
+     - parameter modelID: Model ID of the translation model to use. If this is specified, the **source** and **target** parameters will be ignored. The method requires either a model ID or both the **source** and **target** parameters.
+     - parameter source: Language code of the source text language. Use with `target` as an alternative way to select a translation model. When `source` and `target` are set, and a model ID is not set, the system chooses a default model for the language pair (usually the model based on the news domain).
+     - parameter target: Language code of the translation target language. Use with source as an alternative way to select a translation model.
 
-     - returns: An initialized `TranslateRequest` that represents a translation
-        request to the Language Translator service.
-     */
-    init(text: [String], source: String, target: String) {
-        self.modelID = nil
+     - returns: An initialized `TranslateRequest`.
+    */
+    public init(text: [String], modelID: String? = nil, source: String? = nil, target: String? = nil) {
+        self.text = text
+        self.modelID = modelID
         self.source = source
         self.target = target
-        self.text = text
     }
 
-    /// Used internally to serialize a `TranslateRequest` model to JSON.
-    func toJSONObject() -> Any {
-        var json = [String: Any]()
-        if let modelID = modelID { json["model_id"] = modelID }
-        if let source = source { json["source"] = source }
-        if let target = target { json["target"] = target }
-        json["text"] = text
-        return json
-    }
 }

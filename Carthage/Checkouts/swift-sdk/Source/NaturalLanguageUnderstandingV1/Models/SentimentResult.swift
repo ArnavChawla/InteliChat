@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,48 +15,20 @@
  **/
 
 import Foundation
-import RestKit
 
 /** The sentiment of the content. */
-public struct SentimentResult: JSONDecodable {
-    
+public struct SentimentResult: Decodable {
+
     /// The document level sentiment.
-    public let document: DocumentSentimentResults?
-    
+    public var document: DocumentSentimentResults?
+
     /// The targeted sentiment to analyze.
-    public let targets: [TargetedSentimentResults]?
+    public var targets: [TargetedSentimentResults]?
 
-    /// Used internally to initialize a `SentimentResult` model from JSON.
-    public init(json: JSON) throws {
-        document = try? json.decode(at: "document", type: DocumentSentimentResults.self)
-        targets = try? json.decodedArray(at: "targets", type: TargetedSentimentResults.self)
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case document = "document"
+        case targets = "targets"
     }
-}
 
-/** The sentiment results of the document. */
-public struct DocumentSentimentResults: JSONDecodable {
-    
-    /// Sentiment score from -1 (negative) to 1 (positive).
-    public let score: Double?
-    
-    /// Used internally to initialize a `DocumentSentimentResults` model from JSON.
-    public init(json: JSON) throws {
-        score = try? json.getDouble(at: "score")
-    }
-}
-
-/** The targeted sentiment results of the document. */
-public struct TargetedSentimentResults: JSONDecodable {
-    
-    /// Targeted text.
-    public let text: String?
-    
-    /// Sentiment score from -1 (negative) to 1 (positive).
-    public let score: Double?
-    
-    /// Used internally to initialize a `TargetedSentimentResults` model from JSON.
-    public init(json: JSON) throws {
-        text = try? json.getString(at: "text")
-        score = try? json.getDouble(at: "score")
-    }
 }

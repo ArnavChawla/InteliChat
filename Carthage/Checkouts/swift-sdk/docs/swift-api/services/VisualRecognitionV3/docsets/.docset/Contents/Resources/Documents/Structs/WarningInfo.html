@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>WarningInfo Struct Reference</title>
+    <title>WarningInfo Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -11,7 +11,7 @@
   </head>
   <body>
     <a name="//apple_ref/swift/Struct/WarningInfo" class="dashAnchor"></a>
-    <a title="WarningInfo Struct Reference"></a>
+    <a title="WarningInfo Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        WarningInfo Struct Reference
+        WarningInfo Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -37,13 +37,24 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Structs/Age.html">Age</a>
+                <a href="../Enums/JSON.html">JSON</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/Classification.html">Classification</a>
+                <a href="../Enums/RestError.html">RestError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Class.html">Class</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ClassResult.html">ClassResult</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ClassifiedImage.html">ClassifiedImage</a>
@@ -55,16 +66,16 @@
                 <a href="../Structs/Classifier.html">Classifier</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ClassifierResults.html">ClassifierResults</a>
+                <a href="../Structs/Classifier/Status.html">– Status</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/Collection.html">Collection</a>
+                <a href="../Structs/ClassifierResult.html">ClassifierResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/CollectionImage.html">CollectionImage</a>
+                <a href="../Structs/Classifiers.html">Classifiers</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/CollectionImages.html">CollectionImages</a>
+                <a href="../Structs/DetectedFaces.html">DetectedFaces</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ErrorInfo.html">ErrorInfo</a>
@@ -73,28 +84,25 @@
                 <a href="../Structs/Face.html">Face</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Structs/FaceAge.html">FaceAge</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FaceGender.html">FaceGender</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FaceIdentity.html">FaceIdentity</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Structs/FaceLocation.html">FaceLocation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/Gender.html">Gender</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/Identity.html">Identity</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ImageWithFaces.html">ImageWithFaces</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ImagesWithFaces.html">ImagesWithFaces</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/Metadata.html">Metadata</a>
+                <a href="../Structs.html#/s:19VisualRecognitionV311JSONWrapperV">JSONWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/PositiveExample.html">PositiveExample</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Structs/SimilarImages.html">SimilarImages</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/WarningInfo.html">WarningInfo</a>
@@ -109,11 +117,11 @@
             <h1>WarningInfo</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">WarningInfo</span><span class="p">:</span> <span class="kt">JSONDecodable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">WarningInfo</span> <span class="p">:</span> <span class="kt">Decodable</span></code></pre>
 
                 </div>
               </div>
-            <p>Information about a warning that occurred.</p>
+            <p>Information about something that went wrong.</p>
 
           </section>
           <section class="section task-group-section">
@@ -122,9 +130,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV19VisualRecognitionV311WarningInfo9warningIDSS"></a>
+                    <a name="/s:19VisualRecognitionV311WarningInfoV9warningIDSSvp"></a>
                     <a name="//apple_ref/swift/Property/warningID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV19VisualRecognitionV311WarningInfo9warningIDSS">warningID</a>
+                    <a class="token" href="#/s:19VisualRecognitionV311WarningInfoV9warningIDSSvp">warningID</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -132,14 +140,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A codified warning string (e.g. <q>limit_reached</q>).</p>
+                        <p>Codified warning string, such as <code>limit_reached</code>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">warningID</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">warningID</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -149,9 +157,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV19VisualRecognitionV311WarningInfo11descriptionSS"></a>
+                    <a name="/s:19VisualRecognitionV311WarningInfoV11descriptionSSvp"></a>
                     <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV19VisualRecognitionV311WarningInfo11descriptionSS">description</a>
+                    <a class="token" href="#/s:19VisualRecognitionV311WarningInfoV11descriptionSSvp">description</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -159,41 +167,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A human-readable warning string (e.g. <q>Max number of images (100) reached</q>).</p>
+                        <p>Information about the error.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV19VisualRecognitionV311WarningInfocFzT4jsonV7RestKit4JSON_S0_"></a>
-                    <a name="//apple_ref/swift/Method/init(json:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV19VisualRecognitionV311WarningInfocFzT4jsonV7RestKit4JSON_S0_">init(json:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Used internally to initialize a <code>WarningInfo</code> model from JSON.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">json</span><span class="p">:</span> <span class="kt">JSON</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span></code></pre>
 
                         </div>
                       </div>
@@ -205,8 +186,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,16 @@
  **/
 
 import Foundation
-import RestKit
 
 /** The author of the analyzed content. */
-public struct Author: JSONDecodable {
-    
-    /// Name of the author.
-    public let name: String?
+public struct Author: Decodable {
 
-    /// Used internally to initialize a `Author` model from JSON.
-    public init(json: JSON) throws {
-        name = try? json.getString(at: "name")
+    /// Name of the author.
+    public var name: String?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case name = "name"
     }
+
 }

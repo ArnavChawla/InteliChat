@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,25 @@
  **/
 
 import Foundation
-import RestKit
 
-/** An option indicating whether or not to include the author, publication date, and title of 
- the HTML or URL content. */
-public struct MetadataOptions: JSONEncodable {
-    
-    /// The JSON object to internally serialize the model to JSON.
-    public let json: [String: Any]?
-    
+/** The Authors, Publication Date, and Title of the document. Supports URL and HTML input types. */
+public struct MetadataOptions: Encodable {
+
+    /// Additional properties associated with this model.
+    public var additionalProperties: [String: JSON]
+
     /**
-     Initialize a `MetadataOptions` with all member variables.
-     
+     Initialize a `MetadataOptions`.
+
      - returns: An initialized `MetadataOptions`.
-     */
-    public init() {
-        json = [String: Any]()
+    */
+    public init(additionalProperties: [String: JSON] = [:]) {
+        self.additionalProperties = additionalProperties
     }
-    
-    /// Used internally to serialize a `MetadataOptions` model to JSON.
-    public func toJSONObject() -> Any {
-        return json ?? [String: Any]()
+
+    public func encode(to encoder: Encoder) throws {
+        var dynamicContainer = encoder.container(keyedBy: DynamicKeys.self)
+        try dynamicContainer.encodeIfPresent(additionalProperties)
     }
+
 }

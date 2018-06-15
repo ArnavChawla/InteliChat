@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>SentimentOptions Struct Reference</title>
+    <title>SentimentOptions Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -11,7 +11,7 @@
   </head>
   <body>
     <a name="//apple_ref/swift/Struct/SentimentOptions" class="dashAnchor"></a>
-    <a title="SentimentOptions Struct Reference"></a>
+    <a title="SentimentOptions Structure Reference"></a>
     <header>
       <div class="content-wrapper">
         <p><a href="../index.html"> Docs</a></p>
@@ -22,7 +22,7 @@
       <p id="breadcrumbs">
         <a href="../index.html"> Reference</a>
         <img id="carat" src="../img/carat.png" />
-        SentimentOptions Struct Reference
+        SentimentOptions Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -37,7 +37,18 @@
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/JSON.html">JSON</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RestError.html">RestError</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AnalysisResults.html">AnalysisResults</a>
@@ -56,6 +67,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/ConceptsResult.html">ConceptsResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DeleteModelResults.html">DeleteModelResults</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DisambiguationResult.html">DisambiguationResult</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/DocumentEmotionResults.html">DocumentEmotionResults</a>
@@ -79,10 +96,19 @@
                 <a href="../Structs/EntitiesResult.html">EntitiesResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/EntitiesResult/EntitySentiment.html">– EntitySentiment</a>
+                <a href="../Structs/EntityMention.html">EntityMention</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/FeatureSentimentResults.html">FeatureSentimentResults</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Features.html">Features</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Feed.html">Feed</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:30NaturalLanguageUnderstandingV111JSONWrapperV">JSONWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/KeywordsOptions.html">KeywordsOptions</a>
@@ -91,13 +117,16 @@
                 <a href="../Structs/KeywordsResult.html">KeywordsResult</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/KeywordsResult/KeywordSentiment.html">– KeywordSentiment</a>
+                <a href="../Structs/ListModelsResults.html">ListModelsResults</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/MetadataOptions.html">MetadataOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/MetadataResult.html">MetadataResult</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Model.html">Model</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/Parameters.html">Parameters</a>
@@ -118,7 +147,7 @@
                 <a href="../Structs/SemanticRolesAction.html">SemanticRolesAction</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/SemanticRolesAction/SemanticRolesVerb.html">– SemanticRolesVerb</a>
+                <a href="../Structs/SemanticRolesEntity.html">SemanticRolesEntity</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/SemanticRolesKeyword.html">SemanticRolesKeyword</a>
@@ -136,7 +165,7 @@
                 <a href="../Structs/SemanticRolesSubject.html">SemanticRolesSubject</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/SemanticRolesSubject/SemanticRolesEntity.html">– SemanticRolesEntity</a>
+                <a href="../Structs/SemanticRolesVerb.html">SemanticRolesVerb</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Structs/SentimentOptions.html">SentimentOptions</a>
@@ -163,11 +192,11 @@
             <h1>SentimentOptions</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">SentimentOptions</span><span class="p">:</span> <span class="kt">JSONEncodable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">SentimentOptions</span> <span class="p">:</span> <span class="kt">Encodable</span></code></pre>
 
                 </div>
               </div>
-            <p>An options specifying if sentiment of detected entities, keywords, or phrases should be returned.</p>
+            <p>An option specifying if sentiment of detected entities, keywords, or phrases should be returned.</p>
 
           </section>
           <section class="section task-group-section">
@@ -176,9 +205,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV30NaturalLanguageUnderstandingV116SentimentOptions8documentGSqSb_"></a>
+                    <a name="/s:30NaturalLanguageUnderstandingV116SentimentOptionsV8documentSbSgvp"></a>
                     <a name="//apple_ref/swift/Property/document" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV30NaturalLanguageUnderstandingV116SentimentOptions8documentGSqSb_">document</a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV116SentimentOptionsV8documentSbSgvp">document</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -193,7 +222,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">document</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">document</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -203,9 +232,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:vV30NaturalLanguageUnderstandingV116SentimentOptions7targetsGSqGSaSS__"></a>
+                    <a name="/s:30NaturalLanguageUnderstandingV116SentimentOptionsV7targetsSaySSGSgvp"></a>
                     <a name="//apple_ref/swift/Property/targets" class="dashAnchor"></a>
-                    <a class="token" href="#/s:vV30NaturalLanguageUnderstandingV116SentimentOptions7targetsGSqGSaSS__">targets</a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV116SentimentOptionsV7targetsSaySSGSgvp">targets</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -220,7 +249,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?</span></code></pre>
 
                         </div>
                       </div>
@@ -230,9 +259,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:FV30NaturalLanguageUnderstandingV116SentimentOptionscFT8documentGSqSb_7targetsGSqGSaSS___S0_"></a>
+                    <a name="/s:30NaturalLanguageUnderstandingV116SentimentOptionsVACSbSg8document_SaySSGSg7targetstcfc"></a>
                     <a name="//apple_ref/swift/Method/init(document:targets:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV30NaturalLanguageUnderstandingV116SentimentOptionscFT8documentGSqSb_7targetsGSqGSaSS___S0_">init(document:targets:)</a>
+                    <a class="token" href="#/s:30NaturalLanguageUnderstandingV116SentimentOptionsVACSbSg8document_SaySSGSg7targetstcfc">init(document:targets:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -240,14 +269,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Initialize a <code>SentimentOptions</code> with all member variables.</p>
+                        <p>Initialize a <code>SentimentOptions</code> with member variables.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">document</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">document</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">targets</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -264,7 +293,6 @@
                               <td>
                                 <div>
                                   <p>Set this to false to hide document-level sentiment results.</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -277,7 +305,6 @@
                               <td>
                                 <div>
                                   <p>Sentiment results will be returned for each target string that is found in the document.</p>
-
                                 </div>
                               </td>
                             </tr>
@@ -287,34 +314,6 @@
                       <div>
                         <h4>Return Value</h4>
                         <p>An initialized <code>SentimentOptions</code>.</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FV30NaturalLanguageUnderstandingV116SentimentOptions12toJSONObjectFT_P_"></a>
-                    <a name="//apple_ref/swift/Method/toJSONObject()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FV30NaturalLanguageUnderstandingV116SentimentOptions12toJSONObjectFT_P_">toJSONObject()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Used internally to serialize a <code>SentimentOptions</code> model to JSON.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toJSONObject</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Any</span></code></pre>
-
-                        </div>
                       </div>
                     </section>
                   </div>
@@ -324,8 +323,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2017-03-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-05-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

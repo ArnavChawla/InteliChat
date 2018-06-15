@@ -1,5 +1,5 @@
 /**
- * Copyright IBM Corporation 2017
+ * Copyright IBM Corporation 2018
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,44 +15,44 @@
  **/
 
 import Foundation
-import RestKit
 
 /** The important people, places, geopolitical entities and other types of entities in your content. */
-public struct EntitiesResult: JSONDecodable {
-    
-    /// The type of entity found in the content.
-    public let type: String?
-    
-    /// Relevance score from 0 to 1. Higher values indicate greater relevance
-    public let relevance: Double?
-    
-    /// The number of times the entity was mentioned in the text.
-    public let count: Int?
-    
-    /// The name of the entity
-    public let text: String?
-    
-    /// The sentiment of the entity.
-    public let sentiment: EntitySentiment?
+public struct EntitiesResult: Decodable {
 
-    /// Used internally to initialize an `EntitiesResult` model from JSON.
-    public init(json: JSON) throws {
-        type = try? json.getString(at: "type")
-        relevance = try? json.getDouble(at: "relevance")
-        count = try? json.getInt(at: "count")
-        text = try? json.getString(at: "text")
-        sentiment = try? json.decode(at: "sentiment", type: EntitySentiment.self)
+    /// Entity type.
+    public var type: String?
+
+    /// The name of the entity.
+    public var text: String?
+
+    /// Relevance score from 0 to 1. Higher values indicate greater relevance.
+    public var relevance: Double?
+
+    /// Entity mentions and locations.
+    public var mentions: [EntityMention]?
+
+    /// How many times the entity was mentioned in the text.
+    public var count: Int?
+
+    /// Emotion analysis results for the entity, enabled with the "emotion" option.
+    public var emotion: EmotionScores?
+
+    /// Sentiment analysis results for the entity, enabled with the "sentiment" option.
+    public var sentiment: FeatureSentimentResults?
+
+    /// Disambiguation information for the entity.
+    public var disambiguation: DisambiguationResult?
+
+    // Map each property name to the key that shall be used for encoding/decoding.
+    private enum CodingKeys: String, CodingKey {
+        case type = "type"
+        case text = "text"
+        case relevance = "relevance"
+        case mentions = "mentions"
+        case count = "count"
+        case emotion = "emotion"
+        case sentiment = "sentiment"
+        case disambiguation = "disambiguation"
     }
-    
-    /** The sentiment of the entity. */
-    public struct EntitySentiment: JSONDecodable {
-        
-        /// The sentiment value of the found entity within the text from 0 to 1.
-        public let score: Double?
-        
-        /// Used internally to initialize an `EntitySentiment` model from JSON.
-        public init(json: JSON) throws {
-            score = try? json.getDouble(at: "score")
-        }
-    }
+
 }
